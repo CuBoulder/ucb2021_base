@@ -46,7 +46,7 @@ function ucb2021_base_preprocess_page(array &$variables) {
   $variables['theme_path'] = base_path() . $variables['directory'];
   $variables['ucb_campus_header_color'] = theme_get_setting('ucb_campus_header_color');
   $variables['ucb_header_color'] = theme_get_setting('ucb_header_color');
-  $variables['ucb_be_boulder'] = theme_get_setting('ucb_be_boulder');
+  $variables['ucb_sidebar_position'] = theme_get_setting('ucb_sidebar_position');
 
   // check to see if we're on the homepage or not
   try {
@@ -69,7 +69,7 @@ function ucb2021_base_preprocess_page__user(array &$variables) {
   $variables['theme_path'] = base_path() . $variables['directory'];
   $variables['ucb_campus_header_color'] = theme_get_setting('ucb_campus_header_color');
   $variables['ucb_header_color'] = theme_get_setting('ucb_header_color');
-  $variables['ucb_be_boulder'] = theme_get_setting('ucb_be_boulder');
+  $variables['ucb_sidebar_position'] = theme_get_setting('ucb_sidebar_position');
 }
 
 /***
@@ -84,7 +84,7 @@ function ucb2021_base_preprocess_page__user__login(array &$variables) {
   $variables['theme_path'] = base_path() . $variables['directory'];
   $variables['ucb_campus_header_color'] = theme_get_setting('ucb_campus_header_color');
   $variables['ucb_header_color'] = theme_get_setting('ucb_header_color');
-  $variables['ucb_be_boulder'] = theme_get_setting('ucb_be_boulder');
+  $variables['ucb_sidebar_position'] = theme_get_setting('ucb_sidebar_position');
 }
 
 
@@ -93,7 +93,6 @@ function ucb2021_base_preprocess_page__user__login(array &$variables) {
  */
 function ucb2021_base_preprocess_region__header(array &$variables) {
   $variables['theme_path'] = base_path() . $variables['directory'];
-  $variables['ucb_be_boulder'] = theme_get_setting('ucb_be_boulder');
 }
 
 /***
@@ -101,7 +100,6 @@ function ucb2021_base_preprocess_region__header(array &$variables) {
  */
 function ucb2021_base_preprocess_region__footer(array &$variables) {
   $variables['theme_path'] = base_path() . $variables['directory'];
-  $variables['ucb_be_boulder'] = theme_get_setting('ucb_be_boulder');
 }
 
 /***
@@ -145,16 +143,15 @@ function ucb2021_base_form_system_theme_settings_alter(&$form, \Drupal\Core\Form
     '#description'      => t("Select the color for the header background for the site information at the top of the page."),
   );
 
-  $form['ucb_be_boulder'] = array(
+  $form['ucb_sidebar_position'] = array(
     '#type'           => 'select',
-    '#title'          => t('Where to display the Be Boulder slogan on the site.'),
-    '#default_value'    => theme_get_setting('ucb_be_boulder'),
+    '#title'          => t('Location of the sidebar for content on pages'),
+    '#default_value'    => 'Left',
     '#options'        => array(
-      t('None'),
-      t('Footer'),
-      t('Header'),
+      t('Left'),
+      t('Right')
     ),
-    '#description'    => t("Check this box if you would like to display the 'Be Boulder' slogan in the header."),
+    '#description'    => t("Select where the sidebar content should appear on the page."),
   );
 
   $form['ucb_gtm_account'] = array(
