@@ -54,10 +54,16 @@
 
 /*
 * For fixing the horizontal scroll bar from hero unit when logged in
+* -34px is half the width of the admin toolbar
 */
 @media screen and (min-width: 975px) {
   .toolbar-fixed .ucb-article-body .paragraph--type--hero-unit {
     width: 100vw;
     margin-left: calc(-50vw - 34px);
+  }
+
+  .toolbar-fixed .ucb-article-body .paragraph--type--hero-unit .container {
+    left: 34px;
+    position: relative;
   }
 }
