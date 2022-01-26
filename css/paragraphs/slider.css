@@ -85,6 +85,11 @@
   cursor: pointer;
 }
 
+.carousel-control-next,
+.carousel-control-prev {
+  opacity: 1;
+}
+
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
   border-radius: 100px;
@@ -103,7 +108,7 @@
 
 .carousel-control-prev-icon:hover,
 .carousel-control-next-icon:hover {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0,  0.6);
 }
 
 /* media queries */
