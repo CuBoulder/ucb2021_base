@@ -16,9 +16,9 @@
 
 {# set classes for the size of the component #}
 {% if paragraph.field_size.value is same as("0") %}
-  {% set size = "size-full-width" %}
-{% elseif paragraph.field_size.value is same as("1") %}
   {% set size = "size-large" %}
+{% elseif paragraph.field_size.value is same as("1") %}
+  {% set size = "size-medium" %}
 {% else %}
   {% set size = "size-small" %}
 {% endif %}
