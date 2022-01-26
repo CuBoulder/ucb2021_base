@@ -85,7 +85,7 @@
   cursor: pointer;
 }
 
-.carousel-control-prev-icon,
+.carousel-control-prev-icon, 
 .carousel-control-next-icon {
   border-radius: 100px;
   width: 3rem;
@@ -101,7 +101,7 @@
   background-position: 40%;
 }
 
-.carousel-control-prev-icon:hover,
+.carousel-control-prev-icon:hover, 
 .carousel-control-next-icon:hover {
   background-color: rgba(0,0,0,0.3);
 }
