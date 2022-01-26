@@ -85,6 +85,27 @@
   cursor: pointer;
 }
 
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  border-radius: 100px;
+  width: 3rem;
+  height: 3rem;
+  background-size: 75% 75%;
+}
+
+.carousel-control-next-icon {
+  background-position: 60%;
+}
+
+.carousel-control-prev-icon {
+  background-position: 40%;
+}
+
+.carousel-control-prev-icon:hover,
+.carousel-control-next-icon:hover {
+  background-color: rgba(0,0,0,0.3);
+}
+
 /* media queries */
 @media screen and (max-width: 768px) {
   .paragraph.paragraph--type--slider.right-overlay .carousel-inner .carousel-caption,
