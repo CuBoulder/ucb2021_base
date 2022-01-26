@@ -7,9 +7,4 @@
 *
 #}
 
-{% if paragraph.field_media.entity.field_media_image.entity.fileuri|render %}
-        <img itemprop="image" src="{{ file_url(paragraph.field_media.entity.field_media_image.entity.fileuri) }}"
-alt="{{ paragraph.field_media.entity.field_media_image.alt }}">
-        {% else %}
-        <span itemprop="video">{{ content.field_media }}</span>
-{% endif %}
+{{ content }}
