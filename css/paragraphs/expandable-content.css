@@ -1,0 +1,54 @@
+/*
+ * Styles for expandable content paragraph
+ *
+*/
+.vertical-tab-content {
+    width: 100%;
+}
+
+.nav-tabs,
+.vertical-tabs {
+    display:none;
+}
+
+.accordion-flush :last-child {
+    border-bottom: 0;
+}
+
+@media(min-width:768px) {
+    .nav-tabs,
+    .vertical-tabs {
+        display: flex;
+    }
+    .tab-pane .border {
+        display:none;
+    }  
+    .tab-pane .collapse{
+        display:block;
+    }
+    .vertical-tabs {
+        width: 100%;
+        max-width: 25%;
+    }
+    
+    .vertical-tab-content {
+        display: flex;
+        max-width: 75%;
+    }
+
+    .horizontal-accordion-tab,
+    .vertical-accordion-tab {
+        display: none;
+    }
+
+    .tab-content .accordion-item {
+        border: none;
+    }
+}
+
+@media(max-width:767px){
+    .tab-content > .tab-pane {
+        display: block !important;
+        opacity: 1;
+    }
+}
