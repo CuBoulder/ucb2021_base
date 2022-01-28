@@ -252,7 +252,7 @@ li.main-menu-item a.nav-link.active {
   top: 0;
   width: 100%;
   background-color: var(--ucb-link);
-  z-index: 1;
+  z-index: 99;
   height: 32px;
   padding: 0;
   margin: 0;
