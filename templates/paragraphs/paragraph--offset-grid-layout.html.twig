@@ -7,10 +7,8 @@
 *
 #}
 
-{% block paragraph %}
-    <div {{ attributes.addClass('container') }}>
         <div class="row row-cols-lg-2 row-cols-1">
-            {% for key, item in content.field_offset_layout_content if key|first != '#' %}
+            {% for key, item in paragraph.field_grid_layout_content if key|first != '#' %}
                     {% if (loop.index0 % 3 == 0) and ((loop.index0 is even) or (loop.index0 == 0)) %}
                         <div class="col">
                             <div class="grid-image-container-large">
@@ -32,8 +30,18 @@
                     {% endif %}
             {% endfor %}
         </div>
-    </div>
-{% endblock paragraph %}
+
+        {% for key, item in paragraph.field_grid_layout_content if key|first != '#' %}
+          <div class="col">
+            <div class="grid-column">
+              <div class="grid-image-container grid-fill">
+                {{ item.entity.field_grid_layout_content_image|view }}
+              </div>
+              <div class="grid-text-container">
+                <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                {{item.entity.field_grid_layout_content_text|view}}
+              </div>
+            </div>
 
 {# 
   Classes to equalize using ucb-equalize-height.js

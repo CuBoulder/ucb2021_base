@@ -22,19 +22,21 @@
 	{% endif %}
 {% endif %}
 
-{% block paragraph %}
-	<div {{ attributes.addClass('container') }}>
-		<div class="row row-cols-lg-{{ columnNumbers }} row-cols-md-2 row-cols-1 justify-content-evenly">
-			{% for key, item in content.field_card_layout_content if key|first != '#' %}
-				<div class="col">
-					<div class="grid-card">
-						{{ item }}
-					</div>
+<div class="row row-cols-lg-{{ columnNumbers }} row-cols-md-2 row-cols-1 justify-content-evenly">
+	{% for key, item in content.field_column_layout_content if key|first != '#' %}
+		<div class="col">
+			<div class="grid-card">
+				<div class="grid-image-container grid-fill">
+					{{ item.field_grid_layout_content_image|view }}
 				</div>
-			{% endfor %}
+				<div class="grid-text-container">
+					<h3>{{item.field_grid_layout_content_title|view}}</h3>
+					{{item.field_grid_layout_content_text|view}}
+				</div>
+			</div>
 		</div>
-	</div>
-{% endblock paragraph %}
+	{% endfor %}
+</div>
 
 {# 
   Classes to equalize using ucb-equalize-height.js

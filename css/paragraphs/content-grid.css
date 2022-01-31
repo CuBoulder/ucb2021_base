@@ -4,7 +4,16 @@
 */
 
 /* Overall Content Grid CSS */
+.ucb-above-content .paragraph--type--content-grid,
+.ucb-below-content .paragraph--type--content-grid {
+  padding: 1.5em;
+}
+
 .grid-text-container {
+  padding: 1em 0;
+}
+
+.grid-card .grid-text-container {
   padding: 1em;
 }
 
@@ -58,72 +67,7 @@
   margin-top: 1em;
 }
 
-/* Features Layout CSS */
-
-.feature-grid {
-  margin-bottom: 1em;
-}
-
-.feature-grid-fill img {
-  flex-shrink: 0;
-  min-width: 100%;
-  min-height: 100%;
-  object-fit: cover;
-  margin-bottom: 0;
-}
-
-.feature-grid-image-container {
-  position: relative;
-  width: 100%;
-}
-
-.feature-grid-image-container .feature-grid-text {
-  padding: 0 0.75rem 0.75rem 0.75rem;
-  position: absolute;
-  bottom: 0;
-}
-
-.feature-grid-text.text-white h3,
-.feature-grid-text.text-white p {
-  text-shadow: 3px 3px 3px rgb(20 20 20 / 80%);
-}
-
-.small-feature-one {
-  margin-bottom: 0.5em;
-}
-
-.small-feature-two {
-  margin-top: 0.5em;
-}
-
-.small-feature-grid-image-container {
-  height: 100%;
-  padding: 1em;
-  display: flex;
-  align-items: self-end;
-}
-
-@media screen and (max-width: 975px) {
-  .small-feature-grid {
-    margin-top: 1em;
-    padding-right: 0;
-  }
-
-  .small-feature-one {
-    padding-right: 0;
-  }
-
-  .small-feature-two {
-    padding-right: 0;
-  }
-}
-
 /*** Offest Grid Layout ***/
 .grid-image-container-large .grid-fill {
   display: initial;
-}
-
-/*** Teaser Grid Layout ***/
-.row-content {
-  margin-bottom: 1em;
 }

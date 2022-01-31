@@ -7,6 +7,8 @@
 *
 #}
 
+{{ attach_library('ucb2021_base/ucb-content-grid') }}
+
 {%
   set classes = [
     'paragraph',
@@ -16,10 +18,177 @@
   ]
 %}
 
-{{ attach_library('ucb2021_base/ucb-content-grid') }}
+{% set layoutSelection = paragraph.field_grid_layout_selection.value %}
+{% set columnNumbers = '3' %}
+{% if paragraph.field_grid_column_count.value is same as("0") %}
+  {% set columnNumbers = "2" %}
+{% elseif paragraph.field_grid_column_count.value is same as("1") %}
+  {% set columnNumbers = "3" %}
+{% elseif paragraph.field_grid_column_count.value is same as("2") %}
+  {% set columnNumbers = "4" %}
+{% endif %}
 
 {% block paragraph %}
 	<div{{attributes.addClass(classes)}}>
-		{{ content }}
+    {# Column Grid Layout #}
+    {% if layoutSelection == 0 %}
+      <div class="row row-cols-lg-{{ columnNumbers }} row-cols-md-2 row-cols-1 justify-content-evenly">
+        {% for key, item in paragraph.field_grid_layout_content if key|first != '#' %}
+          <div class="col">
+            <div class="grid-column">
+              <div class="grid-image-container grid-fill">
+                {{ item.entity.field_grid_layout_content_image|view }}
+              </div>
+              <div class="grid-text-container">
+                <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                {{item.entity.field_grid_layout_content_text|view}}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {# Card Grid Layout #}
+    {% elseif layoutSelection == 1 %}
+      <div class="row row-cols-lg-{{ columnNumbers }} row-cols-md-2 row-cols-1 justify-content-evenly">
+        {% for key, item in paragraph.field_grid_layout_content if key|first != '#' %}
+          <div class="col">
+            <div class="grid-card">
+              <div class="grid-image-container grid-fill">
+                {{ item.entity.field_grid_layout_content_image|view }}
+              </div>
+              <div class="grid-text-container">
+                <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                {{item.entity.field_grid_layout_content_text|view}}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {# Overlay Grid Layout #}
+    {% elseif layoutSelection == 2 %}
+      <div class="row row-cols-lg-{{ columnNumbers }} row-cols-md-2 row-cols-1 justify-content-evenly">
+        {% for key, item in paragraph.field_grid_layout_content if key|first != '#' %}
+          <div class="col">
+            <div class="grid-column">
+              <div class="overlay-grid-image-container grid-fill">
+                {{ item.entity.field_grid_layout_content_image|view }}
+                <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+              </div>
+              <div class="overlay-grid-text">
+                {{item.entity.field_grid_layout_content_text|view}}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {# Offset Grid Layout #}
+    {% else %}
+      <div class="row row-cols-lg-2 row-cols-1">
+        {% for key, item in paragraph.field_grid_layout_content if key|first != '#' %}
+          {% if (loop.index0 % 3 == 0) and ((loop.index0 is even) or (loop.index0 == 0)) %}
+            <div class="col">
+              <div class="grid-image-container-large">
+                <div class="grid-image-container grid-fill">
+                  {{ item.entity.field_grid_layout_content_image|view }}
+                </div>
+                <div class="grid-text-container">
+                  <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                  {{item.entity.field_grid_layout_content_text|view}}
+                </div>
+              </div>
+            </div>
+            {% elseif (loop.index % 3 == 0) and (loop.index != 3) and (loop.index0 is odd) %} 
+              <div class="col">
+                <div class="grid-image-container-large">
+                  <div class="grid-image-container grid-fill">
+                    {{ item.entity.field_grid_layout_content_image|view }}
+                  </div>
+                  <div class="grid-text-container">
+                    <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                    {{item.entity.field_grid_layout_content_text|view}}
+                  </div>
+                </div>
+              </div>
+            {% else %}
+              <div class="col-lg-3 col-md-6 col">
+                <div class="grid-image-container-small">
+                  <div class="grid-image-container grid-fill">
+                    {{ item.entity.field_grid_layout_content_image|view }}
+                  </div>
+                  <div class="grid-text-container">
+                    <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                    {{item.entity.field_grid_layout_content_text|view}}
+                  </div>
+                </div>
+              </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
 	</div>
 {% endblock paragraph %}
+
+{# 
+  Classes to equalize Column Layout images using ucb-equalize-height.js
+#}
+<script>
+	window.addEventListener("load", function () {
+equalheight('.grid-column .grid-image-container article')
+})
+window.addEventListener("resize", function () {
+setTimeout(function () {
+equalheight('.grid-column .grid-image-container article')
+})
+})
+</script>
+
+{# 
+  Classes to equalize Card Layout fields using ucb-equalize-height.js
+#}
+<script>
+	window.addEventListener("load", function () {
+equalheight('.grid-image-container article')
+})
+window.addEventListener("resize", function () {
+setTimeout(function () {
+equalheight('.grid-image-container article')
+})
+})
+
+window.addEventListener("load", function () {
+equalheight('.grid-card')
+})
+window.addEventListener("resize", function () {
+setTimeout(function () {
+equalheight('.grid-card')
+})
+})
+</script>
+
+{# 
+  Classes to equalize Overlay Layout images using ucb-equalize-height.js
+#}
+<script>
+	window.addEventListener("load", function () {
+equalheight('.overlay-grid-image-container article')
+})
+window.addEventListener("resize", function () {
+setTimeout(function () {
+equalheight('.overlay-grid-image-container article')
+})
+})
+</script>
+
+{# 
+  Classes to equalize using ucb-equalize-height.js
+#}
+<script>
+	window.addEventListener("load", function () {
+equalheight('.grid-image-container-small .grid-image-container article')
+})
+window.addEventListener("resize", function () {
+setTimeout(function () {
+equalheight('.grid-image-container-small .grid-image-container article')
+})
+})
+</script>

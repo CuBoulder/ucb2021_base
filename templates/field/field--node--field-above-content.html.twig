@@ -1,0 +1,13 @@
+{#
+/**
+* Theme layout to display above content information.
+*
+* Created by jnichol on 1/31/22
+*/
+#}
+
+<div class="ucb-above-content">
+    {% for item in items %}
+        {{ item|render }}
+    {% endfor %}
+</div>
