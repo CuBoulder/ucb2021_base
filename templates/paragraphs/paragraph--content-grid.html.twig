@@ -20,6 +20,8 @@
 
 {% block paragraph %}
 	<div{{attributes.addClass(classes)}}>
-		{{ content }}
+    {% if field.grid_layout_selection == 0 %}
+    
+    {% endif %}
 	</div>
 {% endblock paragraph %}

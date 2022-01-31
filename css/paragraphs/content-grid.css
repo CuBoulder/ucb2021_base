@@ -48,6 +48,11 @@
   position: absolute;
   bottom: 0;
   left: 0;
+  background: rgba(0, 0, 0, 0.7);
+  margin-bottom: 0;
+  color: white;
+  padding-top: 0.5em;
+  width: 100%;
 }
 
 .overlay-grid-image-container h3.text-white {
@@ -78,14 +83,9 @@
 }
 
 .feature-grid-image-container .feature-grid-text {
-  padding: 0 0.75rem 0.75rem 0.75rem;
+  padding: 0.75rem;
   position: absolute;
   bottom: 0;
-}
-
-.feature-grid-text.text-white h3,
-.feature-grid-text.text-white p {
-  text-shadow: 3px 3px 3px rgb(20 20 20 / 80%);
 }
 
 .small-feature-one {
@@ -98,9 +98,15 @@
 
 .small-feature-grid-image-container {
   height: 100%;
-  padding: 1em;
   display: flex;
   align-items: self-end;
+}
+
+.feature-grid-text {
+  background: rgba(0, 0, 0, 0.7);
+  margin-bottom: 0;
+  color: white;
+  padding: 0.75em;
 }
 
 @media screen and (max-width: 975px) {

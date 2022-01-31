@@ -7,16 +7,13 @@
 *
 #}
 
-{% set largeFeatureTextColor = paragraph.field_large_feature_text_color.value %}
-{% set smallFeatureOneTextColor = paragraph.field_first_small_feature_color.value %}
-{% set smallFeatureTwoTextColor = paragraph.field_second_small_feature_color.value %}
 {% set smallFeatureOneBGValue = "background-image:url(#{ file_url( paragraph.field_first_small_feature_image.entity.field_media_image.entity.fileuri ) });background-repeat:no-repeat;background-position:center;background-size:cover;" %}
 {% set smallFeatureTwoBGValue = "background-image:url(#{ file_url( paragraph.field_second_small_feature_image.entity.field_media_image.entity.fileuri ) });background-repeat:no-repeat;background-position:center;background-size:cover;" %}
     
 <div class="col">
     <div class="feature-grid-image-container feature-grid-fill">
         {{ content.field_large_feature_image }}
-        <div class="feature-grid-text {{ largeFeatureTextColor }}">
+        <div class="feature-grid-text">
             <h3>{{ content.field_large_feature_title }}</h3>
             {{ content.field_large_feature_text }}
         </div>
@@ -25,7 +22,7 @@
 <div class="row small-feature-grid">
     <div class="col-lg-12 small-feature-one">
         <div class="small-feature-grid-image-container" style={{ smallFeatureOneBGValue }}>
-            <div class="feature-grid-text {{ smallFeatureOneTextColor }}">
+            <div class="feature-grid-text">
                 <h3>{{ content.field_first_small_feature_title }}</h3>
                 {{ content.field_first_small_feature_text }}
             </div>
@@ -33,7 +30,7 @@
     </div>
     <div class="col-lg-12 small-feature-two">
         <div class="small-feature-grid-image-container" style={{ smallFeatureTwoBGValue }}>
-            <div class="feature-grid-text {{ smallFeatureTwoTextColor }}">
+            <div class="feature-grid-text">
                 <h3>{{ content.field_second_small_feature_title }}</h3>
                 {{ content.field_second_small_feature_text }}
             </div>
