@@ -68,7 +68,7 @@
 }
 
 .feature-row-image-container .feature-row-text {
-  padding: 0 0.75rem 0.75rem 0.75rem;
+  padding: 0.75rem;
   position: absolute;
   bottom: 0;
 }
@@ -83,9 +83,15 @@
 
 .small-feature-row-image-container {
   height: 100%;
-  padding: 1em;
   display: flex;
   align-items: self-end;
+}
+
+.feature-row-text {
+  background: rgba(0, 0, 0, 0.7);
+  margin-bottom: 0;
+  color: white;
+  padding: 0.75em;
 }
 
 @media screen and (max-width: 975px) {

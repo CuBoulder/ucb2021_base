@@ -53,14 +53,14 @@
 }
 
 .overlay-grid-image-container h3 {
-  padding: 0 0.75rem 0.75rem 0.75rem;
+  padding: 0.75rem;
   position: absolute;
   bottom: 0;
   left: 0;
-}
-
-.overlay-grid-image-container h3.text-white {
-  text-shadow: 3px 3px 3px rgb(20 20 20 / 80%);
+  background: rgba(0, 0, 0, 0.7);
+  margin-bottom: 0;
+  color: white;
+  width: 100%;
 }
 
 .overlay-grid-text {
