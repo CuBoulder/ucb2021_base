@@ -13,8 +13,7 @@ var equalheight = function (container) {
     topPosition = 0,
     currentDiv = 0;
 
-  Array.from(document.querySelectorAll(container)).forEach((el, i) => {
-    // eslint-disable-line
+  Array.from(document.querySelectorAll(container)).forEach((el, i) => { // eslint-disable-line
     el.style.height = "auto";
     topPosition = el.offsetTop;
     if (currentRowStart != topPosition) {
