@@ -38,3 +38,60 @@ var equalheight = function (container) { // eslint-disable-line
     }
   });
 };
+
+/* 
+  Classes to equalize Column Layout images using ucb-equalize-height.js
+*/
+	window.addEventListener("load", function () {
+equalheight('.grid-column .grid-image-container article')
+})
+window.addEventListener("resize", function () {
+setTimeout(function () {
+equalheight('.grid-column .grid-image-container article')
+})
+})
+
+/* 
+  Classes to equalize Card Layout fields using ucb-equalize-height.js
+*/
+	window.addEventListener("load", function () {
+equalheight('.grid-image-container article')
+})
+window.addEventListener("resize", function () {
+setTimeout(function () {
+equalheight('.grid-image-container article')
+})
+})
+
+window.addEventListener("load", function () {
+equalheight('.grid-card')
+})
+window.addEventListener("resize", function () {
+setTimeout(function () {
+equalheight('.grid-card')
+})
+})
+
+/* 
+  Classes to equalize Overlay Layout images using ucb-equalize-height.js
+*/
+	window.addEventListener("load", function () {
+equalheight('.overlay-grid-image-container article')
+})
+window.addEventListener("resize", function () {
+setTimeout(function () {
+equalheight('.overlay-grid-image-container article')
+})
+})
+
+/* 
+  Classes to equalize using ucb-equalize-height.js
+*/
+	window.addEventListener("load", function () {
+equalheight('.grid-image-container-small .grid-image-container article')
+})
+window.addEventListener("resize", function () {
+setTimeout(function () {
+equalheight('.grid-image-container-small .grid-image-container article')
+})
+})
