@@ -101,9 +101,9 @@
 		<!-- vertical tab/accordion -->
 	{% else %}
 		<div
-			class="d-flex align-items-start">
+			class="vertical-tab-accordion d-flex align-items-start">
 			<!-- vertical tab/accordion tabs -->
-			<div class="vertical-tabs nav flex-column nav-pills me-3" id="ucb-vertical-tabs{{ paragraph.id() }}" role="tablist" aria-orientation="vertical">
+			<div class="vertical-tabs nav flex-column nav-pills" id="ucb-vertical-tabs{{ paragraph.id() }}" role="tablist" aria-orientation="vertical">
 				{% for key, item in paragraph.field_expandable_content_copy if key|first != '#' %}
 					{% if loop.first == true %}
 						<button class="nav-link vertical-tab-link active" id="ucb-vertical-tabs{{ paragraph.id() }}-title{{ loop.index }}-tab" data-bs-toggle="pill" data-bs-target="#ucb-vertical-tabs{{ paragraph.id() }}-title{{ loop.index }}" type="button" role="tab" aria-controls="ucb-vertical-tabs{{ paragraph.id() }}-title{{ loop.index }}" aria-selected="true">{{ item.entity.field_expandable_content_title|view }}</button>

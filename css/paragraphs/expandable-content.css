@@ -15,6 +15,48 @@
   border-bottom: 0;
 }
 
+.accordion-button {
+  color: #0277BD;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: transparent;
+}
+
+.accordion-button:focus {
+  box-shadow: none;
+}
+
+.horizontal-tab-link.nav-link {
+  color: black;
+}
+
+.horizontal-tab-link.nav-link.active {
+  color: white;
+  background-color: black;
+  border-radius: 0;
+}
+
+.horizontal-tab-link.nav-link:hover {
+  border-radius: 0;
+}
+
+.vertical-tab-accordion {
+  background: #f2f2f2;
+  border: 1px solid rgba(128,128,128,0.333);
+}
+
+.vertical-tab-link.nav-link {
+  background-color: #e7e7e7;
+  color: #6a6a6a;
+  border-radius: 0;
+}
+
+.vertical-tab-link.nav-link.active {
+  background: white;
+  color: black;
+}
+
 @media (min-width: 768px) {
   .nav-tabs,
   .vertical-tabs {
