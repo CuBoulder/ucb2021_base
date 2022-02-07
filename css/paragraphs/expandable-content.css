@@ -16,7 +16,7 @@
 }
 
 .accordion-button {
-  color: #0277BD;
+  color: #0277bd;
 }
 
 .accordion-button:not(.collapsed) {
@@ -43,7 +43,7 @@
 
 .vertical-tab-accordion {
   background: #f2f2f2;
-  border: 1px solid rgba(128,128,128,0.333);
+  border: 1px solid rgba(128, 128, 128, 0.333);
 }
 
 .vertical-tab-link.nav-link {
