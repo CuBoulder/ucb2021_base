@@ -1,11 +1,13 @@
 {#
 /**
  * @file
- * Theme to implement the content grid
+ * Theme to implement the content row
  *
  * Created by Joshua Nicholson on 12/13/21
 *
 #}
+
+{{ attach_library('ucb2021_base/ucb-content-row') }}
 
 {%
   set classes = [
@@ -16,10 +18,107 @@
   ]
 %}
 
-{{ attach_library('ucb2021_base/ucb-content-row') }}
+{% set layoutSelection = paragraph.field_row_layout_selection.value %}
 
 {% block paragraph %}
 	<div{{attributes.addClass(classes)}}>
-		{{ content }}
+    {# Teaser Row Layout #}
+    {% if layoutSelection == 0 %}
+      {% for key, item in paragraph.field_row_layout_content if key|first != '#' %}
+        <div class="row row-content">
+            <div class="col-4 row-image-container">
+                {{ item.entity.field_row_layout_content_image|view }}
+            </div>
+            <div class="col-8 row-text-container">
+                <h3>{{item.entity.field_row_layout_content_title|view}}</h3>
+                {{item.entity.field_row_layout_content_text|view}}
+            </div>
+        </div>
+      {% endfor %}
+    {# Teaser Alternate Row Layout #}
+    {% elseif layoutSelection == 1 %}
+      {% for key, item in paragraph.field_row_layout_content if key|first != '#' %} 
+        <div class="row d-flex row-content">
+          {% if (loop.index is odd) %}
+            <div class="col-4 row-image-container">
+              {{ item.entity.field_row_layout_content_image|view }}
+            </div>
+            <div class="col-8 row-text-container">
+              <h3>{{item.entity.field_row_layout_content_title|view}}</h3>
+              {{item.entity.field_row_layout_content_text|view}}
+            </div>
+          {% else %}
+            <div class="col-8 row-text-container">
+              <h3>{{item.entity.field_row_layout_content_title|view}}</h3>
+              {{item.entity.field_row_layout_content_text|view}}
+            </div>
+            <div class="col-4 row-image-container">
+              {{ item.entity.field_row_layout_content_image|view }}
+            </div>
+          {% endif %} 
+        </div>
+      {% endfor %}
+    {# Tiles Row Layout #}
+    {% elseif layoutSelection == 2 %}
+      {% for key, item in paragraph.field_row_layout_content if key|first != '#' %} 
+        <div class="row d-flex row-content">
+          {% if (loop.index is odd) %}
+            <div class="col-6 row-image-container">
+              {{ item.entity.field_row_layout_content_image|view }}
+            </div>
+            <div class="col-6 row-text-container">
+              <h3>{{item.entity.field_row_layout_content_title|view}}</h3>
+              {{item.entity.field_row_layout_content_text|view}}
+            </div>
+          {% else %}
+            <div class="col-6 row-text-container">
+              <h3>{{item.entity.field_row_layout_content_title|view}}</h3>
+              {{item.entity.field_row_layout_content_text|view}}
+            </div>
+            <div class="col-6 row-image-container">
+              {{ item.entity.field_row_layout_content_image|view }}
+            </div>
+          {% endif %} 
+        </div>
+      {% endfor %}
+    {# Features Row Layout #}
+    {% else %}
+      <div class="row row-cols-lg-2 row-cols-1 feature-row">
+        {% for key, item in paragraph.field_row_layout_content if key|first != '#' %}
+          {% set smallFeatureBGValue = "background-image:url(#{ file_url( item.entity.field_row_layout_content_image.entity.field_media_image.entity.fileuri ) });background-repeat:no-repeat;background-position:center;background-size:cover;" %}
+            {% if (loop.index0 % 3 == 0) or (loop.index0 == 0) %}
+              <div class="col">
+                  <div class="feature-row-image-container feature-row-fill">
+                      {{ item.entity.field_row_layout_content_image|view }}
+                      <div class="feature-row-text">
+                          <h3>{{ item.entity.field_row_layout_content_title|view }}</h3>
+                          {{ item.entity.field_row_layout_content_text|view }}
+                      </div>
+                  </div>
+              </div>
+              <div class="row small-feature-row">
+            {% elseif loop.index0 is odd %}
+                <div class="col-lg-12 small-feature">
+                    <div class="small-feature-row-image-container" style={{ smallFeatureBGValue }}>
+                        <div class="feature-row-text">
+                            <h3>{{ item.entity.field_row_layout_content_title|view }}</h3>
+                            {{ item.entity.field_row_layout_content_text|view }}
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-lg-12 small-feature">
+                    <div class="small-feature-row-image-container" style={{ smallFeatureBGValue }}>
+                        <div class="feature-row-text">
+                            <h3>{{ item.entity.field_row_layout_content_title|view }}</h3>
+                            {{ item.entity.field_row_layout_content_text|view }}
+                        </div>
+                    </div>
+                </div>
+              </div>
+            {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
 	</div>
 {% endblock paragraph %}
