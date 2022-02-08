@@ -2,6 +2,33 @@
  * Styles for expandable content paragraph
  *
 */
+
+.accordion-button::after {
+  background: none;
+}
+
+.accordion-button:not(.collapsed)::after {
+  background: none;
+}
+
+.accordion-button::before {
+  flex-shrink: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 1em;
+  content: "\f0fe";
+  background-repeat: no-repeat;
+  background-size: 1.25rem;
+  transition: transform .2s ease-in-out;
+  font-family: 'Font Awesome 5 Free';
+  color: #0277bd;
+  /* background: orange; */
+}
+
+.accordion-button:not(.collapsed)::before {
+  content: "\f146";
+}
+
 .vertical-tab-content {
   width: 100%;
 }
@@ -39,11 +66,6 @@
 
 .horizontal-tab-link.nav-link:hover {
   border-radius: 0;
-}
-
-.vertical-tab-accordion {
-  background: #f2f2f2;
-  border: 1px solid rgba(128, 128, 128, 0.333);
 }
 
 .vertical-tab-link.nav-link {
@@ -88,6 +110,11 @@
 
   .tab-content .accordion-item {
     border: none;
+  }
+  
+  .vertical-tab-accordion {
+    background: #f2f2f2;
+    border: 1px solid rgba(128, 128, 128, 0.333);
   }
 }
 
