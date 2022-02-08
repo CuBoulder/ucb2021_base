@@ -56,7 +56,6 @@
 
 .accordion-button:hover {
   color: #b71c1c;
-
 }
 
 .accordion-button:hover::before {
