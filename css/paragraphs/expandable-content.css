@@ -19,10 +19,9 @@
   content: "\f0fe";
   background-repeat: no-repeat;
   background-size: 1.25rem;
-  transition: transform .2s ease-in-out;
+  transition: transform 0.2s ease-in-out;
   font-family: 'Font Awesome 5 Free';
   color: #0277bd;
-  /* background: orange; */
 }
 
 .accordion-button:not(.collapsed)::before {
@@ -111,7 +110,7 @@
   .tab-content .accordion-item {
     border: none;
   }
-  
+
   .vertical-tab-accordion {
     background: #f2f2f2;
     border: 1px solid rgba(128, 128, 128, 0.333);
