@@ -1,0 +1,45 @@
+.horizontal-orientation {
+  display: inline;
+  padding-left: 0px;
+}
+
+.horizontal-orientation li {
+  display: inline;
+  padding-right: 6px;
+}
+
+.vertical-orientation li {
+  list-style-type: none;
+}
+
+.imgTiny li i {
+  font-size: 24px;
+}
+
+.imgSmall li i {
+  font-size: 32px;
+}
+
+.imgMedium li i {
+  font-size: 48px;
+}
+
+.imgLarge li i {
+  font-size: 64px;
+}
+.vertical-orientation {
+  display: block;
+  padding-left: 0px;
+}
+.ucb-above-content .paragraph--type--social-media-icons-block,
+.ucb-below-content .paragraph--type--social-media-icons-block {
+  padding: 1.5em;
+}
+
+@media (max-width: 767px) {
+  .vertical-orientation,
+  .vertical-orientation li {
+    display: inline;
+    padding-left: 0px;
+  }
+}
