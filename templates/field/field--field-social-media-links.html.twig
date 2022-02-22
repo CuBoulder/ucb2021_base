@@ -21,52 +21,64 @@
 			{% set formattedContent = item.content['#url'] |render|striptags|trim|upper %}
 
 			{% if 'TWITTER' in formattedContent %}
-				<a href="{{ item.content['#url'] }}" title="Twitter" alt="Twitter">
+				<a href="{{ item.content['#url'] }}" class="icon-a" title="Twitter" alt="Twitter">
 					<span class="sr-only">Twitter</span>
-					<i class="fab fa-twitter"></i>
+					<span class="twitter-icon-bg">
+
+						<i class="fab fa-twitter-square twitter-icon"></i>
+					</span>
+					<span class="vertical-icon-span">Twitter</span>
 				</a>
 			{% elseif 'FACEBOOK' in formattedContent %}
-				<a href="{{ item.content['#url'] }}" title="FaceBook" alt="FaceBook">
-					<span class="sr-only">FaceBook</span>
-					<i class="fab fa-facebook-square"></i>
-				</a>
+				<div class="icon-div">
+					<a href="{{ item.content['#url'] }}" class="icon-a" title="FaceBook" alt="FaceBook">
+						<span class="sr-only">FaceBook</span>
+						<span class="custom-social custom-social-fb">
+							<i class="fab fa-facebook-f facebook-icon"></i>
+						</span>
+						<div class="vertical-icon-span">FaceBook</div>
+					</a>
+				</div>
 
 			{% elseif 'INSTAGRAM' in formattedContent %}
-				<a href="{{ item.content['#url'] }}" title="Instagram" alt="Instagram">
+				<a href="{{ item.content['#url'] }}" class="icon-a" title="Instagram" alt="Instagram">
 					<span class="sr-only">Instagram</span>
-					<i class="fab fa-instagram"></i>
+					<i class="fab fa-instagram-square instagram-icon"></i>
+					<span class="vertical-icon-span">Instagram</span>
 				</a>
 
 			{% elseif 'LINKEDIN' in formattedContent %}
-				<a href="{{ item.content['#url'] }}" title="LinkedIn" alt="LinkedIn">
+				<a href="{{ item.content['#url'] }}" class="icon-a" title="LinkedIn" alt="LinkedIn">
 					<span class="sr-only">LinkedIn</span>
-					<i class="fab fa-linkedin"></i>
+					<i class="fab fa-linkedin linkedin-icon"></i>
+					<span class="vertical-icon-span">LinkedIn</span>
 				</a>
 
 			{% elseif 'YOUTUBE' in formattedContent %}
-				<a href="{{ item.content['#url'] }}" title="YouTube" alt="YouTube">
+				<a href="{{ item.content['#url'] }}" class="icon-a" title="YouTube" alt="YouTube">
 					<span class="sr-only">YouTube</span>
-					<i class="fab fa-youtube"></i>
+					<i class="fab fa-youtube-square youtube-icon"></i>
+					<span class="vertical-icon-span">Youtube</span>
 				</a>
 
 			{% elseif 'PINTREST' in formattedContent %}
-				<a href="{{ item.content['#url'] }}" title="Pintrest" alt="Pintrest">
-					<span class="sr-only">Pintrest</span>
-					<i class="fab fa-pinterest-square"></i>
-				</a>
-
-			{% elseif '@' in formattedContent %}
-				<a href="{{ item.content['#url'] }}" title="Email" alt="Email">
-					<span class="sr-only">Email</span>
-					<i class="fas fa-envelope-square"></i>
-				</a>
+				<div class="icon-div">
+					<a href="{{ item.content['#url'] }}" class="icon-a" title="Pintrest" alt="Pintrest">
+						<span class="sr-only">Pintrest</span>
+						<span class="pintrest-background-64">
+							<i class="fab fa-pinterest-square pintrest-icon"></i>
+						</span>
+						<span class="vertical-icon-span">Pintrest</span>
+					</a>
+				</div>
 
 			{% else %}
-				<a href="{{ item.content['#url'] }}" title="Social Media" alt="Social Media">
+				<a href="{{ item.content['#url'] }}" class="icon-a" title="Social Media" alt="Social Media">
 					<span class="sr-only">{{ item.content['#url'] }}</span>
 					<i class="fa fa-external-link-alt"></i>
+					<span class="vertical-icon-span">{{ item.content['#url'] }}</span>
 				</a>
-				
+
 			{% endif %}
 		</li>
 	{% endfor %}
