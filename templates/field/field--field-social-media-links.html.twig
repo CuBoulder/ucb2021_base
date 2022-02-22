@@ -83,7 +83,78 @@
 							<span class="vertical-icon-span">Pintrest</span>
 						</span>
 					</a>
+			{% elseif 'FLICKR' in formattedContent %}
+					<a href="{{ item.content['#url'] }}" class="icon-a" title="Flickr" alt="Flickr">
+						<span class="icon-div">
+							<span class="sr-only">Flickr</span>
+							<span class="icon-bg icon-bg-flickr">
+								<i class="fab fa-flickr icon-foreground"></i>
+							</span>
+							<span class="vertical-icon-span">Flickr</span>
+						</span>
+					</a>
+			{% elseif 'VIMEO' in formattedContent %}
+					<a href="{{ item.content['#url'] }}" class="icon-a" title="Vimeo" alt="Vimeo">
+						<span class="icon-div">
+							<span class="sr-only">Vimeo</span>
+							<span class="icon-bg icon-bg-vimeo">
+								<i class="fab fa-vimeo-v icon-foreground"></i>
+							</span>
+							<span class="vertical-icon-span">Vimeo</span>
+						</span>
+					</a>
+			{% elseif 'WORDPRESS' in formattedContent %}
+					<a href="{{ item.content['#url'] }}" class="icon-a" title="Wordpress" alt="Wordpress">
+						<span class="icon-div">
+							<span class="sr-only">WordPress</span>
+							<span class="icon-bg icon-bg-wordpress">
+								<i class="fab fa-wordpress-simple icon-foreground"></i>
+							</span>
+							<span class="vertical-icon-span">WordPress</span>
+						</span>
+					</a>
+			{% elseif 'TIKTOK' in formattedContent %}
+					<a href="{{ item.content['#url'] }}" class="icon-a" title="Tiktok" alt="Tiktok">
+						<span class="icon-div">
+							<span class="sr-only">TikTok</span>
+							<span class="icon-bg icon-bg-pintrest">
+								<i class="fab fa-tiktok icon-foreground"></i>
+							</span>
+							<span class="vertical-icon-span">TikTok</span>
+						</span>
+					</a>
+			{% elseif 'REDDIT' in formattedContent %}
+					<a href="{{ item.content['#url'] }}" class="icon-a" title="Reddit" alt="Reddit">
+						<span class="icon-div">
+							<span class="sr-only">Reddit</span>
+							<span class="icon-bg icon-bg-pintrest">
+								<i class="fab fa-reddit-alien icon-foreground"></i>
+							</span>
+							<span class="vertical-icon-span">Reddit</span>
+						</span>
+					</a>
 
+			{% elseif 'PATREON' in formattedContent %}
+					<a href="{{ item.content['#url'] }}" class="icon-a" title="Patreon" alt="Patreon">
+						<span class="icon-div">
+							<span class="sr-only">Patreon</span>
+							<span class="icon-bg icon-bg-patreon">
+								<i class="fab fa-patreon icon-foreground"></i>
+							</span>
+							<span class="vertical-icon-span">Patreon</span>
+						</span>
+					</a>
+
+			{% elseif 'DISCORD' in formattedContent %}
+					<a href="{{ item.content['#url'] }}" class="icon-a" title="Discord" alt="Discord">
+						<span class="icon-div">
+							<span class="sr-only">Discord</span>
+							<span class="icon-bg icon-bg-discord">
+								<i class="fab fa-discord icon-foreground"></i>
+							</span>
+							<span class="vertical-icon-span">Discord</span>
+						</span>
+					</a>
 			{% else %}
 				<a href="{{ item.content['#url'] }}" class="icon-a" title="Social Media" alt="Social Media">
 					<span class="icon-div">

@@ -114,6 +114,34 @@
   background-color: darkblue;
 }
 
+.icon-bg-discord {
+  background-color: #2C2F33;
+}
+
+.icon-bg-flickr {
+  background-color: #0063dc;
+}
+
+.icon-bg-vimeo {
+  background-color: #86c9ef;
+}
+
+.icon-bg-reddit {
+  background-color: #86c9ef;
+}
+
+.icon-bg-wordpress {
+  background-color: #21759b;
+}
+
+.icon-bg-tiktok {
+  background-color: #000000;
+}
+
+.icon-bg-patreon {
+  background-color: #f96854;
+}
+
 .icon-div {
   display: flex;
   background-color: black;
