@@ -1,0 +1,64 @@
+{#
+/**
+ * @file
+ * Theme to implement the social media icons block
+ *
+ * Created by Jacob Korf 2/15/2021
+*
+#}
+{{ attach_library('ucb2021_base/ucb-social-media-icons-block') }}
+{%
+  set classes = [
+    'paragraph',
+    'paragraph--type--' ~ paragraph.bundle|clean_class,
+    view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+    not paragraph.isPublished() ? 'paragraph--unpublished'
+  ]
+%}
+
+
+<!-- layoutSelection gathers the orientation value from the orientation field, 
+    0 -> Horizontal
+    1 -> Vertical -->
+{% set layoutSelection = paragraph.field_social_media_icons_orienta.value %}
+
+<!-- imageSizeListValue gathers the icon size value from the icon size field
+    0 -> Tiny
+    1 -> Small
+    2 -> Medium
+    3 -> Large -->
+{% set imageSizeListValue = paragraph.field_social_media_link_size.value %}
+
+<!-- imageSize coverts the value from imageSizeListValue into a css class.
+     Base value is Tiny corresponding to 0 in the imageSizeListValue. -->
+{% set imageSize = 'imgTiny' %}
+{% if imageSizeListValue  == 0 %}
+	{% set imageSize = 'imgTiny' %}
+{% elseif imageSizeListValue == 1 %}
+	{% set imageSize = 'imgSmall' %}
+{% elseif imageSizeListValue == 2 %}
+	{% set imageSize = 'imgMedium' %}
+{% elseif imageSizeListValue == 3 %}
+	{% set imageSize = 'imgLarge' %}
+{% endif %}
+
+
+{% block paragraph %}
+	<div{{attributes.addClass(classes)}}>
+        <!-- Horizontal -->
+		{% if layoutSelection == 0 %}
+			<ul class='horizontal-orientation {{ imageSize }}'>
+				{{ content.field_social_media_links|render }}
+				{{ content.field_social_media_email_link|render}}
+			</ul>
+        <!-- Horizontal ends -->
+        <!-- Vertical -->
+		{% else %}
+			<ul class='vertical-orientation {{ imageSize }}'>
+				{{ content.field_social_media_links|render }}
+				{{ content.field_social_media_email_link|render}}
+			</ul>
+		{% endif %}
+        <!-- Vertical ends-->
+	</div>
+{% endblock paragraph %}

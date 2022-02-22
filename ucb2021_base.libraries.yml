@@ -98,3 +98,9 @@ ucb-expandable-content:
   css:
     theme:
       css/paragraphs/expandable-content.css: {}
+
+ucb-social-media-icons-block:
+  version: 1.x
+  css:
+    theme:
+      css/paragraphs/social-media-icons.css: {}

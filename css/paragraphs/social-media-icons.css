@@ -1,0 +1,182 @@
+.horizontal-orientation {
+  display: inline-block;
+}
+
+.horizontal-orientation li {
+  display: inline-block;
+  padding-right: 6px;
+}
+
+.horizontal-orientation .vertical-icon-span {
+  display: none;
+}
+
+.vertical-orientation li {
+  list-style-type: none;
+  padding-top: 10px;
+}
+
+.imgTiny li i {
+  font-size: 12px;
+}
+
+.imgTiny .vertical-icon-span {
+  font-size: 8px;
+  width: 75px;
+}
+
+.imgTiny .icon-bg {
+  height: 24px;
+  width: 24px;
+}
+
+.imgSmall li i {
+  font-size: 16px;
+}
+
+.imgSmall .vertical-icon-span {
+  font-size: 12px;
+  width: 100px;
+}
+
+.imgSmall .icon-bg {
+  height: 32px;
+  width: 32px;
+}
+
+.imgMedium li i {
+  font-size: 24px;
+}
+
+.imgMedium .vertical-icon-span {
+  font-size: 16px;
+  width: 125px;
+}
+
+.imgMedium .icon-bg {
+  height: 48px;
+  width: 48px;
+}
+
+.imgLarge li i {
+  font-size: 32px;
+}
+
+.imgLarge .vertical-icon-span {
+  font-size: 20px;
+  width: 150px;
+}
+
+.imgLarge .icon-bg {
+  height: 64px;
+  width: 64px;
+}
+
+.vertical-orientation {
+  display: block;
+  padding-left: 0;
+}
+
+.ucb-above-content .paragraph-icon-bg.icon-bg-media-icons-block,
+.ucb-below-content .paragraph-icon-bg.icon-bg-media-icons-block {
+  padding: 1.5em;
+}
+
+.icon-foreground {
+  color: #fff;
+}
+
+.icon-bg-twitter {
+  background-color: #4da7de;
+}
+
+.icon-bg-instagram {
+  background-color: #9c7c6e;
+}
+
+.icon-bg-linkedin {
+  background-color: #3371b7;
+}
+
+.icon-bg-youtube {
+  background-color: #e02a20;
+}
+
+.icon-bg-email {
+  background-color: #fbbc05;
+}
+
+.icon-bg-pintrest {
+  background-color: #c92619;
+}
+
+.icon-bg-link {
+  background-color: darkblue;
+}
+
+.icon-bg-discord {
+  background-color: #2c2f33;
+}
+
+.icon-bg-flickr {
+  background-color: #0063dc;
+}
+
+.icon-bg-vimeo {
+  background-color: #86c9ef;
+}
+
+.icon-bg-reddit {
+  background-color: #86c9ef;
+}
+
+.icon-bg-wordpress {
+  background-color: #21759b;
+}
+
+.icon-bg-tiktok {
+  background-color: #000;
+}
+
+.icon-bg-patreon {
+  background-color: #f96854;
+}
+
+.icon-div {
+  display: flex;
+  background-color: black;
+  width: fit-content;
+  align-items: center;
+}
+
+.icon-bg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-bg-facebook {
+  background-color: #3b5998;
+}
+
+.icon-div:hover,
+.icon-div:hover .icon-bg {
+  background-color: grey;
+  transition-property: background-color;
+  transition-duration: 0.5s;
+}
+
+.vertical-icon-span {
+  display: inline-block;
+  padding: 0 10px;
+  color: #fff;
+  font-weight: bold;
+}
+
+@media (max-width: 767px) {
+  .vertical-orientation,
+  .vertical-orientation li {
+    display: inline;
+    padding-left: 0;
+  }
+}
