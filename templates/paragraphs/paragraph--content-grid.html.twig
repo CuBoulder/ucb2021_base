@@ -36,13 +36,17 @@
         {% for key, item in paragraph.field_grid_layout_content if key|first != '#' %}
           <div class="col">
             <div class="grid-column">
-              <div class="grid-image-container grid-fill">
-                {{ item.entity.field_grid_layout_content_image|view }}
-              </div>
-              <div class="grid-text-container">
-                <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
-                {{item.entity.field_grid_layout_content_text|view}}
-              </div>
+              {% if item.entity.field_grid_layout_content_image|view %}
+                <div class="grid-image-container grid-fill">
+                  {{ item.entity.field_grid_layout_content_image|view }}
+                </div>
+              {% endif %}
+              {% if (item.entity.field_grid_layout_content_title|view) or (item.entity.field_grid_layout_content_text|view) %}
+                <div class="grid-text-container">
+                  <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                  {{item.entity.field_grid_layout_content_text|view}}
+                </div>
+              {% endif %}
             </div>
           </div>
         {% endfor %}
@@ -53,13 +57,17 @@
         {% for key, item in paragraph.field_grid_layout_content if key|first != '#' %}
           <div class="col">
             <div class="grid-card">
-              <div class="grid-image-container grid-fill">
-                {{ item.entity.field_grid_layout_content_image|view }}
-              </div>
-              <div class="grid-text-container">
-                <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
-                {{item.entity.field_grid_layout_content_text|view}}
-              </div>
+              {% if item.entity.field_grid_layout_content_image|view %}
+                <div class="grid-image-container grid-fill">
+                  {{ item.entity.field_grid_layout_content_image|view }}
+                </div>
+              {% endif %}
+              {% if (item.entity.field_grid_layout_content_title|view) or (item.entity.field_grid_layout_content_text|view) %}
+                <div class="grid-text-container">
+                  <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                  {{item.entity.field_grid_layout_content_text|view}}
+                </div>
+              {% endif %}
             </div>
           </div>
         {% endfor %}
@@ -70,13 +78,17 @@
         {% for key, item in paragraph.field_grid_layout_content if key|first != '#' %}
           <div class="col">
             <div class="grid-column">
-              <div class="overlay-grid-image-container grid-fill">
-                {{ item.entity.field_grid_layout_content_image|view }}
-                <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
-              </div>
-              <div class="overlay-grid-text">
-                {{item.entity.field_grid_layout_content_text|view}}
-              </div>
+              {% if item.entity.field_grid_layout_content_image|view %}
+                <div class="overlay-grid-image-container grid-fill">
+                  {{ item.entity.field_grid_layout_content_image|view }}
+                  <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                </div>
+              {% endif %}
+              {% if item.entity.field_grid_layout_content_text|view %}
+                <div class="overlay-grid-text">
+                  {{item.entity.field_grid_layout_content_text|view}}
+                </div>
+              {% endif %}
             </div>
           </div>
         {% endfor %}
@@ -88,37 +100,49 @@
           {% if (loop.index0 % 3 == 0) and ((loop.index0 is even) or (loop.index0 == 0)) %}
             <div class="col">
               <div class="grid-image-container-large">
-                <div class="grid-image-container grid-fill">
-                  {{ item.entity.field_grid_layout_content_image|view }}
-                </div>
-                <div class="grid-text-container">
-                  <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
-                  {{item.entity.field_grid_layout_content_text|view}}
-                </div>
+                {% if item.entity.field_grid_layout_content_image|view %}
+                  <div class="grid-image-container grid-fill">
+                    {{ item.entity.field_grid_layout_content_image|view }}
+                  </div>
+                {% endif %}
+                {% if (item.entity.field_grid_layout_content_title|view) or (item.entity.field_grid_layout_content_text|view) %}
+                  <div class="grid-text-container">
+                    <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                    {{item.entity.field_grid_layout_content_text|view}}
+                  </div>
+                {% endif %}
               </div>
             </div>
             {% elseif (loop.index % 3 == 0) and (loop.index != 3) and (loop.index0 is odd) %} 
               <div class="col">
                 <div class="grid-image-container-large">
-                  <div class="grid-image-container grid-fill">
-                    {{ item.entity.field_grid_layout_content_image|view }}
-                  </div>
-                  <div class="grid-text-container">
-                    <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
-                    {{item.entity.field_grid_layout_content_text|view}}
-                  </div>
+                  {% if item.entity.field_grid_layout_content_image|view %}
+                    <div class="grid-image-container grid-fill">
+                      {{ item.entity.field_grid_layout_content_image|view }}
+                    </div>
+                  {% endif %}
+                  {% if (item.entity.field_grid_layout_content_title|view) or (item.entity.field_grid_layout_content_text|view) %}
+                    <div class="grid-text-container">
+                      <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                      {{item.entity.field_grid_layout_content_text|view}}
+                    </div>
+                  {% endif %}
                 </div>
               </div>
             {% else %}
               <div class="col-lg-3 col-md-6 col">
                 <div class="grid-image-container-small">
-                  <div class="grid-image-container grid-fill">
-                    {{ item.entity.field_grid_layout_content_image|view }}
-                  </div>
-                  <div class="grid-text-container">
-                    <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
-                    {{item.entity.field_grid_layout_content_text|view}}
-                  </div>
+                  {% if item.entity.field_grid_layout_content_image|view %}
+                    <div class="grid-image-container grid-fill">
+                      {{ item.entity.field_grid_layout_content_image|view }}
+                    </div>
+                  {% endif %}
+                  {% if (item.entity.field_grid_layout_content_title|view) or (item.entity.field_grid_layout_content_text|view) %}
+                    <div class="grid-text-container">
+                      <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                      {{item.entity.field_grid_layout_content_text|view}}
+                    </div>
+                  {% endif %}
                 </div>
               </div>
           {% endif %}
