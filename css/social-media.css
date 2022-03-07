@@ -2,7 +2,7 @@ li.social-media-item.menu-item {
   height: auto;
 }
 
-a.ucb-social-link {
+.ucb-social-container .icon-bg {
   color: var(--ucb-gold);
   text-decoration: none;
   padding: 0.5em;
@@ -14,60 +14,163 @@ a.ucb-social-link {
   border: 1px solid #1a1a1a;
 }
 
-a.ucb-social-link:hover {
-  color: var(--ucb-white);
-  background-color: var(--ucb-gold);
-  border: 1px solid;
+.ucb-social-container .vertical-icon-span {
+  display: none;
 }
 
-a.ucb-twitter-link:hover {
+.ucb-social-container .icon-foreground {
+  color: var(--ucb-gold);
+  font-size: 1.3333em;
+}
+
+.ucb-social-container .icon-bg-twitter:hover .icon-foreground,
+.ucb-social-container .icon-bg-facebook:hover .icon-foreground,
+.ucb-social-container .icon-bg-linkedin:hover .icon-foreground,
+.ucb-social-container .icon-bg-email:hover .icon-foreground,
+.ucb-social-container .icon-bg-youtube:hover .icon-foreground,
+.ucb-social-container .icon-bg-pintrest:hover .icon-foreground,
+.ucb-social-container .icon-bg-link:hover .icon-foreground,
+.ucb-social-container .icon-bg-discord:hover .icon-foreground,
+.ucb-social-container .icon-bg-reddit:hover .icon-foreground,
+.ucb-social-container .icon-bg-flickr:hover .icon-foreground,
+.ucb-social-container .icon-bg-vimeo:hover .icon-foreground,
+.ucb-social-container .icon-bg-tiktok:hover .icon-foreground,
+.ucb-social-container .icon-bg-patreon:hover .icon-foreground,
+.ucb-social-container .icon-bg-wordpress:hover .icon-foreground {
+  color: #fff;
+  transition: color 0.25s;
+}
+
+.ucb-social-container .icon-bg-instagram:hover .icon-foreground {
+  color: #fff;
+}
+
+.ucb-social-container .icon-bg-twitter:hover {
   background: #55acee;
-  color: #fff;
-  border-color: #fff;
+  transition: background-color 0.25s;
 }
 
-a.ucb-facebook-link:hover {
+.ucb-social-container .icon-bg-facebook:hover {
   background: #3b5998;
-  color: #fff;
-  border-color: #fff;
-}
-
-a.ucb-linkedin-link:hover {
-  background: #0977b5;
-  color: #fff;
-  border-color: #fff;
-}
-
-a.ucb-youtube-link:hover {
-  background: #fff;
-  color: #b31217;
-  border-color: #b31217;
-}
-
-a.ucb-flickr-link:hover {
-  background: #fff;
-  color: #ff0084;
-  border-color: #ff0084;
-}
-
-a.ucb-pinterest-link:hover {
-  background: rgb(230, 0, 35);
-  color: white;
-  border-color: #ff0084;
+  transition: background-color 0.25s;
 }
 
 /* stylelint-disable indentation */
-a.ucb-instagram-link:hover {
-  background:
-    radial-gradient(circle farthest-corner at 35% 90%, #fec564, transparent 50%),
+.ucb-social-container .icon-bg-instagram:hover {
+  background: radial-gradient(
+      circle farthest-corner at 35% 90%,
+      #fec564,
+      transparent 50%
+    ),
     radial-gradient(circle farthest-corner at 0 140%, #fec564, transparent 50%),
     radial-gradient(ellipse farthest-corner at 0 -25%, #5258cf, transparent 50%),
-    radial-gradient(ellipse farthest-corner at 20% -50%, #5258cf, transparent 50%),
+    radial-gradient(
+      ellipse farthest-corner at 20% -50%,
+      #5258cf,
+      transparent 50%
+    ),
     radial-gradient(ellipse farthest-corner at 100% 0, #893dc2, transparent 50%),
-    radial-gradient(ellipse farthest-corner at 60% -20%, #893dc2, transparent 50%),
+    radial-gradient(
+      ellipse farthest-corner at 60% -20%,
+      #893dc2,
+      transparent 50%
+    ),
     radial-gradient(ellipse farthest-corner at 100% 100%, #d9317a, transparent),
-    linear-gradient(#6559ca, #bc318f 30%, #e33f5f 50%, #f77638 70%, #fec66d 100%);
-  color: #fff;
-  border-color: #fff;
+    linear-gradient(
+      #6559ca,
+      #bc318f 30%,
+      #e33f5f 50%,
+      #f77638 70%,
+      #fec66d 100%
+    );
+  transition: background-color 0.25s;
 }
+
 /* stylelint-enable indentation */
+.ucb-social-container .icon-bg-linkedin:hover {
+  background-color: #3371b7;
+  transition-property: background-color 0.25s;
+}
+
+.ucb-social-container .icon-bg-youtube:hover {
+  background-color: #e02a20;
+  transition-property: background-color 0.25s;
+}
+
+.ucb-social-container .icon-bg-email:hover {
+  background-color: #fbbc05;
+  transition-property: background-color 0.25s;
+}
+
+.ucb-social-container .icon-bg-pintrest:hover {
+  background-color: #c92619;
+  transition-property: background-color 0.25s;
+}
+
+.ucb-social-container .icon-bg-link:hover {
+  background-color: darkblue;
+  transition-property: background-color 0.25s;
+}
+
+.ucb-social-container .icon-bg-discord:hover {
+  background-color: #2c2f33;
+  transition-property: background-color 0.25s;
+}
+
+.ucb-social-container .icon-bg-flickr:hover {
+  background-color: #0063dc;
+  transition-property: background-color 0.25s;
+}
+
+.ucb-social-container .icon-bg-vimeo:hover {
+  background-color: #86c9ef;
+  transition-property: background-color 0.25s;
+}
+
+.ucb-social-container .icon-bg-reddit:hover {
+  background-color: #86c9ef;
+  transition-property: background-color 0.25s;
+}
+
+.ucb-social-container .icon-bg-wordpress:hover {
+  background-color: #21759b;
+  transition-property: background-color 0.25s;
+}
+
+.ucb-social-container .icon-bg-tiktok:hover {
+  background-color: #000;
+  transition-property: background-color 0.25s;
+}
+
+.ucb-social-container .icon-bg-patreon:hover {
+  background-color: #f96854;
+  transition-property: background-color 0.25s;
+}
+
+.ucb-social-container .icon-div {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+}
+
+.ucb-social-container .icon-a {
+  color: var(--ucb-gold);
+  text-decoration: none;
+  padding: 0;
+  border-radius: 0;
+  margin: 2px;
+  text-align: center;
+  width: auto;
+  border: 0;
+}
+
+.ucb-social-container .icon-bg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ucb-above-content .social-media.navbar-social,
+.ucb-below-content .social-media.navbar-social {
+  padding: 1.5em;
+}

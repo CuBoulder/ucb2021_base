@@ -14,10 +14,15 @@
 .vertical-orientation li {
   list-style-type: none;
   padding-top: 10px;
+  width: fit-content;
 }
 
 .imgTiny li i {
   font-size: 12px;
+}
+
+.icon-a {
+  width: fit-content;
 }
 
 .imgTiny .vertical-icon-span {
@@ -72,7 +77,7 @@
   width: 64px;
 }
 
-.vertical-orientation {
+.vertical-orientation ul{
   display: block;
   padding-left: 0;
 }
@@ -155,15 +160,15 @@
   justify-content: center;
 }
 
-.icon-bg-facebook {
+.layout-content .icon-bg-facebook {
   background-color: #3b5998;
 }
 
-.icon-div:hover,
-.icon-div:hover .icon-bg {
+.layout-content .icon-div:hover,
+.layout-content .icon-div:hover .icon-bg {
   background-color: grey;
   transition-property: background-color;
-  transition-duration: 0.5s;
+  transition-duration: 0.25s;
 }
 
 .vertical-icon-span {
