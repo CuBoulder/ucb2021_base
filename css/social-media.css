@@ -3,6 +3,9 @@ li.social-media-item.menu-item {
 }
 
 .ucb-social-container .icon-bg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--ucb-gold);
   text-decoration: none;
   padding: 0.5em;
@@ -57,7 +60,8 @@ li.social-media-item.menu-item {
 
 /* stylelint-disable indentation */
 .ucb-social-container .icon-bg-instagram:hover {
-  background: radial-gradient(
+  background: 
+    radial-gradient(
       circle farthest-corner at 35% 90%,
       #fec564,
       transparent 50%
@@ -162,12 +166,6 @@ li.social-media-item.menu-item {
   text-align: center;
   width: auto;
   border: 0;
-}
-
-.ucb-social-container .icon-bg {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .ucb-above-content .social-media.navbar-social,
