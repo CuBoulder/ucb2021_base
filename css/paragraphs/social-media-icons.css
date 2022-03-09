@@ -84,6 +84,11 @@
 .vertical-orientation ul {
   display: block;
   padding-left: 0;
+  margin-bottom: 0;
+}
+
+.social-media-icons-block {
+  margin-bottom: 10px;
 }
 
 .ucb-above-content .paragraph-icon-bg.icon-bg-media-icons-block,

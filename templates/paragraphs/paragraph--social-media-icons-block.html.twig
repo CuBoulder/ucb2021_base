@@ -57,7 +57,7 @@
 				<!-- Horizontal ends -->
 				<!-- Vertical -->
 			{% else %}
-				<div class='vertical-orientation {{ imageSize }}'>
+				<div class='vertical-orientation {{ imageSize }} social-media-icons-block'>
 				{{ drupal_menu('social-media-menu') }}
 				</div>
 			{% endif %}
@@ -65,14 +65,14 @@
 		{% else %}
 			<!-- Horizontal -->
 			{% if layoutSelection == 0 %}
-				<div class='horizontal-orientation {{ imageSize }}'>
+				<div class='horizontal-orientation {{ imageSize }} social-media-icons-block'>
 					{{ content.field_social_media_links|render }}
 					{{ content.field_social_media_email_link|render}}
 				</div>
 				<!-- Horizontal ends -->
 				<!-- Vertical -->
 			{% else %}
-				<div class='vertical-orientation {{ imageSize }}'>
+				<div class='vertical-orientation {{ imageSize }} social-media-icons-block'>
 					{{ content.field_social_media_links|render }}
 					{{ content.field_social_media_email_link|render}}
 				</div>
