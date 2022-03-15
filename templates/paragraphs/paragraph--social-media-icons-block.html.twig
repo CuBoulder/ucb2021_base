@@ -17,6 +17,8 @@
 %}
 
 
+{% set checkMenuOption = paragraph.field_social_media_menu_check.value %}
+
 <!-- layoutSelection gathers the orientation value from the orientation field, 
     0 -> Horizontal
     1 -> Vertical -->
@@ -45,20 +47,37 @@
 
 {% block paragraph %}
 	<div{{attributes.addClass(classes)}}>
-        <!-- Horizontal -->
-		{% if layoutSelection == 0 %}
-			<ul class='horizontal-orientation {{ imageSize }}'>
-				{{ content.field_social_media_links|render }}
-				{{ content.field_social_media_email_link|render}}
-			</ul>
-        <!-- Horizontal ends -->
-        <!-- Vertical -->
+		{% if checkMenuOption == 1 %}
+
+			<!-- Horizontal -->
+			{% if layoutSelection == 0 %}
+				<div class='horizontal-orientation {{ imageSize }} social-media-icons-block'>
+				{{ drupal_menu('social-media-menu') }}
+				</div>
+				<!-- Horizontal ends -->
+				<!-- Vertical -->
+			{% else %}
+				<div class='vertical-orientation {{ imageSize }} social-media-icons-block'>
+				{{ drupal_menu('social-media-menu') }}
+				</div>
+			{% endif %}
+			<!-- Vertical ends-->
 		{% else %}
-			<ul class='vertical-orientation {{ imageSize }}'>
-				{{ content.field_social_media_links|render }}
-				{{ content.field_social_media_email_link|render}}
-			</ul>
+			<!-- Horizontal -->
+			{% if layoutSelection == 0 %}
+				<div class='horizontal-orientation {{ imageSize }} social-media-icons-block'>
+					{{ content.field_social_media_links|render }}
+					{{ content.field_social_media_email_link|render}}
+				</div>
+				<!-- Horizontal ends -->
+				<!-- Vertical -->
+			{% else %}
+				<div class='vertical-orientation {{ imageSize }} social-media-icons-block'>
+					{{ content.field_social_media_links|render }}
+					{{ content.field_social_media_email_link|render}}
+				</div>
+			{% endif %}
+			<!-- Vertical ends-->
 		{% endif %}
-        <!-- Vertical ends-->
 	</div>
 {% endblock paragraph %}

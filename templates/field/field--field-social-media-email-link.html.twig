@@ -6,15 +6,17 @@
 #}
 
 {% for item in items %}
-	<li>
-		<a href="mailto:{{ item.content }}" title="Email" alt="Email">
-			<span class="icon-div">
-				<span class="sr-only">Email</span>
-				<span class="icon-bg icon-bg-email">
-					<i class="fas fa-envelope icon-foreground"></i>
+	<ul class = "email-ul">
+		<li>
+			<a href="mailto:{{ item.content }}" title="Email" alt="Email">
+				<span class="icon-div">
+					<span class="sr-only">Email</span>
+					<span class="icon-bg icon-bg-email">
+						<i class="fas fa-envelope icon-foreground"></i>
+					</span>
+					<span class="vertical-icon-span">Email</span>
 				</span>
-				<span class="vertical-icon-span">Email</span>
-			</span>
-		</a>
-	</li>
+			</a>
+		</li>
+	</ul>
 {% endfor %}
