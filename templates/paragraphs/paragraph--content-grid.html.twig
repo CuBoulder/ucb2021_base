@@ -34,16 +34,25 @@
     {% if layoutSelection == 0 %}
       <div class="row row-cols-lg-{{ columnNumbers }} row-cols-md-2 row-cols-1 justify-content-evenly">
         {% for key, item in paragraph.field_grid_layout_content if key|first != '#' %}
+        {% set gridLink = item.entity.field_grid_layout_content_link|view %}
           <div class="col">
             <div class="grid-column">
               {% if item.entity.field_grid_layout_content_image|view %}
                 <div class="grid-image-container grid-fill">
-                  {{ item.entity.field_grid_layout_content_image|view }}
+                  {% if item.entity.field_grid_layout_content_image|view %}
+                    <a href=" {{ gridLink }} ">
+                    {{ item.entity.field_grid_layout_content_image|view }}
+                    </a>
+                  {% else %}
+                    {{ item.entity.field_grid_layout_content_image|view }}
+                  {% endif %}
                 </div>
               {% endif %}
               {% if (item.entity.field_grid_layout_content_title|view) or (item.entity.field_grid_layout_content_text|view) %}
                 <div class="grid-text-container">
-                  <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                  <a href=" {{ gridLink }} ">
+                    <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                  </a>
                   {{item.entity.field_grid_layout_content_text|view}}
                 </div>
               {% endif %}
@@ -59,7 +68,13 @@
             <div class="grid-card">
               {% if item.entity.field_grid_layout_content_image|view %}
                 <div class="grid-image-container grid-fill">
-                  {{ item.entity.field_grid_layout_content_image|view }}
+                  {% if item.entity.field_grid_layout_content_image|view %}
+                    <a href=" {{ gridLink }} ">
+                    {{ item.entity.field_grid_layout_content_image|view }}
+                    </a>
+                  {% else %}
+                    {{ item.entity.field_grid_layout_content_image|view }}
+                  {% endif %}
                 </div>
               {% endif %}
               {% if (item.entity.field_grid_layout_content_title|view) or (item.entity.field_grid_layout_content_text|view) %}
@@ -80,8 +95,15 @@
             <div class="grid-column">
               {% if item.entity.field_grid_layout_content_image|view %}
                 <div class="overlay-grid-image-container grid-fill">
-                  {{ item.entity.field_grid_layout_content_image|view }}
-                  <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                  {% if item.entity.field_grid_layout_content_image|view %}
+                    <a href=" {{ gridLink }} ">
+                    {{ item.entity.field_grid_layout_content_image|view }}
+                    <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                    </a>
+                  {% else %}
+                    {{ item.entity.field_grid_layout_content_image|view }}
+                    <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                  {% endif %}
                 </div>
               {% endif %}
               {% if item.entity.field_grid_layout_content_text|view %}
@@ -102,7 +124,13 @@
               <div class="grid-image-container-large">
                 {% if item.entity.field_grid_layout_content_image|view %}
                   <div class="grid-image-container grid-fill">
+                  {% if item.entity.field_grid_layout_content_image|view %}
+                    <a href=" {{ gridLink }} ">
                     {{ item.entity.field_grid_layout_content_image|view }}
+                    </a>
+                  {% else %}
+                    {{ item.entity.field_grid_layout_content_image|view }}
+                  {% endif %}
                   </div>
                 {% endif %}
                 {% if (item.entity.field_grid_layout_content_title|view) or (item.entity.field_grid_layout_content_text|view) %}
@@ -118,7 +146,13 @@
                 <div class="grid-image-container-large">
                   {% if item.entity.field_grid_layout_content_image|view %}
                     <div class="grid-image-container grid-fill">
-                      {{ item.entity.field_grid_layout_content_image|view }}
+                  {% if item.entity.field_grid_layout_content_image|view %}
+                    <a href=" {{ gridLink }} ">
+                    {{ item.entity.field_grid_layout_content_image|view }}
+                    </a>
+                  {% else %}
+                    {{ item.entity.field_grid_layout_content_image|view }}
+                  {% endif %}
                     </div>
                   {% endif %}
                   {% if (item.entity.field_grid_layout_content_title|view) or (item.entity.field_grid_layout_content_text|view) %}
@@ -134,7 +168,13 @@
                 <div class="grid-image-container-small">
                   {% if item.entity.field_grid_layout_content_image|view %}
                     <div class="grid-image-container grid-fill">
-                      {{ item.entity.field_grid_layout_content_image|view }}
+                      {% if item.entity.field_grid_layout_content_image|view %}
+                        <a href=" {{ gridLink }} ">
+                        {{ item.entity.field_grid_layout_content_image|view }}
+                        </a>
+                      {% else %}
+                        {{ item.entity.field_grid_layout_content_image|view }}
+                      {% endif %}
                     </div>
                   {% endif %}
                   {% if (item.entity.field_grid_layout_content_title|view) or (item.entity.field_grid_layout_content_text|view) %}
