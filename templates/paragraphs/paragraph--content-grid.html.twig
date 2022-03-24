@@ -50,9 +50,13 @@
               {% endif %}
               {% if (item.entity.field_grid_layout_content_title|view) or (item.entity.field_grid_layout_content_text|view) %}
                 <div class="grid-text-container">
-                  <a href=" {{ gridLink }} ">
+                  {% if item.entity.field_grid_layout_content_link|view %}
+                    <a href=" {{ gridLink }} ">
                     <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
-                  </a>
+                    </a>
+                  {% else %}
+                    <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                  {% endif %}
                   {{item.entity.field_grid_layout_content_text|view}}
                 </div>
               {% endif %}
@@ -80,7 +84,13 @@
               {% endif %}
               {% if (item.entity.field_grid_layout_content_title|view) or (item.entity.field_grid_layout_content_text|view) %}
                 <div class="grid-text-container">
-                  <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                  {% if item.entity.field_grid_layout_content_link|view %}
+                    <a href=" {{ gridLink }} ">
+                    <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                    </a>
+                  {% else %}
+                    <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                  {% endif %}
                   {{item.entity.field_grid_layout_content_text|view}}
                 </div>
               {% endif %}
@@ -138,7 +148,13 @@
                 {% endif %}
                 {% if (item.entity.field_grid_layout_content_title|view) or (item.entity.field_grid_layout_content_text|view) %}
                   <div class="grid-text-container">
+                  {% if item.entity.field_grid_layout_content_link|view %}
+                    <a href=" {{ gridLink }} ">
                     <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                    </a>
+                  {% else %}
+                    <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                  {% endif %}
                     {{item.entity.field_grid_layout_content_text|view}}
                   </div>
                 {% endif %}
@@ -160,7 +176,13 @@
                   {% endif %}
                   {% if (item.entity.field_grid_layout_content_title|view) or (item.entity.field_grid_layout_content_text|view) %}
                     <div class="grid-text-container">
-                      <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                  {% if item.entity.field_grid_layout_content_link|view %}
+                    <a href=" {{ gridLink }} ">
+                    <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                    </a>
+                  {% else %}
+                    <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                  {% endif %}
                       {{item.entity.field_grid_layout_content_text|view}}
                     </div>
                   {% endif %}
@@ -182,7 +204,13 @@
                   {% endif %}
                   {% if (item.entity.field_grid_layout_content_title|view) or (item.entity.field_grid_layout_content_text|view) %}
                     <div class="grid-text-container">
-                      <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                  {% if item.entity.field_grid_layout_content_link|view %}
+                    <a href=" {{ gridLink }} ">
+                    <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                    </a>
+                  {% else %}
+                    <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                  {% endif %}
                       {{item.entity.field_grid_layout_content_text|view}}
                     </div>
                   {% endif %}
