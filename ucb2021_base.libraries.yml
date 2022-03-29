@@ -110,6 +110,7 @@ ucb-image-gallery:
   version: 1.x
   js:
     js/glightbox.js: {}
+    js/ucb-gallery-lightbox-settings.js: {}
   css:
     theme:
       css/paragraphs/image-gallery.css: {}
