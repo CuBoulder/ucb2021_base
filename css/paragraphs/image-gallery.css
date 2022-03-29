@@ -7,6 +7,6 @@
 }
 
 .gallery-div img {
-    width: 16.33%;
+    max-width: 300px;
     padding: 10px;
 }

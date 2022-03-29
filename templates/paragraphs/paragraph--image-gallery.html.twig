@@ -13,8 +13,8 @@
 		<h1>Hello</h1>
 		<div class="gallery-div">
 			{% for key, item in paragraph.field_image_gallery_photo if key|first != '#' %}
-				<a href="{{ file_url(item.entity.field_media_image.entity.fileuri) }}" class="glightbox ucb-gallery-lightbox">
-					<img src="{{ file_url(item.entity.field_media_image.entity.fileuri) }}" alt="{{ item.entity.field_media_image.alt }}"/>
+				<a href="{{ file_url(item.entity.field_media_image.entity.fileuri) }}" class="glightbox ucb-gallery-lightbox" data-glightbox="description: Tests">
+					{{ item|view }}
 				</a>
 			{% endfor %}
 		</div>
