@@ -1,0 +1,12 @@
+.gallery-div {
+    background: white;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.gallery-div img {
+    width: 16.33%;
+    padding: 10px;
+}
