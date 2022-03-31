@@ -10,9 +10,7 @@
 
 {% block paragraph %}
 	<div{{attributes.addClass(classes)}}>
-		<h1>Hello</h1>
 		<div class="gallery-div">
-    <h3>{{ file_url(content.field_media_image['#items'].entity.uri.value) }}</h3>
 			{% for key, item in paragraph.field_image_gallery_photo if key|first != '#' %}
 				{% if item.entity.field_media_image_caption.value|render|striptags|trim %}
 					{% set photoDescription = item.entity.field_media_image_caption.value|render|striptags|trim %}
