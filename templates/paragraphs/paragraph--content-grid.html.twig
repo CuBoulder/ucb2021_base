@@ -38,12 +38,12 @@
     {% if layoutSelection == 0 %}
       <div class="row row-cols-lg-{{ columnNumbers }} row-cols-md-2 row-cols-1 justify-content-evenly">
         {% for key, item in paragraph.field_grid_layout_content if key|first != '#' %}
-        {% set gridLink = item.entity.field_grid_layout_content_link|view %}
+        {% set gridLink = item.entity.field_grid_layout_content_link.0.url|render %}
           <div class="col">
             <div class="grid-column">
               {% if item.entity.field_grid_layout_content_image|view %}
                 <div class="grid-image-container grid-fill {{ imgStyle }}">
-                  {% if item.entity.field_grid_layout_content_link|view %}
+                  {% if item.entity.field_grid_layout_content_link.0.url|render %}
                     <a href=" {{ gridLink }} ">
                     {{ item.entity.field_grid_layout_content_image|view }}
                     </a>
@@ -54,7 +54,7 @@
               {% endif %}
               {% if (item.entity.field_grid_layout_content_title|view) or (item.entity.field_grid_layout_content_text|view) %}
                 <div class="grid-text-container">
-                  {% if item.entity.field_grid_layout_content_link|view %}
+                  {% if item.entity.field_grid_layout_content_link.0.url|render %}
                     <a href=" {{ gridLink }} ">
                     <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
                     </a>
@@ -72,12 +72,12 @@
     {% elseif layoutSelection == 1 %}
       <div class="row row-cols-lg-{{ columnNumbers }} row-cols-md-2 row-cols-1 justify-content-evenly">
         {% for key, item in paragraph.field_grid_layout_content if key|first != '#' %}
-        {% set gridLink = item.entity.field_grid_layout_content_link|view %}
+        {% set gridLink = item.entity.field_grid_layout_content_link.0.url|render %}
           <div class="col">
             <div class="grid-card">
               {% if item.entity.field_grid_layout_content_image|view %}
                 <div class="grid-image-container grid-fill {{ imgStyle }}">
-                  {% if item.entity.field_grid_layout_content_link|view %}
+                  {% if item.entity.field_grid_layout_content_link.0.url|render %}
                     <a href=" {{ gridLink }} ">
                     {{ item.entity.field_grid_layout_content_image|view }}
                     </a>
@@ -88,7 +88,7 @@
               {% endif %}
               {% if (item.entity.field_grid_layout_content_title|view) or (item.entity.field_grid_layout_content_text|view) %}
                 <div class="grid-text-container">
-                  {% if item.entity.field_grid_layout_content_link|view %}
+                  {% if item.entity.field_grid_layout_content_link.0.url|render %}
                     <a href=" {{ gridLink }} ">
                     <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
                     </a>
@@ -106,12 +106,12 @@
     {% elseif layoutSelection == 2 %}
       <div class="row row-cols-lg-{{ columnNumbers }} row-cols-md-2 row-cols-1 justify-content-evenly">
         {% for key, item in paragraph.field_grid_layout_content if key|first != '#' %}
-        {% set gridLink = item.entity.field_grid_layout_content_link|view %}
+        {% set gridLink = item.entity.field_grid_layout_content_link.0.url|render %}
           <div class="col">
             <div class="grid-column">
               {% if item.entity.field_grid_layout_content_image|view %}
                 <div class="overlay-grid-image-container grid-fill {{ imgStyle }}">
-                  {% if item.entity.field_grid_layout_content_link|view %}
+                  {% if item.entity.field_grid_layout_content_link.0.url|render %}
                     <a href=" {{ gridLink }} ">
                     {{ item.entity.field_grid_layout_content_image|view }}
                     <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
@@ -135,13 +135,13 @@
     {% else %}
       <div class="row row-cols-lg-2 row-cols-1">
         {% for key, item in paragraph.field_grid_layout_content if key|first != '#' %}
-        {% set gridLink = item.entity.field_grid_layout_content_link|view %}
+        {% set gridLink = item.entity.field_grid_layout_content_link.0.url|render %}
           {% if (loop.index0 % 3 == 0) and ((loop.index0 is even) or (loop.index0 == 0)) %}
             <div class="col">
               <div class="grid-image-container-large">
                 {% if item.entity.field_grid_layout_content_image|view %}
                   <div class="grid-image-container grid-fill {{ imgStyle }}">
-                  {% if item.entity.field_grid_layout_content_link|view %}
+                  {% if item.entity.field_grid_layout_content_link.0.url|render %}
                     <a href=" {{ gridLink }} ">
                     {{ item.entity.field_grid_layout_content_image|view }}
                     </a>
@@ -152,7 +152,7 @@
                 {% endif %}
                 {% if (item.entity.field_grid_layout_content_title|view) or (item.entity.field_grid_layout_content_text|view) %}
                   <div class="grid-text-container">
-                  {% if item.entity.field_grid_layout_content_link|view %}
+                  {% if item.entity.field_grid_layout_content_link.0.url|render %}
                     <a href=" {{ gridLink }} ">
                     <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
                     </a>
@@ -169,7 +169,7 @@
                 <div class="grid-image-container-large">
                   {% if item.entity.field_grid_layout_content_image|view %}
                     <div class="grid-image-container grid-fill {{ imgStyle }}">
-                  {% if item.entity.field_grid_layout_content_link|view %}
+                  {% if item.entity.field_grid_layout_content_link.0.url|render %}
                     <a href=" {{ gridLink }} ">
                     {{ item.entity.field_grid_layout_content_image|view }}
                     </a>
@@ -180,7 +180,7 @@
                   {% endif %}
                   {% if (item.entity.field_grid_layout_content_title|view) or (item.entity.field_grid_layout_content_text|view) %}
                     <div class="grid-text-container">
-                  {% if item.entity.field_grid_layout_content_link|view %}
+                  {% if item.entity.field_grid_layout_content_link.0.url|render %}
                     <a href=" {{ gridLink }} ">
                     <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
                     </a>
@@ -208,7 +208,7 @@
                   {% endif %}
                   {% if (item.entity.field_grid_layout_content_title|view) or (item.entity.field_grid_layout_content_text|view) %}
                     <div class="grid-text-container">
-                  {% if item.entity.field_grid_layout_content_link|view %}
+                  {% if item.entity.field_grid_layout_content_link.0.url|render %}
                     <a href=" {{ gridLink }} ">
                     <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
                     </a>
