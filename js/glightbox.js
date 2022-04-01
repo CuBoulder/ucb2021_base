@@ -2046,7 +2046,7 @@
     var videoPlayers = this.getAllPlayers();
     addClass(slideContainer, "gvideo-container");
     slideMedia.insertBefore(
-      createHTML('<div class="gvideo-wrapper"></div>'),
+      createHTML("<div class='gvideo-wrapper'></div>"),
       slideMedia.firstChild
     );
     var videoWrapper = slide.querySelector(".gvideo-wrapper");
@@ -2076,14 +2076,14 @@
 
       if (provider === "local" || !provider) {
         provider = "local";
-        var html = '<video id="' + videoID + '" ';
-        html += 'style="background:#000; max-width: '.concat(data.width, ';" ');
-        html += 'preload="metadata" ';
-        html += 'x-webkit-airplay="allow" ';
+        var html = "<video id='" + videoID + "' ";
+        html += "style='background:#000; max-width: ".concat(data.width, ";' ");
+        html += "preload='metadata' ";
+        html += "x-webkit-airplay='allow' ";
         html += "playsinline ";
         html += "controls ";
-        html += 'class="gvideo-local">';
-        html += '<source src="'.concat(url, '">');
+        html += "class='gvideo-local'>";
+        html += "<source src='".concat(url, "'>");
         html += "</video>";
         customPlaceholder = createHTML(html);
       }
@@ -2091,10 +2091,10 @@
       var placeholder = customPlaceholder
         ? customPlaceholder
         : createHTML(
-            '<div id="'
-              .concat(videoID, '" data-plyr-provider="')
-              .concat(provider, '" data-plyr-embed-id="')
-              .concat(url, '"></div>')
+          '<div id="'
+            .concat(videoID, '" data-plyr-provider="')
+            .concat(provider, '" data-plyr-embed-id="')
+            .concat(url, '"></div>')
           );
       addClass(videoWrapper, "".concat(provider, "-video gvideo"));
       videoWrapper.appendChild(placeholder);
