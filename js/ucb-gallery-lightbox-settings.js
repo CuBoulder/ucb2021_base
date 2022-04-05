@@ -1,4 +1,4 @@
 var lightbox = GLightbox();
-lightbox.on('open', (target) => {
-console.log('lightbox opened');
+lightbox.on("open", (target) => {
+  console.log("lightbox opened");
 });
