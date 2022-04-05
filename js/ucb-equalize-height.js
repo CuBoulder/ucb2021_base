@@ -1,7 +1,7 @@
 function setHeight(el, val, container) {
   if (typeof val === "function") val = val();
   if (typeof val === "string") el.style.height = val;
-  if (container.includes('.wide-img')) el.style.height = val / 2   + "px";
+  if (container.includes(".wide-img")) el.style.height = val / 2   + "px";
   else el.style.height = val + "px";
 }
 
