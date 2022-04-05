@@ -109,9 +109,9 @@ ucb-social-media-icons-block:
 ucb-image-gallery:
   version: 1.x
   js:
-    js/glightbox.js: {}
-    js/ucb-gallery-lightbox-settings.js: {}
+    js/glightbox/glightbox.js: {}
+    js/glightbox/ucb-gallery-lightbox-settings.js: {}
   css:
     theme:
       css/paragraphs/image-gallery.css: {}
-      css/glightbox.min.css: {}
+      js/glightbox/glightbox.min.css: {}
