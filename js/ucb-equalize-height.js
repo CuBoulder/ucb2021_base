@@ -1,7 +1,7 @@
 function setHeight(el, val) {
   if (typeof val === "function") val = val();
   if (typeof val === "string") el.style.height = val;
-  else el.style.height = val + "px";
+  else el.style.height = val / 2 + "px";
 }
 
 var equalheight = function (container) {
@@ -56,11 +56,11 @@ window.addEventListener("resize", function () {
   Classes to equalize Card Layout fields using ucb-equalize-height.js
 */
 window.addEventListener("load", function () {
-  equalheight(".grid-image-container article");
+  equalheight(".grid-card .grid-image-container article");
 });
 window.addEventListener("resize", function () {
   setTimeout(function () {
-    equalheight(".grid-image-container article");
+    equalheight(".grid-card .grid-image-container article");
   });
 });
 
