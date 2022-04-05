@@ -1,4 +1,3 @@
-var lightbox = GLightbox();
-lightbox.on("open", (target) => {
-  console.log("lightbox opened");
+var lightbox = GLightbox(); // eslint-disable-line
+lightbox.on("open", (target) => { // eslint-disable-line
 });
