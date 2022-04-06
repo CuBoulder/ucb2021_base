@@ -109,7 +109,7 @@ ucb-social-media-icons-block:
 ucb-image-gallery:
   version: 1.x
   js:
-    js/glightbox/glightbox.js: {}
+    js/glightbox/glightbox.min.js: {}
     js/glightbox/ucb-gallery-lightbox-settings.js: {}
   css:
     theme:
