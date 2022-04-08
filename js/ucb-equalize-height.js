@@ -1,6 +1,7 @@
-function setHeight(el, val) {
+function setHeight(el, val, container) {
   if (typeof val === "function") val = val();
   if (typeof val === "string") el.style.height = val;
+  if (container.includes(".wide-img")) el.style.height = val / 2   + "px";
   else el.style.height = val + "px";
 }
 
@@ -18,7 +19,7 @@ var equalheight = function (container) {
     topPosition = el.offsetTop;
     if (currentRowStart != topPosition) {
       for (currentDiv = 0; currentDiv < rowDivs.length; currentDiv++) {
-        setHeight(rowDivs[currentDiv], currentTallest);
+        setHeight(rowDivs[currentDiv], currentTallest, container);
       }
       rowDivs.length = 0;
       currentRowStart = topPosition;
@@ -35,7 +36,7 @@ var equalheight = function (container) {
           : currentTallest;
     }
     for (currentDiv = 0; currentDiv < rowDivs.length; currentDiv++) {
-      setHeight(rowDivs[currentDiv], currentTallest);
+      setHeight(rowDivs[currentDiv], currentTallest, container);
     }
   });
 };
@@ -52,15 +53,33 @@ window.addEventListener("resize", function () {
   });
 });
 
+window.addEventListener("load", function () {
+  equalheight(".grid-column .grid-image-container.wide-img article");
+});
+window.addEventListener("resize", function () {
+  setTimeout(function () {
+    equalheight(".grid-column .grid-image-container.wide-img article");
+  });
+});
+
 /* 
   Classes to equalize Card Layout fields using ucb-equalize-height.js
 */
 window.addEventListener("load", function () {
-  equalheight(".grid-image-container article");
+  equalheight(".grid-card .grid-image-container article");
 });
 window.addEventListener("resize", function () {
   setTimeout(function () {
-    equalheight(".grid-image-container article");
+    equalheight(".grid-card .grid-image-container article");
+  });
+});
+
+window.addEventListener("load", function () {
+  equalheight(".grid-card .grid-image-container.wide-img article");
+});
+window.addEventListener("resize", function () {
+  setTimeout(function () {
+    equalheight(".grid-card .grid-image-container.wide-img article");
   });
 });
 
@@ -82,6 +101,15 @@ window.addEventListener("load", function () {
 window.addEventListener("resize", function () {
   setTimeout(function () {
     equalheight(".overlay-grid-image-container article");
+  });
+});
+
+window.addEventListener("load", function () {
+  equalheight(".overlay-grid-image-container.wide-img article");
+});
+window.addEventListener("resize", function () {
+  setTimeout(function () {
+    equalheight(".overlay-grid-image-container.wide-img article");
   });
 });
 

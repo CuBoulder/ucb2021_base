@@ -41,6 +41,7 @@
 
 .grid-fill article div {
   height: 100%;
+  display: flex;
 }
 
 /* Card Layout CSS */
