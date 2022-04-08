@@ -1,0 +1,25 @@
+{%
+  set classes = [
+    'paragraph',
+    'paragraph--type--' ~ paragraph.bundle|clean_class,
+    view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+    not paragraph.isPublished() ? 'paragraph--unpublished',
+    paragraph.field_text_align.value,
+    paragraph.field_text_color.value
+  ]
+%}
+
+{{ attach_library('ucb2021_base/ucb-video-reveal') }}
+
+{% block paragraph %}
+	<a href="javascript:alert('Hello World!');">
+		<div class="video-reveal-div">
+			{{ content.field_video_reveal_image|render }}
+			<div class="centered">
+				<i class="far fa-play-circle"></i>
+				<p>{{ content.field_video_reveal_text|render }}</p>
+			</div>
+		</div>
+	</a>
+	{{ content.field_video_reveal_video|render }}
+{% endblock paragraph %}
