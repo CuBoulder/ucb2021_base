@@ -104,3 +104,14 @@ ucb-social-media-icons-block:
   css:
     theme:
       css/paragraphs/social-media-icons.css: {}
+
+
+ucb-image-gallery:
+  version: 1.x
+  js:
+    js/glightbox/glightbox.min.js: {}
+    js/glightbox/ucb-gallery-lightbox-settings.js: {}
+  css:
+    theme:
+      css/paragraphs/image-gallery.css: {}
+      js/glightbox/glightbox.min.css: {}

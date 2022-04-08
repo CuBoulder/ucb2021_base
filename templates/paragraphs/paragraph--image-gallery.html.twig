@@ -1,0 +1,28 @@
+{{ attach_library('ucb2021_base/ucb-image-gallery') }}
+{%
+  set classes = [
+    'paragraph',
+    'paragraph--type--' ~ paragraph.bundle|clean_class,
+    view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+    not paragraph.isPublished() ? 'paragraph--unpublished'
+  ]
+%}
+
+{% block paragraph %}
+	<div{{attributes.addClass(classes)}}>
+		<div class="row row-cols-lg-6 row-cols-md-3 row-cols-2 justify-content-center gallery-div">
+			{% for key, item in paragraph.field_image_gallery_photo if key|first != '#' %}
+				{% if item.entity.field_media_image_caption.value|render|striptags|trim %}
+					{% set photoDescription = item.entity.field_media_image_caption.value|render|striptags|trim %}
+				{% else %}
+					{% set photoDescription = "" %}
+				{% endif %}
+				<div class="col gallery-item">
+					<a href="{{ file_url(item.entity.field_media_image.entity.fileuri) }}" class="glightbox ucb-gallery-lightbox" data-gallery="gallery{{ paragraph.id() }}" data-glightbox="description: {{ photoDescription }} ">
+						{{ item|view }}
+					</a>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock paragraph %}
