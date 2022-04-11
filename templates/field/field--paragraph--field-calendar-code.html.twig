@@ -1,0 +1,14 @@
+{#
+/**
+ * Theme layout to display copy for grid layouts
+ * Created by jnichol on 4/07/22
+ */
+#}
+
+{% for item in items %}
+       {% if ('text/javascript' in item.content['#context'].value|raw) and ('calendar.colorado.edu' in item.content['#context'].value|raw) %}
+        <strong>{{ item.content['#context'].value|raw }}</strong>
+    {% else %}
+    <strong>Error: Only calendar.colorado.edu events embed code is allowed.</strong>
+    {% endif %}
+{% endfor %}
