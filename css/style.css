@@ -428,10 +428,12 @@ article img {
   height: auto;
 }
 
-article .align-right img, article .align-right .media-image-caption p {
+article .align-right img,
+article .align-right .media-image-caption p {
   padding-left: 1em;
 }
 
-article .align-left img, article .align-left .media-image-caption p {
+article .align-left img,
+article .align-left .media-image-caption p {
   padding-right: 1em;
 }
