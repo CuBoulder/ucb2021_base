@@ -1,0 +1,29 @@
+.ucb-events-calendar .localist-widget {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.ucb-events-calendar .localist_minicalendar_events {
+  flex-grow: 1;
+}
+
+.ucb-events-calendar .localist_minicalendar {
+  padding: 0 20px;
+}
+
+.ucb-events-calendar .localist_widget_container li.lw_event_item:first-child {
+  margin-top: 0;
+}
+
+.ucb-events-calendar .localist_widget_container ul.lw_event_list {
+  max-width: none;
+}
+
+.ucb-events-calendar .localist_widget_container .lw_event_item_image img {
+  max-width: 150px;
+}
+
+.ucb-events-calendar .localist_widget_container span.lw_event_item_date {
+  background: rgba(0, 0, 0, 0.75);
+  font-weight: bold;
+}

@@ -115,3 +115,9 @@ ucb-image-gallery:
     theme:
       css/paragraphs/image-gallery.css: {}
       js/glightbox/glightbox.min.css: {}
+
+ucb-events-calendar:
+  version: 1.x
+  css:
+    theme:
+      css/paragraphs/events-calendar.css: {}
