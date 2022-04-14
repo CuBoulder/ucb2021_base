@@ -39,10 +39,10 @@
             <div class="col-8 row-text-container">
                 {% if item.entity.field_row_layout_content_link.0.url|render %}
                   <a href=" {{ rowLink }} ">
-                  <h3>{{item.entity.field_row_layout_content_title|view}}</h3>
+                  <h3>{{item.entity.field_row_layout_content_title.value|render|striptags|trim}}</h3>
                   </a>
                 {% else %}
-                  <h3>{{item.entity.field_row_layout_content_title|view}}</h3>
+                  <h3>{{item.entity.field_row_layout_content_title.value|render|striptags|trim}}</h3>
                 {% endif %}
                 {{item.entity.field_row_layout_content_text|view}}
             </div>
@@ -66,10 +66,10 @@
             <div class="col-8 row-text-container">
               {% if item.entity.field_row_layout_content_link.0.url|render %}
                 <a href=" {{ rowLink }} ">
-                <h3>{{item.entity.field_row_layout_content_title|view}}</h3>
+                <h3>{{item.entity.field_row_layout_content_title.value|render|striptags|trim}}</h3>
                 </a>
               {% else %}
-                <h3>{{item.entity.field_row_layout_content_title|view}}</h3>
+                <h3>{{item.entity.field_row_layout_content_title.value|render|striptags|trim}}</h3>
               {% endif %}
               {{item.entity.field_row_layout_content_text|view}}
             </div>
@@ -77,10 +77,10 @@
             <div class="col-8 row-text-container">
               {% if item.entity.field_row_layout_content_link.0.url|render %}
                 <a href=" {{ rowLink }} ">
-                <h3>{{item.entity.field_row_layout_content_title|view}}</h3>
+                <h3>{{item.entity.field_row_layout_content_title.value|render|striptags|trim}}</h3>
                 </a>
               {% else %}
-                <h3>{{item.entity.field_row_layout_content_title|view}}</h3>
+                <h3>{{item.entity.field_row_layout_content_title.value|render|striptags|trim}}</h3>
               {% endif %}
               {{item.entity.field_row_layout_content_text|view}}
             </div>
@@ -114,10 +114,10 @@
             <div class="col-6 row-text-container">
               {% if item.entity.field_row_layout_content_link.0.url|render %}
                 <a href=" {{ rowLink }} ">
-                <h3>{{item.entity.field_row_layout_content_title|view}}</h3>
+                <h3>{{item.entity.field_row_layout_content_title.value|render|striptags|trim}}</h3>
                 </a>
               {% else %}
-                <h3>{{item.entity.field_row_layout_content_title|view}}</h3>
+                <h3>{{item.entity.field_row_layout_content_title.value|render|striptags|trim}}</h3>
               {% endif %}
               {{item.entity.field_row_layout_content_text|view}}
             </div>
@@ -125,10 +125,10 @@
             <div class="col-6 row-text-container">
               {% if item.entity.field_row_layout_content_link.0.url|render %}
                 <a href=" {{ rowLink }} ">
-                <h3>{{item.entity.field_row_layout_content_title|view}}</h3>
+                <h3>{{item.entity.field_row_layout_content_title.value|render|striptags|trim}}</h3>
                 </a>
               {% else %}
-                <h3>{{item.entity.field_row_layout_content_title|view}}</h3>
+                <h3>{{item.entity.field_row_layout_content_title.value|render|striptags|trim}}</h3>
               {% endif %}
               {{item.entity.field_row_layout_content_text|view}}
             </div>
@@ -163,10 +163,10 @@
                       <div class="feature-row-text">
                           {% if item.entity.field_row_layout_content_link.0.url|render %}
                             <a href=" {{ rowLink }} ">
-                            <h3>{{item.entity.field_row_layout_content_title|view}}</h3>
+                            <h3>{{item.entity.field_row_layout_content_title.value|render|striptags|trim}}</h3>
                             </a>
                           {% else %}
-                            <h3>{{item.entity.field_row_layout_content_title|view}}</h3>
+                            <h3>{{item.entity.field_row_layout_content_title.value|render|striptags|trim}}</h3>
                           {% endif %}
                           {{ item.entity.field_row_layout_content_text|view }}
                       </div>
@@ -179,10 +179,10 @@
                         <div class="feature-row-text">
                             {% if item.entity.field_row_layout_content_link.0.url|render %}
                               <a href=" {{ rowLink }} ">
-                              <h3>{{item.entity.field_row_layout_content_title|view}}</h3>
+                              <h3>{{item.entity.field_row_layout_content_title.value|render|striptags|trim}}</h3>
                               </a>
                             {% else %}
-                              <h3>{{item.entity.field_row_layout_content_title|view}}</h3>
+                              <h3>{{item.entity.field_row_layout_content_title.value|render|striptags|trim}}</h3>
                             {% endif %}
                             {{ item.entity.field_row_layout_content_text|view }}
                         </div>
@@ -194,10 +194,10 @@
                         <div class="feature-row-text">
                             {% if item.entity.field_row_layout_content_link.0.url|render %}
                               <a href=" {{ rowLink }} ">
-                              <h3>{{item.entity.field_row_layout_content_title|view}}</h3>
+                              <h3>{{item.entity.field_row_layout_content_title.value|render|striptags|trim}}</h3>
                               </a>
                             {% else %}
-                              <h3>{{item.entity.field_row_layout_content_title|view}}</h3>
+                              <h3>{{item.entity.field_row_layout_content_title.value|render|striptags|trim}}</h3>
                             {% endif %}
                             {{ item.entity.field_row_layout_content_text|view }}
                         </div>

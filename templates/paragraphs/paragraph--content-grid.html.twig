@@ -52,14 +52,14 @@
                   {% endif %}
                 </div>
               {% endif %}
-              {% if (item.entity.field_grid_layout_content_title|view) or (item.entity.field_grid_layout_content_text|view) %}
+              {% if (item.entity.field_grid_layout_content_title.value|render|striptags|trim) or (item.entity.field_grid_layout_content_text|view) %}
                 <div class="grid-text-container">
                   {% if item.entity.field_grid_layout_content_link.0.url|render %}
                     <a href=" {{ gridLink }} ">
-                    <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                    <h3>{{item.entity.field_grid_layout_content_title.value|render|striptags|trim}}</h3>
                     </a>
                   {% else %}
-                    <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                    <h3>{{item.entity.field_grid_layout_content_title.value|render|striptags|trim}}</h3>
                   {% endif %}
                   {{item.entity.field_grid_layout_content_text|view}}
                 </div>
@@ -86,14 +86,14 @@
                   {% endif %}
                 </div>
               {% endif %}
-              {% if (item.entity.field_grid_layout_content_title|view) or (item.entity.field_grid_layout_content_text|view) %}
+              {% if (item.entity.field_grid_layout_content_title.value|render|striptags|trim) or (item.entity.field_grid_layout_content_text|view) %}
                 <div class="grid-text-container">
                   {% if item.entity.field_grid_layout_content_link.0.url|render %}
                     <a href=" {{ gridLink }} ">
-                    <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                    <h3>{{item.entity.field_grid_layout_content_title.value|render|striptags|trim}}</h3>
                     </a>
                   {% else %}
-                    <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                    <h3>{{item.entity.field_grid_layout_content_title.value|render|striptags|trim}}</h3>
                   {% endif %}
                   {{item.entity.field_grid_layout_content_text|view}}
                 </div>
@@ -114,11 +114,11 @@
                   {% if item.entity.field_grid_layout_content_link.0.url|render %}
                     <a href=" {{ gridLink }} ">
                     {{ item.entity.field_grid_layout_content_image|view }}
-                    <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                    <h3>{{item.entity.field_grid_layout_content_title.value|render|striptags|trim}}</h3>
                     </a>
                   {% else %}
                     {{ item.entity.field_grid_layout_content_image|view }}
-                    <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                    <h3>{{item.entity.field_grid_layout_content_title.value|render|striptags|trim}}</h3>
                   {% endif %}
                 </div>
               {% endif %}
@@ -150,14 +150,14 @@
                   {% endif %}
                   </div>
                 {% endif %}
-                {% if (item.entity.field_grid_layout_content_title|view) or (item.entity.field_grid_layout_content_text|view) %}
+                {% if (item.entity.field_grid_layout_content_title.value|render|striptags|trim) or (item.entity.field_grid_layout_content_text|view) %}
                   <div class="grid-text-container">
                   {% if item.entity.field_grid_layout_content_link.0.url|render %}
                     <a href=" {{ gridLink }} ">
-                    <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                    <h3>{{item.entity.field_grid_layout_content_title.value|render|striptags|trim}}</h3>
                     </a>
                   {% else %}
-                    <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                    <h3>{{item.entity.field_grid_layout_content_title.value|render|striptags|trim}}</h3>
                   {% endif %}
                     {{item.entity.field_grid_layout_content_text|view}}
                   </div>
@@ -178,14 +178,14 @@
                   {% endif %}
                     </div>
                   {% endif %}
-                  {% if (item.entity.field_grid_layout_content_title|view) or (item.entity.field_grid_layout_content_text|view) %}
+                  {% if (item.entity.field_grid_layout_content_title.value|render|striptags|trim) or (item.entity.field_grid_layout_content_text|view) %}
                     <div class="grid-text-container">
                   {% if item.entity.field_grid_layout_content_link.0.url|render %}
                     <a href=" {{ gridLink }} ">
-                    <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                    <h3>{{item.entity.field_grid_layout_content_title.value|render|striptags|trim}}</h3>
                     </a>
                   {% else %}
-                    <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                    <h3>{{item.entity.field_grid_layout_content_title.value|render|striptags|trim}}</h3>
                   {% endif %}
                       {{item.entity.field_grid_layout_content_text|view}}
                     </div>
@@ -206,14 +206,14 @@
                       {% endif %}
                     </div>
                   {% endif %}
-                  {% if (item.entity.field_grid_layout_content_title|view) or (item.entity.field_grid_layout_content_text|view) %}
+                  {% if (item.entity.field_grid_layout_content_title.value|render|striptags|trim) or (item.entity.field_grid_layout_content_text|view) %}
                     <div class="grid-text-container">
                   {% if item.entity.field_grid_layout_content_link.0.url|render %}
                     <a href=" {{ gridLink }} ">
-                    <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                    <h3>{{item.entity.field_grid_layout_content_title.value|render|striptags|trim}}</h3>
                     </a>
                   {% else %}
-                    <h3>{{item.entity.field_grid_layout_content_title|view}}</h3>
+                    <h3>{{item.entity.field_grid_layout_content_title.value|render|striptags|trim}}</h3>
                   {% endif %}
                       {{item.entity.field_grid_layout_content_text|view}}
                     </div>
