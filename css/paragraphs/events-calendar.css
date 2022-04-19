@@ -69,17 +69,8 @@
   background: rgba(0, 0, 0, 0.75);
 }
 
-.ucb-events-calendar .localist_widget_container span.lw_event_item_date {
-  background: rgba(0, 0, 0, 0.75);
-  font-weight: bold;
-}
-
 .ucb-events-calendar .localist_widget_container {
   background: none;
-}
-
-.ucb-events-calendar .localist_widget_container ul.lw_event_list {
-  max-width: none;
 }
 
 .ucb-events-calendar .localist_widget_container li.lw_event_item {
@@ -102,20 +93,10 @@
   font-size: 75%;
 }
 
-.ucb-events-calendar .localist_minicalendar_events {
-  flex-grow: 1;
-}
-
 .ucb-events-calendar .localist_minicalendar_events::after {
   content: "";
   display: table;
   clear: both;
-}
-
-.ucb-events-calendar .localist_minicalendar {
-  max-width: 400px;
-  margin: 0 auto;
-  padding-bottom: 40px;
 }
 
 .ucb-events-calendar .localist_minicalendar .localist_minicalendar_nav,
