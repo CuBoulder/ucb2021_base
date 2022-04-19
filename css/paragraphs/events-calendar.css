@@ -49,10 +49,6 @@
   clear: both;
 }
 
-.localist-events #lw {
-  background: none;
-}
-
 .localist-events .lwn,
 .localist-events .lwd,
 .localist-events .lwn0,
@@ -179,10 +175,6 @@
   color: #fff;
 }
 
-.localist-events .localist-widget-hl .event-card:hover {
-  border-color: inherit;
-}
-
 .localist-events .localist-widget-hl .event-details {
   background: rgba(0, 0, 0, 0.65);
 }
@@ -197,7 +189,7 @@
 
 .localist-events .localist-widget-hl .event-card {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.5s ease,background-color 0.5s ease,color 0.5s ease;
+  transition: box-shadow 0.5s ease, background-color 0.5s ease, color 0.5s ease;
   border: none;
 }
 
