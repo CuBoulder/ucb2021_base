@@ -106,7 +106,7 @@
   flex-grow: 1;
 }
 
-.localist-events .localist_minicalendar_events:after {
+.localist-events .localist_minicalendar_events::after {
   content: "";
   display: table;
   clear: both;
@@ -127,7 +127,7 @@
 
 .localist-events .localist_minicalendar .localist_minicalendar_pager a:link,
 .localist-events .localist_minicalendar .localist_minicalendar_pager a:visited {
-  color: #fff !important;
+  color: #fff ;
   background-color: #0277bd;
 }
 
@@ -137,7 +137,7 @@
 
 .localist-events .localist_minicalendar .localist_minicalendar_pager a.disabled:link,
 .localist-events .localist_minicalendar .localist_minicalendar_pager a.disabled:visited {
-  color: #999 !important;
+  color: #999 ;
   background-color: #ddd;
 }
 
@@ -161,7 +161,7 @@
 }
 
 .localist-events .localist_minicalendar .localist_minicalendar_minicalendar td a {
-  color: #01578b !important;
+  color: #01578b ;
 }
 
 .localist-events .localist_minicalendar .localist_minicalendar_minicalendar td a:hover {
@@ -176,7 +176,7 @@
 
 .localist-events .localist_minicalendar .localist_minicalendar_minicalendar .localist_minicalendar_today a:link,
 .localist-events .localist_minicalendar .localist_minicalendar_minicalendar .localist_minicalendar_today a:visited {
-  color: #fff !important;
+  color: #fff ;
 }
 
 .localist-events .localist-widget-hl .event-card:hover {
@@ -199,11 +199,15 @@
   -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  transition: -webkit-box-shadow 0.5s ease, background-color 0.5s ease,
-    color 0.5s ease;
-  transition: -moz-box-shadow 0.5s ease, background-color 0.5s ease,
-    color 0.5s ease;
-  transition: box-shadow 0.5s ease, background-color 0.5s ease, color 0.5s ease;
+  transition: -webkit-box-shadow 0.5s ease,
+  background-color 0.5s ease,
+  color 0.5s ease;
+  transition: -moz-box-shadow 0.5s ease,
+  background-color 0.5s ease,
+  color 0.5s ease;
+  transition: box-shadow 0.5s ease,
+  background-color 0.5s ease,
+  color 0.5s ease;
   border: none;
 }
 
@@ -232,8 +236,8 @@
   }
 }
 
-.localist-wrapper>ul,
-.localist-wrapper>ul>li {
+.localist-wrapper > ul,
+.localist-wrapper > ul > li {
   list-style: none;
   list-style-image: none;
   margin: 0;
@@ -261,7 +265,7 @@ table.localist_minicalendar_minicalendar caption {
   height: 1px;
   overflow: hidden;
   padding: 0;
-  position: absolute !important;
+  position: absolute ;
   width: 1px;
   white-space: nowrap;
 }
