@@ -1,0 +1,24 @@
+{#
+/**
+ * @file
+ * Theme to implement the events calendar embedder
+ *
+ * Created by Joshua Nicholson on 4/07/22
+*
+#}
+
+{{ attach_library('ucb2021_base/ucb-events-calendar') }}
+{%
+  set classes = [
+    'paragraph',
+    'paragraph--type--' ~ paragraph.bundle|clean_class,
+    view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+    not paragraph.isPublished() ? 'paragraph--unpublished'
+  ]
+%}
+
+{% block paragraph %}
+	<div{{attributes.addClass(classes)}}>
+        {{ content }}
+    </div>
+{% endblock paragraph %}
