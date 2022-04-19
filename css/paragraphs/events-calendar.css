@@ -1,8 +1,3 @@
-.ucb-events-calendar .localist-widget {
-  display: flex;
-  flex-direction: row-reverse;
-}
-
 .ucb-events-calendar .localist_minicalendar_events {
   flex-grow: 1;
 }
@@ -232,5 +227,12 @@ table.localist_minicalendar_minicalendar caption {
 
   .template-5 .le-date-wrapper .le-date-day {
     font-size: 350%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .ucb-events-calendar .localist-widget {
+    display: flex;
+    flex-direction: row-reverse;
   }
 }
