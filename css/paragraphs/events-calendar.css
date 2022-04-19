@@ -127,7 +127,7 @@
 
 .localist-events .localist_minicalendar .localist_minicalendar_pager a:link,
 .localist-events .localist_minicalendar .localist_minicalendar_pager a:visited {
-  color: #fff ;
+  color: #fff;
   background-color: #0277bd;
 }
 
@@ -137,7 +137,7 @@
 
 .localist-events .localist_minicalendar .localist_minicalendar_pager a.disabled:link,
 .localist-events .localist_minicalendar .localist_minicalendar_pager a.disabled:visited {
-  color: #999 ;
+  color: #999;
   background-color: #ddd;
 }
 
@@ -161,7 +161,7 @@
 }
 
 .localist-events .localist_minicalendar .localist_minicalendar_minicalendar td a {
-  color: #01578b ;
+  color: #01578b;
 }
 
 .localist-events .localist_minicalendar .localist_minicalendar_minicalendar td a:hover {
@@ -176,7 +176,7 @@
 
 .localist-events .localist_minicalendar .localist_minicalendar_minicalendar .localist_minicalendar_today a:link,
 .localist-events .localist_minicalendar .localist_minicalendar_minicalendar .localist_minicalendar_today a:visited {
-  color: #fff ;
+  color: #fff;
 }
 
 .localist-events .localist-widget-hl .event-card:hover {
@@ -196,44 +196,13 @@
 }
 
 .localist-events .localist-widget-hl .event-card {
-  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  transition: -webkit-box-shadow 0.5s ease,
-  background-color 0.5s ease,
-  color 0.5s ease;
-  transition: -moz-box-shadow 0.5s ease,
-  background-color 0.5s ease,
-  color 0.5s ease;
-  transition: box-shadow 0.5s ease,
-  background-color 0.5s ease,
-  color 0.5s ease;
+  transition: box-shadow 0.5s ease,background-color 0.5s ease,color 0.5s ease;
   border: none;
 }
 
 .localist-events .localist-widget-hl .event-card:hover {
-  -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
-  -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
-}
-
-/* Template 5 */
-.template-5 .le-date-wrapper .le-date-month {
-  line-height: 1;
-}
-
-.template-5 .le-date-wrapper .le-date-day {
-  line-height: 1;
-}
-
-@media screen and (min-width: 600px) {
-  .template-5 .le-date-wrapper .le-date-month {
-    font-size: 250%;
-  }
-
-  .template-5 .le-date-wrapper .le-date-day {
-    font-size: 350%;
-  }
 }
 
 .localist-wrapper > ul,
@@ -265,7 +234,26 @@ table.localist_minicalendar_minicalendar caption {
   height: 1px;
   overflow: hidden;
   padding: 0;
-  position: absolute ;
+  position: absolute;
   width: 1px;
   white-space: nowrap;
+}
+
+/* Template 5 */
+.template-5 .le-date-wrapper .le-date-month {
+  line-height: 1;
+}
+
+.template-5 .le-date-wrapper .le-date-day {
+  line-height: 1;
+}
+
+@media screen and (min-width: 600px) {
+  .template-5 .le-date-wrapper .le-date-month {
+    font-size: 250%;
+  }
+
+  .template-5 .le-date-wrapper .le-date-day {
+    font-size: 350%;
+  }
 }
