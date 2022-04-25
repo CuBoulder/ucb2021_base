@@ -4,6 +4,12 @@
 */
 
 /* Overall Content Row CSS */
+
+.feature-row-image-container .contextual-region button,
+.row-image-container .contextual-region button {
+  display: none;
+}
+
 .ucb-above-content .paragraph--type--content-row,
 .ucb-below-content .paragraph--type--content-row {
   padding: 1.5em;
