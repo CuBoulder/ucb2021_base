@@ -38,6 +38,13 @@
     {% if layoutSelection == 0 %}
       <div class="row row-cols-lg-{{ columnNumbers }} row-cols-md-2 row-cols-1 justify-content-evenly">
         {% for key, item in paragraph.field_grid_layout_content if key|first != '#' %}
+        {% if imgStyle == "square-img" %}
+          {% set imgUrl = item.entity.field_grid_layout_content_image.entity.field_media_image.entity.fileuri|image_style('focal_image') %}
+          {% set imgAlt = item.entity.field_grid_layout_content_image.entity.field_media_image.alt|render %}
+        {% else %}
+          {% set imgUrl = item.entity.field_grid_layout_content_image.entity.field_media_image.entity.fileuri|image_style('focal_image_wide') %}
+          {% set imgAlt = item.entity.field_grid_layout_content_image.entity.field_media_image.alt|render %}
+        {% endif %}
         {% set gridLink = item.entity.field_grid_layout_content_link.0.url|render %}
           <div class="col">
             <div class="grid-column">
@@ -45,10 +52,10 @@
                 <div class="grid-image-container grid-fill {{ imgStyle }}">
                   {% if item.entity.field_grid_layout_content_link.0.url|render %}
                     <a href=" {{ gridLink }} ">
-                    {{ item.entity.field_grid_layout_content_image|view }}
+                      <img src="{{ imgUrl }}" alt="{{ imgAlt }}"/>
                     </a>
                   {% else %}
-                    {{ item.entity.field_grid_layout_content_image|view }}
+                    <img src="{{ imgUrl }}" alt="{{ imgAlt }}"/>
                   {% endif %}
                 </div>
               {% endif %}
@@ -72,6 +79,13 @@
     {% elseif layoutSelection == 1 %}
       <div class="row row-cols-lg-{{ columnNumbers }} row-cols-md-2 row-cols-1 justify-content-evenly">
         {% for key, item in paragraph.field_grid_layout_content if key|first != '#' %}
+        {% if imgStyle == "square-img" %}
+          {% set imgUrl = item.entity.field_grid_layout_content_image.entity.field_media_image.entity.fileuri|image_style('focal_image') %}
+          {% set imgAlt = item.entity.field_grid_layout_content_image.entity.field_media_image.alt|render %}
+        {% else %}
+          {% set imgUrl = item.entity.field_grid_layout_content_image.entity.field_media_image.entity.fileuri|image_style('focal_image_wide') %}
+          {% set imgAlt = item.entity.field_grid_layout_content_image.entity.field_media_image.alt|render %}
+        {% endif %}
         {% set gridLink = item.entity.field_grid_layout_content_link.0.url|render %}
           <div class="col">
             <div class="grid-card">
@@ -79,10 +93,10 @@
                 <div class="grid-image-container grid-fill {{ imgStyle }}">
                   {% if item.entity.field_grid_layout_content_link.0.url|render %}
                     <a href=" {{ gridLink }} ">
-                    {{ item.entity.field_grid_layout_content_image|view }}
+                      <img src="{{ imgUrl }}" alt="{{ imgAlt }}" />
                     </a>
                   {% else %}
-                    {{ item.entity.field_grid_layout_content_image|view }}
+                    <img src="{{ imgUrl }}" alt="{{ imgAlt }}" />
                   {% endif %}
                 </div>
               {% endif %}
@@ -106,6 +120,13 @@
     {% elseif layoutSelection == 2 %}
       <div class="row row-cols-lg-{{ columnNumbers }} row-cols-md-2 row-cols-1 justify-content-evenly">
         {% for key, item in paragraph.field_grid_layout_content if key|first != '#' %}
+        {% if imgStyle == "square-img" %}
+          {% set imgUrl = item.entity.field_grid_layout_content_image.entity.field_media_image.entity.fileuri|image_style('focal_image') %}
+          {% set imgAlt = item.entity.field_grid_layout_content_image.entity.field_media_image.alt|render %}
+        {% else %}
+          {% set imgUrl = item.entity.field_grid_layout_content_image.entity.field_media_image.entity.fileuri|image_style('focal_image_wide') %}
+          {% set imgAlt = item.entity.field_grid_layout_content_image.entity.field_media_image.alt|render %}
+        {% endif %}
         {% set gridLink = item.entity.field_grid_layout_content_link.0.url|render %}
           <div class="col">
             <div class="grid-column">
@@ -113,11 +134,11 @@
                 <div class="overlay-grid-image-container grid-fill {{ imgStyle }}">
                   {% if item.entity.field_grid_layout_content_link.0.url|render %}
                     <a href=" {{ gridLink }} ">
-                    {{ item.entity.field_grid_layout_content_image|view }}
+                      <img src="{{ imgUrl }}" alt="{{ imgAlt }}"/>
                     <h3>{{item.entity.field_grid_layout_content_title.value|render|striptags|trim}}</h3>
                     </a>
                   {% else %}
-                    {{ item.entity.field_grid_layout_content_image|view }}
+                    <img src="{{ imgUrl }}" alt="{{ imgAlt }}"/>
                     <h3>{{item.entity.field_grid_layout_content_title.value|render|striptags|trim}}</h3>
                   {% endif %}
                 </div>
@@ -135,6 +156,13 @@
     {% else %}
       <div class="row row-cols-lg-2 row-cols-1">
         {% for key, item in paragraph.field_grid_layout_content if key|first != '#' %}
+        {% if imgStyle == "square-img" %}
+          {% set imgUrl = item.entity.field_grid_layout_content_image.entity.field_media_image.entity.fileuri|image_style('focal_image') %}
+          {% set imgAlt = item.entity.field_grid_layout_content_image.entity.field_media_image.alt|render %}
+        {% else %}
+          {% set imgUrl = item.entity.field_grid_layout_content_image.entity.field_media_image.entity.fileuri|image_style('focal_image_wide') %}
+          {% set imgAlt = item.entity.field_grid_layout_content_image.entity.field_media_image.alt|render %}
+        {% endif %}
         {% set gridLink = item.entity.field_grid_layout_content_link.0.url|render %}
           {% if (loop.index0 % 3 == 0) and ((loop.index0 is even) or (loop.index0 == 0)) %}
             <div class="col">
@@ -143,10 +171,10 @@
                   <div class="grid-image-container grid-fill {{ imgStyle }}">
                   {% if item.entity.field_grid_layout_content_link.0.url|render %}
                     <a href=" {{ gridLink }} ">
-                    {{ item.entity.field_grid_layout_content_image|view }}
+                      <img src="{{ imgUrl }}" alt="{{ imgAlt }}"/>
                     </a>
                   {% else %}
-                    {{ item.entity.field_grid_layout_content_image|view }}
+                    <img src="{{ imgUrl }}" alt="{{ imgAlt }}"/>
                   {% endif %}
                   </div>
                 {% endif %}
@@ -171,10 +199,10 @@
                     <div class="grid-image-container grid-fill {{ imgStyle }}">
                   {% if item.entity.field_grid_layout_content_link.0.url|render %}
                     <a href=" {{ gridLink }} ">
-                    {{ item.entity.field_grid_layout_content_image|view }}
+                      <img src="{{ imgUrl }}" alt="{{ imgAlt }}"/>
                     </a>
                   {% else %}
-                    {{ item.entity.field_grid_layout_content_image|view }}
+                    <img src="{{ imgUrl }}" alt="{{ imgAlt }}"/>
                   {% endif %}
                     </div>
                   {% endif %}
@@ -199,10 +227,10 @@
                     <div class="grid-image-container grid-fill {{ imgStyle }}">
                       {% if item.entity.field_grid_layout_content_image|view %}
                         <a href=" {{ gridLink }} ">
-                        {{ item.entity.field_grid_layout_content_image|view }}
+                          <img src="{{ imgUrl }}" alt="{{ imgAlt }}"/>
                         </a>
                       {% else %}
-                        {{ item.entity.field_grid_layout_content_image|view }}
+                        <img src="{{ imgUrl }}" alt="{{ imgAlt }}"/>
                       {% endif %}
                     </div>
                   {% endif %}
@@ -210,7 +238,7 @@
                     <div class="grid-text-container">
                   {% if item.entity.field_grid_layout_content_link.0.url|render %}
                     <a href=" {{ gridLink }} ">
-                    <h3>{{item.entity.field_grid_layout_content_title.value|render|striptags|trim}}</h3>
+                      <h3>{{item.entity.field_grid_layout_content_title.value|render|striptags|trim}}</h3>
                     </a>
                   {% else %}
                     <h3>{{item.entity.field_grid_layout_content_title.value|render|striptags|trim}}</h3>
