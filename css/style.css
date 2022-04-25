@@ -424,14 +424,16 @@ li.social-media-item.menu-item {
 
 /**** Responsive Images ******/
 article img {
-  width: 100%;
+  max-width: 100%;
   height: auto;
 }
 
-article .align-right img {
+article .align-right img,
+article .align-right .media-image-caption p {
   padding-left: 1em;
 }
 
-article .align-left img {
+article .align-left img,
+article .align-left .media-image-caption p {
   padding-right: 1em;
 }
