@@ -41,7 +41,7 @@ for(var i = 0, x = els.length; i < x; i++) {
 
       // apparently this is difficult -- maybe future polish? 
 
-    };
+    ;}
 
   }
 }
