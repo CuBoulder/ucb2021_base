@@ -1,31 +1,31 @@
 .ucb-vid-reveal {
-    position: relative;
+  position: relative;
 }
 
 .ucb-video-reveal-controls {
-    position: absolute;
-    text-align: center;
-    font-size: 2.25em;
-    font-weight: bold;
-    color: white;
-    text-shadow: 2px 2px 2px rgba(20,20,20,0.3);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    cursor: pointer;
-    line-height: 1.75em;
+  position: absolute;
+  text-align: center;
+  font-size: 2.25em;
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 2px rgba(20,20,20,0.3);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  line-height: 1.75em;
 }
 
 span.ucb-vid-reveal-icon {
-    font-size: 2em;
+  font-size: 2em;
 }
 
 .ucb-video-reveal-video {
-    display: none;
+  display: none;
 }
 
 @media screen and (max-width: 768px) {
-    .ucb-video-reveal-controls {
-        font-size: 1.25em;
-    }
+  .ucb-video-reveal-controls {
+    font-size: 1.25em;
+  }
 }
