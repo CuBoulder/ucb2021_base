@@ -1,3 +1,7 @@
+.ucb-vid-reveal {
+    position: relative;
+}
+
 .ucb-video-reveal-controls {
     position: absolute;
     text-align: center;
