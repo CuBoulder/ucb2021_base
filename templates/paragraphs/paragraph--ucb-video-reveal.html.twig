@@ -57,14 +57,16 @@
   <div{{ attributes.addClass(classes) }}>
     {% block content %}
       <div id="ucb-video-paragraph-{{ myId }}" class="ucb-video-text-div">
-        <span class="ucb-vid-reveal-text">{{ content.field_ucb_vid_reveal_text}}</span>
-        <span class="ucb-vid-reveal-icon"><i class="fas fa-play-circle"></i></span>
-      </div>
-      {{ content.field_ucb_vid_reveal_image|render }}
-
-      <div class="ucb-video-reveal-video">
+        <div class="ucb-video-reveal-controls">
+          <span class="ucb-vid-reveal-text">{{ content.field_ucb_vid_reveal_text}}</span>
+          <span class="ucb-vid-reveal-icon"><i class="fas fa-play-circle"></i></span>
+        </div>
+        <div class="ucb-video-reveal-image">
+          {{ content.field_ucb_vid_reveal_image|render }}
+        </div>
         {{ content.field_ucb_vid_reveal_video|render }}
       </div>
+
     {% endblock %}
   </div>
 {% endblock paragraph %}
