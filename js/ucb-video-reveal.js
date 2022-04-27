@@ -1,9 +1,19 @@
-
+/*
+ *  ucb-video-reveal.js - This should allow the dynamic functionality necessary
+ *      for the video reveal paragraph.   
+ * 
+ *  FUTURE  : add in auto-play of vidoe on reveal 
+ *          : have image fade-out and video fade-in?  
+*/
 var els = document.getElementsByClassName('ucb-video-reveal-controls');
 
+// Adding a handler for each instance of the video reveal ... 
+// this should allow multiple instances of the video reveal paragraph
+// to all work independantly on the page.  
 for(var i = 0, x = els.length; i < x; i++) {
   els[i].onclick = function() {
-      alert("Coming Soon!");
+      // sanity checker
+      // alert("Coming Soon!");
 
       // We have 3 sibling elements that we're dealing with.  One was clicked on
       // the text control element which needs to be hidden
@@ -25,28 +35,13 @@ for(var i = 0, x = els.length; i < x; i++) {
         videoEl.style.display = "block";
 
         // now we should be able to play the video for the user 
+        // I wonder how that works... 
+        // looks like you can add "&autoplay=1" to the src field to make a YouTube
+        // video autoplay.
 
+        // apparently this is difficult -- maybe future polish? 
 
       }
 
-
-      // hide the image 
-      //imageEl = this.querySelector('img');
-    //   imageEls = this.children;
-    //   for(var j = 0; j < imageEls.length; j++) {
-    //       console.log(imageEls[j].tagName);
-    //       if(imageEls[j].tagName == "img") {
-    //         alert("Found an Image!");
-    //         imageEls[j].style.display = "none";
-    //       }
-    //   }
-
-      // hide the text 
-    //   textEl = this.querySelector('.ucb-vid-reveal-text');
-    //   textEl.style.display = "none";
-
-      // un-hide the video 
-
-      // start playing the video 
   }
 }

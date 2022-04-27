@@ -19,3 +19,9 @@ span.ucb-vid-reveal-icon {
 .ucb-video-reveal-video {
     display: none;
 }
+
+@media screen and (max-width: 768px) {
+    .ucb-video-reveal-controls {
+        font-size: 1.25em;
+    }
+}
