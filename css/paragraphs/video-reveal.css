@@ -27,7 +27,6 @@ span.ucb-vid-reveal-icon {
 .ucb-video-reveal-close {
   width: 100%;
   display: none;
-  height: 2em;
   background: #222;
   color: white;
   text-align: right;
@@ -43,7 +42,7 @@ span.ucb-vid-reveal-icon {
 }
 
 div.contextual {
-    display: none;
+  display: none;
 }
 
 @media screen and (max-width: 768px) {
@@ -51,3 +50,4 @@ div.contextual {
     font-size: 1.25em;
   }
 }
+
