@@ -5,7 +5,11 @@
  *  FUTURE  : add in auto-play of vidoe on reveal
  *          : have image fade-out and video fade-in?
 */
+// controls to show the video 
 var els = document.getElementsByClassName("ucb-video-reveal-controls");
+
+// controls to close the video 
+var closeEls = document.getElementsByClassName("ucb-video-reveal-close");
 
 // Adding a handler for each instance of the video reveal ...
 // this should allow multiple instances of the video reveal paragraph
@@ -30,7 +34,10 @@ for (let i = 0, x = els.length; i < x; i++) {
       // find the image and hide it
       myParentEl.querySelector(".ucb-video-reveal-image").style.display = "none";
 
-      // find the video and show it
+      // find the video and video control block and show them
+      let vidControlEl = myParentEl.querySelector(".ucb-video-reveal-close");
+      vidControlEl.style.display = "inline-block";
+
       let videoEl = myParentEl.querySelector(".ucb-video-reveal-video");
       videoEl.style.display = "block";
 
@@ -41,6 +48,35 @@ for (let i = 0, x = els.length; i < x; i++) {
 
       // apparently this is difficult -- maybe future polish?
 
+    }
+  };
+}
+
+
+// Adding a handler for each instance of the video close button ...
+// this should allow multiple instances of the video reveal paragraph 
+// to all work independantly on the page.  
+for (let i = 0, x = closeEls.length; i < x; i++) {
+  closeEls[i].onclick = function() {
+    // Sanity checker
+    //alert("Coming Soon!");
+
+    // get the parent element
+    let myParentEl = this.parentElement;
+
+    if(myParentEl) {
+      // find the video and video control block and hide them
+      let vidControlEl = myParentEl.querySelector(".ucb-video-reveal-close");
+      vidControlEl.style.display = "none";
+
+      let videoEl = myParentEl.querySelector(".ucb-video-reveal-video");
+      videoEl.style.display = "none";
+
+      // find the text controls and show them
+      myParentEl.querySelector(".ucb-video-reveal-controls").style.display = "block";
+
+      // find the image and hide it
+      myParentEl.querySelector(".ucb-video-reveal-image").style.display = "block";
     }
   };
 }

@@ -24,6 +24,28 @@ span.ucb-vid-reveal-icon {
   display: none;
 }
 
+.ucb-video-reveal-close {
+  width: 100%;
+  display: none;
+  height: 2em;
+  background: #222;
+  color: white;
+  text-align: right;
+  height: fit-content;
+  margin: 0;
+  padding-top: 0.25em;
+}
+
+.ucb-video-reveal-close i.fas.fa-times-circle {
+  font-size: 2em;
+  margin-right: 0.25em;
+  cursor: pointer;
+}
+
+div.contextual {
+    display: none;
+}
+
 @media screen and (max-width: 768px) {
   .ucb-video-reveal-controls {
     font-size: 1.25em;
