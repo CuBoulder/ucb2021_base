@@ -105,7 +105,6 @@ ucb-social-media-icons-block:
     theme:
       css/paragraphs/social-media-icons.css: {}
 
-
 ucb-image-gallery:
   version: 1.x
   js:
@@ -121,3 +120,11 @@ ucb-events-calendar:
   css:
     theme:
       css/paragraphs/events-calendar.css: {}
+
+ucb-video-reveal:
+  version: 1.x
+  js:
+    js/ucb-video-reveal.js: {}
+  css:
+    theme:
+      css/paragraphs/video-reveal.css: {}
