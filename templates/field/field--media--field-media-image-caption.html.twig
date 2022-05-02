@@ -1,3 +1,5 @@
 {% for item in items %}
-    {{ item|render|striptags|trim }}
+    <span class="media-image-caption">
+        {{ item|render }}
+    </span>
 {% endfor %}
