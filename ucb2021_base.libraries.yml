@@ -117,9 +117,12 @@ ucb-image-gallery:
 
 ucb-form-page:
   version: 1.x
+  js:
+    js/ucb-form-page.js: {}
   css:
     theme:
       css/ucb-form-page.css: {}
+  
       
 ucb-events-calendar:
   version: 1.x
