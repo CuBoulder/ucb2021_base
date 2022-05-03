@@ -1,6 +1,6 @@
 {
     "name": "cu-boulder/ucb2021_base",
     "description": "Drupal 9 2021 base theme for CU Boulder",
-    "license": "MIT",
+    "license": "GPL-2.0-or-later",
     "type": "drupal-custom-theme"
 }
