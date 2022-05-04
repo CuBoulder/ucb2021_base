@@ -1,9 +1,9 @@
 {#
 /**
  * @file
- * Theme to implement the newsletter section content
+ * Theme to implement the newsletter section article
  *
- * Created by Joshua Nicholson on 4/28/22
+ * Created by Joshua Nicholson on 5/3/22
 *
 #}
 
@@ -19,6 +19,6 @@
 
 {% block paragraph %}
 	<div{{attributes.addClass(classes)}}>
-        {{ content.field_article_selection|view('newsletter_feature') }}
+        {{ content }}
     </div>
 {% endblock paragraph %}

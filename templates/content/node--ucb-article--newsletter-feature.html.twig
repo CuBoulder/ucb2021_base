@@ -1,0 +1,31 @@
+{#
+/**
+ * Theme layout to display a Newsletter Page's Article content in the Feature Display.
+ *
+ */
+#}
+
+{{ attach_library('ucb2021_base/ucb-page') }}
+{{ attach_library('ucb2021_base/ucb-article') }}
+
+{%
+  set classes = [
+  'node',
+  'node--type-' ~ node.bundle|clean_class,
+  node.isPromoted() ? 'node--promoted',
+  node.isSticky() ? 'node--sticky',
+  not node.isPublished() ? 'node--unpublished',
+  view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+]
+%}
+
+{% set sidebar_position = drupal_config('ucb2021_base.settings', 'ucb_sidebar_position') %}
+
+<article{{attributes.addClass(classes)}}>
+  <h3>FEATURE TEST</h3>
+   <a href="{{ drupal_url('node/1') }}">{{ node.label }}</a>
+  {{ label }}
+  {{ content.field_ucb_article_categories }}
+  {{ content.field_ucb_article_summary|render }}  
+  <h3>FEATURE TEST END</h3>
+</article>
