@@ -38,18 +38,41 @@
   {% set size = "size-small" %}
 {% endif %}
 
+{# get the state of the overlay toggle and the color of the text #}
+{% set overlayClass = "" %} 
+{% if paragraph.field_ucb_hero_overlay.value %}
+  {# overlay requested set to dark #}
+  {% set overlayClass = "ucb-overlay-dark" %}
+
+  {# dark text, so switch to the light overlay instead #}
+  {% if paragraph.field_text_color.value == "text-body" %}
+    {% set overlayClass = "ucb-overlay-light" %}
+  {% endif %}
+{% endif %} 
+
+
 {% block paragraph %}
-  <div{{ attributes.addClass(classes).setAttribute("style","#{bgValue}").addClass(size) }}>
+  <div{{ attributes.addClass(classes).setAttribute("style","#{bgValue}").addClass(size, overlayClass) }}>
     {% block content %}
       {% set linkColor = paragraph.field_link_color.value %}
       {# Dont let twig render the links #}
       <div class="container">
-        {{ content|without('field_links') }}
-        {# Render links here #}
-        {# <p> {{ dump(paragraph.field_links.value) }} </p> #}
-        {% for item in paragraph.field_links.value %}
-          <a href="{{ item.uri }}" class="button {{ linkColor }}" > {{ item.title }} </a>
-        {% endfor %}
+        <div class="row">
+          {% if paragraph.field_text_align.value == "text-righthalf" %}
+              <div class="col-12 col-md-6"></div>
+          {% endif %}
+          <div class="col">
+            {{ content|without('field_links') }}
+            {# Render links here #}
+            {# <p> {{ dump(paragraph.field_links.value) }} </p> #}
+            {% for item in paragraph.field_links.value %}
+              <a href="{{ item.uri }}" class="button {{ linkColor }}" > {{ item.title }} </a>
+            {% endfor %}
+          </div>
+          {% if paragraph.field_text_align.value == "text-lefthalf" %}
+              <div class="col-12 col-md-6"></div>
+          {% endif %}
+        </div>
       </div>
     {% endblock %}
   </div>
