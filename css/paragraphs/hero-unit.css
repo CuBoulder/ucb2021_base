@@ -8,10 +8,6 @@
   margin-bottom: 1em;
 }
 
-.paragraph.paragraph--type--hero-unit.text-white h2 {
-  text-shadow: 3px 3px 3px rgb(20 20 20 / 80%);
-}
-
 .paragraph.paragraph--type--hero-unit.size-large {
   padding: 100px 2rem;
 }
@@ -27,4 +23,14 @@
 .paragraph.paragraph--type--hero-unit.size-small {
   padding: 1rem;
   font-size: initial;
+}
+
+.ucb-overlay-dark {
+  background-color: rgba(20, 20, 20, 0.5);
+  background-blend-mode: overlay;
+}
+
+.ucb-overlay-light {
+  background-color: rgba(200, 200, 200, 0.7);
+  background-blend-mode: overlay;
 }
