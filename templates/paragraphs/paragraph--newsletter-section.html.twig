@@ -1,0 +1,78 @@
+{#
+/**
+ * @file
+ * Theme to implement the newsletter section content
+ *
+ * Created by Joshua Nicholson on 4/28/22
+*
+		{% if paragraph.field_newsletter_section_style.value is same as("0") %}
+			<h3>BIG WRAP TEST</h3>
+				{% for key, item in paragraph.field_newsletter_section_select.entity.field_newsletter_article_select if key|first != '#' %}
+					{{ item.entity.field_ucb_article_thumbnail|view }}
+					{{ item.label }}
+					{{ item.entity.field_ucb_article_categories|view }}
+					{{ item.entity.field_ucb_article_summary|view }}
+				{% endfor %}
+			<h3>BIG WRAP TEST END</h3>
+
+		{% else %}
+			<h3>TEASER TEST</h3>
+			{% for key, item in paragraph.field_newsletter_section_select.entity.field_newsletter_article_select if key|first != '#' %}
+				<div class="col-8">
+					<h3>Beggers</h3>
+					<a href="{{ drupal_url('node/1') }}">{{ node.label }}</a>
+					{{ item|view }}
+				</div>
+			{% endfor %}
+			<h3>TEASER TEST END</h3>
+		{% endif %}
+#}
+
+{%
+  set classes = [
+    'paragraph',
+    'paragraph--type--' ~ paragraph.bundle|clean_class,
+    view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+    not paragraph.isPublished() ? 'paragraph--unpublished'
+  ]
+%}
+
+{% block paragraph %}
+	<div{{attributes.addClass(classes)}}>
+		<div class="row row-content">
+			{% if paragraph.field_newsletter_section_style.value is same as("0") %}
+				{% for key, item in paragraph.field_newsletter_section_select if key|first != '#' %}
+					{# Code to render selected article content #}
+					{{ item.entity.field_newsletter_article_select.entity.field_ucb_article_thumbnail|view }}
+					{{ item.entity.field_newsletter_article_select.entity.field_ucb_article_categories|view }}
+					{{ item.entity.field_newsletter_article_select.entity.field_ucb_article_summary|view }}
+
+					{# Code to render user made content #}
+					{{ item.entity.field_newsletter_content_image|view }}
+					{{ item.entity.field_newsletter_content_title|view }}
+					{{ item.entity.field_newsletter_content_text|view }}
+				{% endfor %}
+
+			{% else %}
+				{% for key, item in paragraph.field_newsletter_section_select if key|first != '#' %}
+					<div class="col-4">
+						{# Code to render selected article content #}
+						{{ item.entity.field_newsletter_article_select.entity.field_ucb_article_categories|view }}
+						{{ item.entity.field_newsletter_article_select.entity.field_ucb_article_summary|view }}
+
+						{# Code to render user made content #}
+						{{ item.entity.field_newsletter_content_title|view }}
+						{{ item.entity.field_newsletter_content_text|view }}
+					</div>
+					<div class="col-2">
+						{# Code to render selected article content #}
+						{{ item.entity.field_newsletter_article_select.entity.field_ucb_article_thumbnail|view }}
+
+						{# Code to render user made content #}
+						{{ item.entity.field_newsletter_content_image|view }}
+					</div>
+				{% endfor %}
+			{% endif %}
+		</div>
+	</div>
+{% endblock paragraph %}
