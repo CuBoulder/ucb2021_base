@@ -24,7 +24,7 @@
 				{# Code to render selected article content #}
 				{% if item.entity.field_newsletter_article_select.entity.field_ucb_article_categories|view %}
 					{{ item.entity.field_newsletter_article_select.entity.field_ucb_article_thumbnail|view }}
-					<h3><a href="{{ item.entity.field_newsletter_article_select.url }}">
+					<h3><a href="{{ path('entity.node.canonical', {'node': item.entity.field_newsletter_article_select.target_id}) }}">
 						{{ item.entity.field_newsletter_article_select.entity.title.value|render|striptags|trim }}
 					</a></h3>
 					<div class="article-teaser-meta">
@@ -53,9 +53,9 @@
 						class="col-5">
 						{# Code to render selected article content #}
 						{% if item.entity.field_newsletter_article_select.entity.field_ucb_article_categories|view %}
-							<h3>
+							<h3><a href="{{ path('entity.node.canonical', {'node': item.entity.field_newsletter_article_select.target_id}) }}">
 								{{ item.entity.field_newsletter_article_select.entity.title.value|render|striptags|trim }}
-							</h3>
+							</a></h3>
 							<div class="article-teaser-meta">
 								{{ item.entity.field_newsletter_article_select.entity.field_ucb_article_categories|view }}
 							</div>

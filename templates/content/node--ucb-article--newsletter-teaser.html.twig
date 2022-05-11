@@ -22,17 +22,17 @@
 {% set sidebar_position = drupal_config('ucb2021_base.settings', 'ucb_sidebar_position') %}
 
 <article{{attributes.addClass(classes)}}>
-  <h3>Fat TEST</h3>
-  <div class="row row-content">
-    <div class="col-8">
-      <a href="{{ drupal_url('node/1') }}">{{ node.label }}</a>
-      {{ content.field_ucb_article_categories }}
-      {{ content.field_ucb_article_summary|render }}  
+{{    <h3>Fat TEST</h3>
+    <div class="row row-content">
+      <div class="col-8">
+        <a href="{{ drupal_url('node/1') }}">{{ node.label }}</a>
+        {{ content.field_ucb_article_categories }}
+        {{ content.field_ucb_article_summary|render }}  
+      </div>
+      <div class="col-4">
+        {{ content.field_ucb_article_thumbnail|render }}
+      </div>
     </div>
-    <div class="col-4">
-      {{ content.field_ucb_article_thumbnail|render }}
-    </div>
-  </div>
-  <h3>Fat TEST END</h3>
+    <h3>Fat TEST END</h3>}}
 
 </article>
