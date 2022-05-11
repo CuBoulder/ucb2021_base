@@ -121,3 +121,9 @@ ucb-events-calendar:
   css:
     theme:
       css/paragraphs/events-calendar.css: {}
+
+ucb-newsletter:
+  version: 1.x
+  css:
+    theme:
+      css/ucb-newsletter.css: {}

@@ -1,0 +1,66 @@
+{#
+/**
+* Theme layout to display a UCB Newsletter Page.
+*
+* Created by jnichol on 5/05/22
+*/
+#}
+
+{{ attach_library('ucb2021_base/ucb-page') }}
+{{ attach_library('ucb2021_base/ucb-newsletter') }}
+
+{%
+set classes = [
+'node',
+'node--type-' ~ node.bundle|clean_class,
+not node.isPublished() ? 'node--unpublished',
+view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+]
+%}
+
+{#Dummy variable to ensure that all content tags are set for caching purposes#}
+{% set content_render = content|render %}
+
+<article{{attributes.addClass(classes)}}>
+	<div class="container ucb-newsletter">
+		{# Newsletter Intro #}
+		{% if content.field_newsletter_intro_image|render %}
+			{{ content.field_newsletter_intro_image }}
+		{% endif %}
+		{% if content.field_newsletter_intro_body|render %}
+			{{ content.field_newsletter_intro_body }}
+		{% endif %}
+    <div>
+
+		{# Newsletter Sections Content #}
+		<div class="ucb-newsletter-section-content">
+			{% if content.field_newsletter_section_content|render %}
+				<div class="ucb-article-body">
+                    {{ content.field_newsletter_section_content }}
+                </div>
+			{% endif %}
+		</div>
+
+		{# Newsletter Blocks #}
+		<div class="row row-content ucb-newsletter-blocks">
+			<div class="col-6">
+				{% if content.field_newsletter_block_title_one|render %}
+					<h3>{{ content.field_newsletter_block_title_one }}</h3>
+				{% endif %}
+
+				{% if content.field_newsletter_block_text_one|render %}
+					{{ content.field_newsletter_block_text_one }}
+				{% endif %}
+			</div>
+			<div class="col-6">
+				{% if content.field_newsletter_block_title_two|render %}
+					<h3>{{ content.field_newsletter_block_title_two }}</h3>
+				{% endif %}
+
+				{% if content.field_newsletter_block_text_two|render %}
+					{{ content.field_newsletter_block_text_two }}
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</article>
