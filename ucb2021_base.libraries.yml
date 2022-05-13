@@ -16,6 +16,7 @@ ucb-global:
       css/styleguide/icons.css: {}
   js:
     js/bootstrap/bootstrap.bundle.min.js: {}
+    js/fontawesome/all.min.js: {}
     js/ucb-main.js: {}
   dependencies:
     - core/drupal
