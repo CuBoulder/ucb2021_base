@@ -52,7 +52,7 @@
 {% set formattedContent = item.url |render|striptags|trim|upper %}
 
 			{% if 'TWITTER' in formattedContent %}
-				<a href="{{ item.content['#url'] }}" class="icon-a" title="Twitter" alt="Twitter">
+				<a href="{{ item.url }}" class="icon-a" title="Twitter" alt="Twitter">
 					<span class="icon-div">
 						<span class="sr-only">Twitter</span>
 						<span class="icon-bg icon-bg-twitter">
@@ -62,7 +62,7 @@
 					</span>
 				</a>
 			{% elseif 'FACEBOOK' in formattedContent %}
-				<a href="{{ item.content['#url'] }}" class="icon-a" title="FaceBook" alt="FaceBook">
+				<a href="{{ item.url }}" class="icon-a" title="FaceBook" alt="FaceBook">
 					<span class="icon-div">
 						<span class="sr-only">FaceBook</span>
 						<span class="icon-bg icon-bg-facebook">
@@ -73,7 +73,7 @@
 				</a>
 
 			{% elseif 'INSTAGRAM' in formattedContent %}
-				<a href="{{ item.content['#url'] }}" class="icon-a" title="Instagram" alt="Instagram">
+				<a href="{{ item.url }}" class="icon-a" title="Instagram" alt="Instagram">
 					<span class="icon-div">
 						<span class="sr-only">Instagram</span>
 						<span class="icon-bg icon-bg-instagram">
@@ -84,7 +84,7 @@
 				</a>
 
 			{% elseif 'LINKEDIN' in formattedContent %}
-				<a href="{{ item.content['#url'] }}" class="icon-a" title="LinkedIn" alt="LinkedIn">
+				<a href="{{ item.url }}" class="icon-a" title="LinkedIn" alt="LinkedIn">
 					<span class="icon-div">
 						<span class="sr-only">LinkedIn</span>
 						<span class="icon-bg icon-bg-linkedin">
@@ -95,7 +95,7 @@
 				</a>
 
 			{% elseif 'YOUTUBE' in formattedContent %}
-				<a href="{{ item.content['#url'] }}" class="icon-a" title="YouTube" alt="YouTube">
+				<a href="{{ item.url }}" class="icon-a" title="YouTube" alt="YouTube">
 					<span class="icon-div">
 						<span class="sr-only">YouTube</span>
 						<span class="icon-bg icon-bg-youtube">
@@ -105,7 +105,7 @@
 					</span>
 				</a>
 			{% elseif 'PINTREST' in formattedContent %}
-					<a href="{{ item.content['#url'] }}" class="icon-a" title="Pintrest" alt="Pintrest">
+					<a href="{{ item.url }}" class="icon-a" title="Pintrest" alt="Pintrest">
 						<span class="icon-div">
 							<span class="sr-only">Pintrest</span>
 							<span class="icon-bg icon-bg-pintrest">
@@ -115,7 +115,7 @@
 						</span>
 					</a>
 			{% elseif 'FLICKR' in formattedContent %}
-					<a href="{{ item.content['#url'] }}" class="icon-a" title="Flickr" alt="Flickr">
+					<a href="{{ item.url }}" class="icon-a" title="Flickr" alt="Flickr">
 						<span class="icon-div">
 							<span class="sr-only">Flickr</span>
 							<span class="icon-bg icon-bg-flickr">
@@ -125,7 +125,7 @@
 						</span>
 					</a>
 			{% elseif 'VIMEO' in formattedContent %}
-					<a href="{{ item.content['#url'] }}" class="icon-a" title="Vimeo" alt="Vimeo">
+					<a href="{{ item.url }}" class="icon-a" title="Vimeo" alt="Vimeo">
 						<span class="icon-div">
 							<span class="sr-only">Vimeo</span>
 							<span class="icon-bg icon-bg-vimeo">
@@ -135,7 +135,7 @@
 						</span>
 					</a>
 			{% elseif 'WORDPRESS' in formattedContent %}
-					<a href="{{ item.content['#url'] }}" class="icon-a" title="Wordpress" alt="Wordpress">
+					<a href="{{ item.url }}" class="icon-a" title="Wordpress" alt="Wordpress">
 						<span class="icon-div">
 							<span class="sr-only">WordPress</span>
 							<span class="icon-bg icon-bg-wordpress">
@@ -145,7 +145,7 @@
 						</span>
 					</a>
 			{% elseif 'TIKTOK' in formattedContent %}
-					<a href="{{ item.content['#url'] }}" class="icon-a" title="Tiktok" alt="Tiktok">
+					<a href="{{ item.url }}" class="icon-a" title="Tiktok" alt="Tiktok">
 						<span class="icon-div">
 							<span class="sr-only">TikTok</span>
 							<span class="icon-bg icon-bg-pintrest">
@@ -155,7 +155,7 @@
 						</span>
 					</a>
 			{% elseif 'REDDIT' in formattedContent %}
-					<a href="{{ item.content['#url'] }}" class="icon-a" title="Reddit" alt="Reddit">
+					<a href="{{ item.url }}" class="icon-a" title="Reddit" alt="Reddit">
 						<span class="icon-div">
 							<span class="sr-only">Reddit</span>
 							<span class="icon-bg icon-bg-pintrest">
@@ -166,7 +166,7 @@
 					</a>
 
 			{% elseif 'PATREON' in formattedContent %}
-					<a href="{{ item.content['#url'] }}" class="icon-a" title="Patreon" alt="Patreon">
+					<a href="{{ item.url }}" class="icon-a" title="Patreon" alt="Patreon">
 						<span class="icon-div">
 							<span class="sr-only">Patreon</span>
 							<span class="icon-bg icon-bg-patreon">
@@ -177,7 +177,7 @@
 					</a>
 
 			{% elseif 'DISCORD' in formattedContent %}
-					<a href="{{ item.content['#url'] }}" class="icon-a" title="Discord" alt="Discord">
+					<a href="{{ item.url }}" class="icon-a" title="Discord" alt="Discord">
 						<span class="icon-div">
 							<span class="sr-only">Discord</span>
 							<span class="icon-bg icon-bg-discord">
@@ -187,7 +187,7 @@
 						</span>
 					</a>
 			{% else %}
-				<a href="{{ item.content['#url'] }}" class="icon-a" title="Social Media" alt="Social Media">
+				<a href="{{ item.url }}" class="icon-a" title="Social Media" alt="Social Media">
 					<span class="icon-div">
 						<span class="sr-only">Link</span>
 						<span class="icon-bg icon-bg-link">

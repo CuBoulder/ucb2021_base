@@ -5,6 +5,7 @@ ucb-global:
       css/bootstrap/bootstrap.min.css: {}
       css/layout.css: {}
     theme:
+      https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&family=Roboto:wght@400;700&display=swap: { type: external }
       css/style.css: {}
       css/style-responsive.css: {}
       css/fontawesome/all.min.css: {}
@@ -105,7 +106,6 @@ ucb-social-media-icons-block:
     theme:
       css/paragraphs/social-media-icons.css: {}
 
-
 ucb-image-gallery:
   version: 1.x
   js:
@@ -116,6 +116,15 @@ ucb-image-gallery:
       css/paragraphs/image-gallery.css: {}
       js/glightbox/glightbox.min.css: {}
 
+ucb-form-page:
+  version: 1.x
+  js:
+    js/ucb-form-page.js: {}
+  css:
+    theme:
+      css/ucb-form-page.css: {}
+  
+      
 ucb-events-calendar:
   version: 1.x
   css:
@@ -127,3 +136,11 @@ ucb-newsletter:
   css:
     theme:
       css/ucb-newsletter.css: {}
+      
+ucb-video-reveal:
+  version: 1.x
+  js:
+    js/ucb-video-reveal.js: {}
+  css:
+    theme:
+      css/paragraphs/video-reveal.css: {}
