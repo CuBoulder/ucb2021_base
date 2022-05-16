@@ -15,25 +15,27 @@ function renderArticleList(JSONURL,id='ucb-article-listing'){
                 let idObj = {};
 
                 // Remove any blanks from our articles before map
-                let filteredData = data.included.filter((url)=> {
-                    return url.attributes.uri !== undefined
-                })
+                if(data.included ) {
+                    let filteredData = data.included.filter((url)=> {
+                        return url.attributes.uri !== undefined
+                    })
 
-                // creates the urlObj, key: data id, value: url
-                filteredData.map((pair)=> {
-                    urlObj[pair.id] = pair.attributes.uri.url
-                })
+                    // creates the urlObj, key: data id, value: url
+                    filteredData.map((pair)=> {
+                        urlObj[pair.id] = pair.attributes.uri.url
+                    })
 
-                // removes all other included data besides images in our included media
-                let idFilterData = data.included.filter((item)=> {
-                    return item.type == "media--image"
-                })
+                    // removes all other included data besides images in our included media
+                    let idFilterData = data.included.filter((item)=> {
+                        return item.type == "media--image"
+                    })
 
                 
-                // using the image-only data, creates the idObj =>  key: thumbnail id, value : data id
-                idFilterData.map((pair)=> {
-                    idObj[pair.id] = pair.relationships.thumbnail.data.id
-                })
+                    // using the image-only data, creates the idObj =>  key: thumbnail id, value : data id
+                    idFilterData.map((pair)=> {
+                        idObj[pair.id] = pair.relationships.thumbnail.data.id
+                    })
+                }
 
                 //iterate over each item in the array
                 data.data.map((item)=> {
