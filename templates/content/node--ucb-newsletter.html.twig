@@ -34,9 +34,9 @@ view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
 
 		{# Newsletter Sections Content #}
 		<div class="ucb-newsletter-section-content">
-			{% if content.field_newsletter_section_content|render %}
+			{% if content.field_newsletter_section_block|render %}
 				<div class="ucb-article-body">
-                    {{ content.field_newsletter_section_content }}
+                    {{ content.field_newsletter_section_block }}
                 </div>
 			{% endif %}
 		</div>
