@@ -10,7 +10,7 @@ function renderArticleList(JSONURL,id='ucb-article-listing'){
             .then(reponse => reponse.json())
             .then(data => {
                 console.log("data obj",data) 
-                // Below objects are needed to match images with their corresponding articles. There are two endpoints => data.data (article) and data.included (incl. media)
+                // Below objects are needed to match images with their corresponding articles. There are two endpoints => data.data (article) and data.included (incl. media), both needed to associate a media library image with its respective article
                 let urlObj = {};
                 let idObj = {};
 
@@ -30,7 +30,6 @@ function renderArticleList(JSONURL,id='ucb-article-listing'){
                         return item.type == "media--image"
                     })
 
-                
                     // using the image-only data, creates the idObj =>  key: thumbnail id, value : data id
                     idFilterData.map((pair)=> {
                         idObj[pair.id] = pair.relationships.thumbnail.data.id
@@ -46,13 +45,12 @@ function renderArticleList(JSONURL,id='ucb-article-listing'){
                     let contentDiv = document.createElement("article")
                     let contentImg = document.createElement("img")
                     let contentDate = document.createElement("p")
-                    let contentHead = document.createElement("h4")
+                    let contentHead = document.createElement("a")
                     let contentBody = document.createElement("p")
                     let contentLink = document.createElement("a")
                     
                     // **ADD DATA**
-                    // This section is for 
-                    // this is my id of the article body paragraph type we need if no thumbnail or summary provided
+                    // this is my id of the article body paragraph type we need only if no thumbnail or summary provided
                     let bodyAndImageId = item.relationships.field_ucb_article_content.data[0].id
                     // if no article summary, use a simplified article body
                     if(!item.attributes.field_ucb_article_summary){
@@ -60,20 +58,22 @@ function renderArticleList(JSONURL,id='ucb-article-listing'){
                         .then(response => response.json())
                         .then(data=> {
                             console.log("2nd call",data)
-                            // Remove any html tags such as blockquote, bold, headers within the article
+                            // Remove any html tags within the article
                             let htmlStrip = data.data.attributes.field_article_text.processed.replace(/<\/?[^>]+(>|$)/g, "")
+                            // Remove any line breaks if media is embedded in the body
+                            let lineBreakStrip = htmlStrip.replace(/(\r\n|\n|\r)/gm, "");
                             // take only the first 100 words ~ 500 chars
-                            let trimmedString = htmlStrip.substr(0,500)
+                            let trimmedString = lineBreakStrip.substr(0,500)
                             // if in the middle of the string, take the whole word
                             trimmedString = trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" ")))
                             // set the contentBody of Article Summary card to the minified body instead
-                            contentBody.innerText = trimmedString
+                            contentBody.innerText = `${trimmedString}...`
                         })
                     } else {
                         contentBody.innerText = item.attributes.field_ucb_article_summary
                     }
 
-                    // if no thumbnail, grab the article image
+                    // if no thumbnail, show no image
                     if(!item.relationships.field_ucb_article_thumbnail.data){
                         // TO DO -- add logic for grabbing the article image here
                         contentImg.src = ""
@@ -85,23 +85,27 @@ function renderArticleList(JSONURL,id='ucb-article-listing'){
 
                     //Date - make human readable
                     contentDate.innerText = new Date(item.attributes.created).toDateString().split(' ').slice(1).join(' ')
-                    contentHead.innerText = item.attributes.title
+                    contentHead.innerHTML = `<h4>${item.attributes.title}</h4>`
+                    contentHead.href = item.attributes.path.alias
+                    contentHead.target = "_blank"
                     contentLink.innerHTML = ` Read More <i class="fal fa-chevron-double-right"></i>`
 
-                    //add link, opens in new window
+                    //add link, opens in new window, doesn't wrap
                     contentLink.href = item.attributes.path.alias
                     contentLink.target = "_blank"
+                    contentLink.style.whiteSpace = "nowrap"
                     
                     //add styles
-                    elDiv.className = "container mb-5 d-flex flex-row"
+                    elDiv.className = "container m-5 d-flex flex-row"
                     contentBody.style.display = "inline"
                     contentDiv.className = "container ml-3"
                     contentDate.style.fontSize = "0.75rem"
                     contentDate.style.lineHeight = "0.75rem"
-                    contentImg.style.minWidth = "250px"
-                    contentImg.style.minHeight = "250px"
-                    contentImg.style.maxWidth = "250px"
-                    contentImg.style.maxHeight = "250px"
+                    contentDate.style.marginBottom = "10px" 
+                    contentImg.style.minWidth = "100px"
+                    contentImg.style.minHeight = "100px"
+                    contentImg.style.maxWidth = "100px"
+                    contentImg.style.maxHeight = "100px"
                     contentImg.style.objectFit = "cover"
 
 
