@@ -114,12 +114,14 @@
   {% endif %}
 {% endfor %}
 
+{# placeholder variables for our include and exclude filters, default to blank strings #}
 {% set IncludeFilter = "" %}
 {% set IncludeCategoryFilter = "" %}
 {% set IncludeTagsFilter = "" %}
 {% set ExcludeCategoryFilter = "" %}
 {% set ExcludeTagsFilter = "" %}
 
+{# Setup Include Category Filter using a logical OR between included category IDs #}
 {% if includeCategories|length %}
   {% set includeGroupMembers = "" %}
   {% for item in includeCategories %}
@@ -133,6 +135,7 @@
   {% set IncludeCategoryFilter = "&filter[cat-include][group][conjunction]=OR" ~ includeGroupMembers %}
 {% endif %}
 
+{# Setup Include Tags Filter using a logical OR between included tag IDs #}
 {% if includeTags|length %}
   {% set includeGroupMembers = "" %}
   {% for item in includeTags %}
@@ -147,6 +150,7 @@
 {% endif %}
 
 {# check to see if we have both Categories and Tags to filter on #}
+{# if so... setup a logicial AND Between both include filters #}
 {% if IncludeCategoryFilter and IncludeTagsFilter %}
   {% set IncludeFilter = '&filter[include-group][group][conjunction]=AND' ~
     '&filter[cat-include][group][memberOf]=include-group' ~
@@ -154,12 +158,28 @@
     IncludeCategoryFilter ~
     IncludeTagsFilter       
   %}
-
+{# Otherwise default to either the Category filter or the Tag filter as defined #}
 {% elseif IncludeCategoryFilter %}
   {% set IncludeFilter = IncludeCategoryFilter %}
 {% elseif IncludeTagsFilter %}
   {% set IncludeFilter = IncludeTagsFilter %}
 {% endif %}
+
+{# Check for Exclude Categories and setup the filter to exclude anything that matches "NOT IN SET" #}
+{% if excludeCategories|length %}
+  {% set excludeGroupMembers = "" %}
+  {% for item in excludeCategories %}
+     {% set excludeGroupMembers = excludeGroupMembers ~ 
+       '&filter[filter-ex-cat][condition][value][' ~ loop.index ~ ']=' ~ item 
+     %}
+  {% endfor %}
+  {% set ExcludeCategoryFilter = 
+       '&filter[filter-ex-cat][condition][path]=field_ucb_article_categories.meta.drupal_internal__target_id' ~
+       '&filter[filter-ex-cat][condition][operator]=IN' ~
+       excludeGroupMembers 
+  %}
+{% endif %}
+
 
 
 {# JSON API Filter logic #}
@@ -199,9 +219,11 @@
         {# <h3>Include Category Filter : {{ IncludeCategoryFilter }}</h3> #}
         {# <h3>Include Tags Filter : {{ IncludeTagsFilter }}</h3> #}
         {# <h3> Full URL : {{ articlesJSON}}{{ IncludeCategoryFilter}}{{IncludeTagsFilter}}</h3> #}
-        <h3> Full URL : {{ articlesJSON}}{{ IncludeFilter}}</h3>
+        {# <h3> Full URL : {{ articlesJSON}}{{ IncludeFilter}}</h3> #}
+        <h3> Full URL : {{ articlesJSON}}{{ ExcludeCategoryFilter }}</h3>
     </div>
-    <div id="ucb-article-listing" class="ucb-article-list-container" data-jsonapi="{{ articlesJSON }}{{ IncludeFilter }}">
+    {# <div id="ucb-article-listing" class="ucb-article-list-container" data-jsonapi="{{ articlesJSON }}{{ IncludeFilter }}"> #}
+    <div id="ucb-article-listing" class="ucb-article-list-container" data-jsonapi="{{ articlesJSON }}{{ ExcludeCategoryFilter }}">
         <p>Please wait... processing</p>
     </div>
   </div>
