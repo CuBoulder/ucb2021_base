@@ -9,7 +9,14 @@ function renderArticleList(JSONURL,id='ucb-article-listing'){
         fetch(JSONURL)
             .then(reponse => reponse.json())
             .then(data => {
-                console.log("data obj",data) 
+                console.log("data obj",data)
+
+                // if no articles of returned, give an error message
+                if(data.data.length==0){
+                    el.innerText = "Error: No articles were returned -- please check your filters for conflicts and try again";
+                    return
+                }
+
                 // Below objects are needed to match images with their corresponding articles. There are two endpoints => data.data (article) and data.included (incl. media), both needed to associate a media library image with its respective article
                 let urlObj = {};
                 let idObj = {};
@@ -75,7 +82,6 @@ function renderArticleList(JSONURL,id='ucb-article-listing'){
 
                     // if no thumbnail, show no image
                     if(!item.relationships.field_ucb_article_thumbnail.data){
-                        // TO DO -- add logic for grabbing the article image here
                         contentImg.src = ""
                     } else {
                         //Use the idObj as a memo to add the corresponding image url
@@ -88,7 +94,7 @@ function renderArticleList(JSONURL,id='ucb-article-listing'){
                     contentHead.innerHTML = `<h4>${item.attributes.title}</h4>`
                     contentHead.href = item.attributes.path.alias
                     contentHead.target = "_blank"
-                    contentLink.innerHTML = ` Read More <i class="fal fa-chevron-double-right"></i>`
+                    contentLink.innerHTML = ` READ MORE <i class="fal fa-chevron-double-right"></i>`
 
                     //add link, opens in new window, doesn't wrap
                     contentLink.href = item.attributes.path.alias
@@ -96,7 +102,7 @@ function renderArticleList(JSONURL,id='ucb-article-listing'){
                     contentLink.style.whiteSpace = "nowrap"
                     
                     //add styles
-                    elDiv.className = "container m-5 d-flex flex-row"
+                    elDiv.className = "container mb-5 d-flex flex-row"
                     contentBody.style.display = "inline"
                     contentDiv.className = "container ml-3"
                     contentDate.style.fontSize = "0.75rem"
@@ -107,7 +113,9 @@ function renderArticleList(JSONURL,id='ucb-article-listing'){
                     contentImg.style.maxWidth = "100px"
                     contentImg.style.maxHeight = "100px"
                     contentImg.style.objectFit = "cover"
-
+                    contentLink.style.fontSize = "0.75rem"
+                    contentLink.style.fontWeight = "bolder"
+                    contentLink.style.display = "block"
 
                     //append image & article info div to parent div
                     elDiv.appendChild(contentImg)
