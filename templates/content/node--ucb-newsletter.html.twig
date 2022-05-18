@@ -22,7 +22,8 @@ view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
 {% set content_render = content|render %}
 
 <article{{attributes.addClass(classes)}}>
-	<div class="container ucb-newsletter">
+	<div
+		class="container ucb-newsletter">
 		{# Newsletter Title #}
 		<h1 class="ucb-newsletter-title" itemprop="name">{{ content.field_newsletter_type }}</h1>
 
@@ -43,26 +44,56 @@ view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
 			{% endif %}
 		</div>
 
+		{# Newsletter Promo/Ad One #}
+		<div class="row row-content ucb-newsletter-promo-one">
+			{% if content.field_newsletter_promo_image_one|render %}
+				<div class="col-4 flex-grow-1">
+					{{ content.field_newsletter_promo_image_one|render	}}
+				</div>
+			{% endif %}
+
+			{% if content.field_newsletter_promo_text_one|render %}
+				<div class="col-8 flex-grow-1">
+					{{ content.field_newsletter_promo_text_one|render }}
+				</div>
+			{% endif %}
+		</div>
+
 		{# Newsletter Blocks #}
 		<div class="row row-content ucb-newsletter-blocks">
 			<div class="col-6">
 				{% if content.field_newsletter_block_title_one|render %}
-					<h3>{{ content.field_newsletter_block_title_one }}</h3>
+					<h3>{{ content.field_newsletter_block_title_one|render }}</h3>
 				{% endif %}
 
 				{% if content.field_newsletter_block_text_one|render %}
-					{{ content.field_newsletter_block_text_one }}
+					{{ content.field_newsletter_block_text_one|render }}
 				{% endif %}
 			</div>
 			<div class="col-6">
 				{% if content.field_newsletter_block_title_two|render %}
-					<h3>{{ content.field_newsletter_block_title_two }}</h3>
+					<h3>{{ content.field_newsletter_block_title_two|render }}</h3>
 				{% endif %}
 
 				{% if content.field_newsletter_block_text_two|render %}
-					{{ content.field_newsletter_block_text_two }}
+					{{ content.field_newsletter_block_text_two|render }}
 				{% endif %}
 			</div>
+		</div>
+
+		{# Newsletter Promo/Ad Two #}
+		<div class="row row-content ucb-newsletter-promo-one">
+			{% if content.field_newsletter_promo_image_two|render %}
+				<div class="col-4 flex-grow-1">
+					{{ content.field_newsletter_promo_image_two|render	}}
+				</div>
+			{% endif %}
+
+			{% if content.field_newsletter_promo_text_two|render %}
+				<div class="col-8 flex-grow-1">
+					{{ content.field_newsletter_promo_text_two|render }}
+				</div>
+			{% endif %}
 		</div>
 	</div>
 </article>
