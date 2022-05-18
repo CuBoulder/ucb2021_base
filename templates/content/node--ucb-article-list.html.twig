@@ -65,6 +65,13 @@
  *
  * @see template_preprocess_node()
  *
+ * TODO : 
+ *    - Paginataion 
+ *    - Pathauto
+ *    - Spinning FontAwesome on load graphic 
+ *    - Responsive View for Mobile (image on top)
+ *    - Image Link 
+ *    - Test edge cases 
  */
 #}
 
@@ -77,6 +84,13 @@
 '?include[node--ucb_article]=uid,title,ucb_article_content,created,field_ucb_article_summary,field_ucb_article_categories,field_ucb_article_tags,field_ucb_article_thumbnail' ~
 '&include=field_ucb_article_thumbnail.field_media_image' ~
 '&fields[file--file]=uri,url'
+%}
+
+{# Filter on only published (status = true) content #}
+{% set PublishedFilter = 
+    '&filter[publish-check][condition][path]=status' ~
+    '&filter[publish-check][condition][value]=1' ~ 
+    '&filter[publish-check][condition][memberOf]=published'  
 %}
 
 {# include and exclude options set by the user #}
@@ -126,9 +140,9 @@
   {% set includeGroupMembers = "" %}
   {% for item in includeCategories %}
      {% set includeGroupMembers = includeGroupMembers ~ 
-       '&filter[filter-' ~ item ~'][condition][path]=field_ucb_article_categories.meta.drupal_internal__target_id' ~
-       '&filter[filter-' ~ item ~'][condition][value]=' ~ item ~
-       '&filter[filter-' ~ item ~'][condition][memberOf]=cat-include' 
+       '&filter[filter-cat' ~ item|trim ~'][condition][path]=field_ucb_article_categories.meta.drupal_internal__target_id' ~
+       '&filter[filter-cat' ~ item|trim ~'][condition][value]=' ~ item|trim ~
+       '&filter[filter-cat' ~ item|trim ~'][condition][memberOf]=cat-include' 
      %}
      
   {% endfor %}
@@ -140,9 +154,9 @@
   {% set includeGroupMembers = "" %}
   {% for item in includeTags %}
      {% set includeGroupMembers = includeGroupMembers ~ 
-       '&filter[filter-' ~ item ~'][condition][path]=field_ucb_article_tags.meta.drupal_internal__target_id' ~
-       '&filter[filter-' ~ item ~'][condition][value]=' ~ item ~
-       '&filter[filter-' ~ item ~'][condition][memberOf]=tag-include' 
+       '&filter[filter-tag' ~ item|trim ~'][condition][path]=field_ucb_article_tags.meta.drupal_internal__target_id' ~
+       '&filter[filter-tag' ~ item|trim ~'][condition][value]=' ~ item|trim ~
+       '&filter[filter-tag' ~ item|trim ~'][condition][memberOf]=tag-include' 
      %}
      
   {% endfor %}
@@ -152,34 +166,62 @@
 {# check to see if we have both Categories and Tags to filter on #}
 {# if so... setup a logicial AND Between both include filters #}
 {% if IncludeCategoryFilter and IncludeTagsFilter %}
-  {% set IncludeFilter = '&filter[include-group][group][conjunction]=AND' ~
-    '&filter[cat-include][group][memberOf]=include-group' ~
-    '&filter[tag-include][group][memberOf]=include-group' ~
+  {% set IncludeFilter = 
+    '&filter[published][group][conjunction]=AND' ~
+    PublishedFilter ~
+    '&filter[include-group][group][conjunction]=AND' ~
+    '&filter[include-group][group][memberOf]=published' ~
     IncludeCategoryFilter ~
-    IncludeTagsFilter       
+    '&filter[cat-include][group][memberOf]=include-group' ~
+    IncludeTagsFilter ~      
+    '&filter[tag-include][group][memberOf]=include-group' 
   %}
 {# Otherwise default to either the Category filter or the Tag filter as defined #}
 {% elseif IncludeCategoryFilter %}
-  {% set IncludeFilter = IncludeCategoryFilter %}
+  {% set IncludeFilter = 
+    '&filter[published][group][conjunction]=AND' ~
+    '&filter[cat-include][group][memberOf]=published' ~
+    PublishedFilter ~
+    IncludeCategoryFilter 
+  %}
 {% elseif IncludeTagsFilter %}
-  {% set IncludeFilter = IncludeTagsFilter %}
+  {% set IncludeFilter = 
+    '&filter[published][group][conjunction]=AND' ~
+    '&filter[tag-include][group][memberOf]=published' ~
+    PublishedFilter ~
+    IncludeTagsFilter 
+  %}
 {% endif %}
 
+
 {# Check for Exclude Categories and setup the filter to exclude anything that matches "NOT IN SET" #}
+{# {% if excludeCategories|length %}
+  {% set excludeGroupMembers = "" %}
+  {% for item in excludeCategories %}
+     {% set excludeGroupMembers = excludeGroupMembers ~ 
+       '&filter[filter-excat][condition][value][' ~ loop.index ~ ']=' ~ item 
+     %}
+  {% endfor %}
+  {% set ExcludeCategoryFilter = 
+       '&filter[filter-excat][condition][path]=field_ucb_article_categories.meta.drupal_internal__target_id' ~
+       '&filter[filter-excat][condition][operator]=NOT%20IN' ~ 
+       excludeGroupMembers 
+  %}
+{% endif %} #}
+{# 
 {% if excludeCategories|length %}
   {% set excludeGroupMembers = "" %}
   {% for item in excludeCategories %}
      {% set excludeGroupMembers = excludeGroupMembers ~ 
-       '&filter[filter-ex-cat][condition][value][' ~ loop.index ~ ']=' ~ item 
+       '&filter[filter-excat' ~ item ~'][condition][path]=field_ucb_article_categories.meta.drupal_internal__target_id' ~
+       '&filter[filter-excat' ~ item ~'][condition][operator]=%3C%3E' ~
+       '&filter[filter-excat' ~ item ~'][condition][value]=' ~ item ~
+       '&filter[filter-excat' ~ item ~'][condition][memberOf]=cat-exclude' 
      %}
+     
   {% endfor %}
-  {% set ExcludeCategoryFilter = 
-       '&filter[filter-ex-cat][condition][path]=field_ucb_article_categories.meta.drupal_internal__target_id' ~
-       '&filter[filter-ex-cat][condition][operator]=IN' ~
-       excludeGroupMembers 
-  %}
-{% endif %}
-
+  {% set ExcludeCategoryFilter = "&filter[cat-exclude][group][conjunction]=AND" ~ excludeGroupMembers %}
+{% endif %} #}
 
 
 {# JSON API Filter logic #}
@@ -220,10 +262,10 @@
         {# <h3>Include Tags Filter : {{ IncludeTagsFilter }}</h3> #}
         {# <h3> Full URL : {{ articlesJSON}}{{ IncludeCategoryFilter}}{{IncludeTagsFilter}}</h3> #}
         {# <h3> Full URL : {{ articlesJSON}}{{ IncludeFilter}}</h3> #}
-        <h3> Full URL : {{ articlesJSON}}{{ ExcludeCategoryFilter }}</h3>
+        <h3> Full URL : {{ articlesJSON}}{{ IncludeFilter }}</h3>
     </div>
     {# <div id="ucb-article-listing" class="ucb-article-list-container" data-jsonapi="{{ articlesJSON }}{{ IncludeFilter }}"> #}
-    <div id="ucb-article-listing" class="ucb-article-list-container" data-jsonapi="{{ articlesJSON }}{{ ExcludeCategoryFilter }}">
+    <div id="ucb-article-listing" class="ucb-article-list-container" data-jsonapi="{{ articlesJSON }}{{ IncludeFilter }}">
         <p>Please wait... processing</p>
     </div>
   </div>
