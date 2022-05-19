@@ -6,12 +6,14 @@ function renderArticleList(JSONURL,id='ucb-article-listing'){
     if(JSONURL) {
         let el = document.getElementById(id);
 
+        el.innerHTML = `<i class="fas fa-spinner fa-pulse"></i> Loading please wait`
+
         fetch(JSONURL)
             .then(reponse => reponse.json())
             .then(data => {
                 console.log("data obj",data)
 
-                // if no articles of returned, give an error message
+                // if no articles of returned, give an error message and kick out 
                 if(data.data.length==0){
                     el.innerText = "Error: No articles were returned -- please check your filters for conflicts and try again";
                     return
@@ -20,7 +22,6 @@ function renderArticleList(JSONURL,id='ucb-article-listing'){
                 // Below objects are needed to match images with their corresponding articles. There are two endpoints => data.data (article) and data.included (incl. media), both needed to associate a media library image with its respective article
                 let urlObj = {};
                 let idObj = {};
-
                 // Remove any blanks from our articles before map
                 if(data.included ) {
                     let filteredData = data.included.filter((url)=> {
@@ -51,6 +52,7 @@ function renderArticleList(JSONURL,id='ucb-article-listing'){
                     //create article content elements
                     let contentDiv = document.createElement("article")
                     let contentImg = document.createElement("img")
+                    let imgLink = document.createElement("a")
                     let contentDate = document.createElement("p")
                     let contentHead = document.createElement("a")
                     let contentBody = document.createElement("p")
@@ -96,15 +98,17 @@ function renderArticleList(JSONURL,id='ucb-article-listing'){
                     contentHead.target = "_blank"
                     contentLink.innerHTML = ` READ MORE <i class="fal fa-chevron-double-right"></i>`
 
-                    //add link, opens in new window, doesn't wrap
+                    //add links, opens in new window, doesn't wrap
                     contentLink.href = item.attributes.path.alias
                     contentLink.target = "_blank"
                     contentLink.style.whiteSpace = "nowrap"
+                    imgLink.href = item.attributes.path.alias
+                    imgLink.classList = "my-0 my-md-2"
                     
                     //add styles
-                    elDiv.className = "container mb-5 d-flex flex-row"
+                    elDiv.className = "container mb-5 d-flex flex-md-row flex-column"
                     contentBody.style.display = "inline"
-                    contentDiv.className = "container ml-3"
+                    contentDiv.className = "mx-0 mx-md-3"
                     contentDate.style.fontSize = "0.75rem"
                     contentDate.style.lineHeight = "0.75rem"
                     contentDate.style.marginBottom = "10px" 
@@ -118,7 +122,8 @@ function renderArticleList(JSONURL,id='ucb-article-listing'){
                     contentLink.style.display = "block"
 
                     //append image & article info div to parent div
-                    elDiv.appendChild(contentImg)
+                    elDiv.appendChild(imgLink)
+                    imgLink.appendChild(contentImg)
                     elDiv.appendChild(contentDiv)
                     contentDiv.appendChild(contentHead)
                     contentDiv.appendChild(contentDate)
