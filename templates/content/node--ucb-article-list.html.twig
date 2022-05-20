@@ -66,12 +66,15 @@
  * @see template_preprocess_node()
  *
  * TODO : 
- *    - Paginataion -- NO PAGINATION
+ *    - Paginataion -- NO PAGINATION - Infinite Load!!!
+ *    - Exclude Filter!!!
  *    - Pathauto
- *    - Spinning FontAwesome on load graphic -- DONE
- *    - Responsive View for Mobile (image on top) -- DONE
- *    - Image Link -- DONE 
+ *    - Spinning FontAwesome on load graphic -- make more conspicious 
+ *    - Responsive View for Mobile (image on top)
+ *       - Set output on Thumbnail to be reasonable size in Article schema 
+ *       - Make the image larger and centered on the smallest view  
  *    - Test edge cases -- DONE
+ *    - Error message on no article found.  
  */
 #}
 
@@ -98,9 +101,9 @@
 {% set myCategories = content.field_ucb_filter_by_category|render|striptags|trim|split(' ') %}
 {% set includeTags = [] %}
 {% set myTags       = content.field_ucb_filter_by_tag|render|striptags|trim|split(' ') %}
-{% set excludeCategories = [] %}
+{% set excludeCategories = "" %}
 {% set myExCategories = content.field_ucb_exclude_category|render|striptags|trim|split(' ') %}
-{% set excludeTags = [] %}
+{% set excludeTags = "" %}
 {% set myExTags       = content.field_ucb_exclude_tag|render|striptags|trim|split(' ') %}
 
 {# two passes to clear out the blank entries that are mysteriously added by default #}
@@ -118,13 +121,21 @@
 
 {% for item in myExCategories %}
   {% if item %}
-    {% set excludeCategories = excludeCategories|merge([item]) %}    
+    {% if loop.last %}
+      {% set excludeCategories = excludeCategories ~ item|trim %}    
+    {% else %}
+      {% set excludeCategories = excludeCategories ~ item|trim ~ ',' %}    
+    {% endif %}
   {% endif %}
 {% endfor %}
 
 {% for item in myExTags %}
   {% if item %}
-    {% set excludeTags = excludeTags|merge([item]) %}    
+    {% if loop.last %}
+      {% set excludeTags = excludeTags ~ item|trim %}    
+    {% else %}
+      {% set excludeTags = excludeTags ~ item|trim ~ ',' %}    
+    {% endif %}
   {% endif %}
 {% endfor %}
 
@@ -191,6 +202,11 @@
     PublishedFilter ~
     IncludeTagsFilter 
   %}
+
+{# no includeded Categories or Tags ... still need to filter on published articles #}
+{% else %}
+  {% set IncludeFilter = '&filter[status][value]=1' 
+  %}
 {% endif %}
 
 
@@ -244,7 +260,8 @@
           {% for item in includeTags %}
             <li>{{ item }}</li>
           {% endfor %}
-        </ul>
+        </ul> #}
+        {#
         <ul>
           <li>Exclude Categories</li>
           {% for item in excludeCategories %}
@@ -258,14 +275,16 @@
           {% endfor %}
         </ul> #}
 
-        {# <h3>Include Category Filter : {{ IncludeCategoryFilter }}</h3> #}
-        {# <h3>Include Tags Filter : {{ IncludeTagsFilter }}</h3> #}
-        {# <h3> Full URL : {{ articlesJSON}}{{ IncludeCategoryFilter}}{{IncludeTagsFilter}}</h3> #}
-        {# <h3> Full URL : {{ articlesJSON}}{{ IncludeFilter}}</h3> #}
         {# <h3> Full URL : {{ articlesJSON}}{{ IncludeFilter }}</h3> #}
+        <h3> Exclude Cats : {{ excludeCategories }}</h3>
+        <h3> Exclude Tags : {{ excludeTags }}</h3>
     </div>
     {# <div id="ucb-article-listing" class="ucb-article-list-container" data-jsonapi="{{ articlesJSON }}{{ IncludeFilter }}"> #}
-    <div id="ucb-article-listing" class="ucb-article-list-container" data-jsonapi="{{ articlesJSON }}{{ IncludeFilter }}">
+    <div id="ucb-article-listing" class="ucb-article-list-container"  
+      data-jsonapi="{{ articlesJSON }}{{ IncludeFilter }}" 
+      data-excats="{{ excludeCategories }}" 
+      data-extags="{{ excludeTags }}"
+      >
     </div>
   </div>
 </article>

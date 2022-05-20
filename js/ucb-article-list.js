@@ -2,7 +2,12 @@ async function getArticleParagraph(id){
     return await fetch(`/jsonapi/paragraph/article_content/${id}?include[paragraph--article_content]=field_article_image,field_article_text&include=field_article_image.field_media_image&fields[file--file]=uri,url`)
 }
 
-function renderArticleList(JSONURL,id='ucb-article-listing'){
+function intersect(a, b) {
+    var setB = new Set(b);
+    return [...new Set(a)].filter(x => setB.has(x));
+}
+
+function renderArticleList(JSONURL,id='ucb-article-listing',ExcludeCategories='',ExcludeTags=''){
     if(JSONURL) {
         let el = document.getElementById(id);
 
@@ -15,7 +20,7 @@ function renderArticleList(JSONURL,id='ucb-article-listing'){
 
                 // if no articles of returned, give an error message and kick out 
                 if(data.data.length==0){
-                    el.innerText = "Error: No articles were returned -- please check your filters for conflicts and try again";
+                    el.innerText = "<h3>No articles were returned -- please check your filters for conflicts and try again</h3>";
                     return
                 }
 
@@ -61,6 +66,48 @@ function renderArticleList(JSONURL,id='ucb-article-listing'){
                     // **ADD DATA**
                     // this is my id of the article body paragraph type we need only if no thumbnail or summary provided
                     let bodyAndImageId = item.relationships.field_ucb_article_content.data[0].id
+                    let myCategories = [];
+                    let myTags = [];
+                    
+                    // loop through and grab all of the categories
+                    if(item.relationships.field_ucb_article_categories) {
+                        for(var i = 0; i < item.relationships.field_ucb_article_categories.data.length; i++ ) {
+                          myCategories.push(parseInt(item.relationships.field_ucb_article_categories.data[i].meta.drupal_internal__target_id)); 
+                        }
+                    }
+
+                    alert("My Categories are : "  + myCategories);
+
+                    // loop through and grab all of the tags 
+                    if(item.relationships.field_ucb_article_tags) {
+                        for(var i = 0; i < item.relationships.field_ucb_article_tags.data.length; i++ ) {
+                          myTags.push(item.relationships.field_ucb_article_tags.data[i].meta.drupal_internal__target_id); 
+                        }
+                    }
+
+                    // if one of our categories matches one of the excluded categories... bail and continue with the next one
+                    let checkCats = ExcludeCategories.split(',').filter(cat => parseInt(cat));
+                    alert("Checking Categories for exclusion : " + checkCats);
+                    // const CatMatch = myCategories.filter(value => checkCats.includes(value));
+                    // let CatMatch = intersect(myCategories, checkCats);
+                    let CatMatch = false;
+                    console.log("I'm here!!!");
+                    for(var i = 0; i < myCategories.length; i++) {
+                        console.log("My Categories["+i+"] = :"+myCategories[i]+":");
+                        if(checkCats.includes(myCategories[i])) {
+                            console.log("Match found : " + myCategories[i]);
+                            CatMatch = true;
+                        }
+                    }
+                    for(var i = 0; i < checkCats.length; i++) {
+                        console.log("Check Categories["+i+"] = :"+checkCats[i]+":");
+                    }
+
+                    // alert("Matching Categories are : " + CatMatch);
+
+
+                    // if one of our tags matches one of the excluded tags... bail and continue with the next one
+
                     // if no article summary, use a simplified article body
                     if(!item.attributes.field_ucb_article_summary){
                         getArticleParagraph(bodyAndImageId)
@@ -140,10 +187,16 @@ function renderArticleList(JSONURL,id='ucb-article-listing'){
     // get the url from the data-jsonapi variable 
     let el = document.getElementById('ucb-article-listing');
     let JSONURL = "NOTHING TO SEE HERE"; 
+    let CategoryExclude = ""; 
+    let TagsExclude = ""; 
     if(el) {
         JSONURL = el.dataset.jsonapi;
+        CategoryExclude = el.dataset.excats;
+        TagsExclude = el.dataset.extags;
+
+        alert("You want to exclude these tags : " + TagsExclude);
     }
 
-   renderArticleList(JSONURL,'ucb-article-listing');
+   renderArticleList(JSONURL,'ucb-article-listing',CategoryExclude, TagsExclude);
 
 })();
