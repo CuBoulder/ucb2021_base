@@ -2,10 +2,19 @@ async function getArticleParagraph(id){
     return await fetch(`/jsonapi/paragraph/article_content/${id}?include[paragraph--article_content]=field_article_image,field_article_text&include=field_article_image.field_media_image&fields[file--file]=uri,url`)
 }
 
-// function intersect(a, b) {
-//     var setB = new Set(b);
-//     return [...new Set(a)].filter(x => setB.has(x));
-// }
+function toggleMessage(id, display='none') {
+  if(id) {
+    var toggle = document.getElementById(id);
+
+    if(toggle) {
+      if(display === "block") {
+        toggle.style.display = "block";
+      } else {
+        toggle.style.display = "none";
+      }
+    }
+  }
+}
 
 function renderArticleList(JSONURL,id='ucb-article-listing',ExcludeCategories='',ExcludeTags=''){
 
@@ -17,16 +26,18 @@ function renderArticleList(JSONURL,id='ucb-article-listing',ExcludeCategories=''
         // used for checking if new data is appended
         let parentDiv = document.getElementById("block-ucb2021-base-content")
 
-        el.innerHTML = `<h5><i class="fas fa-spinner fa-pulse"></i> Loading please wait</h5>`
+        // show the loading spinner while we load the data 
+        toggleMessage('ucb-al-loading', 'block');
 
         fetch(JSONURL)
             .then(reponse => reponse.json())
             .then(data => {
                 console.log("data obj",data)
 
-                // if no articles of returned, give an error message and kick out 
+                // if no articles of returned, stop the loading spinner and let the user know we received no data that matches their query 
                 if(data.data.length==0){
-                    el.innerText = "<h3>No articles were returned -- please check your filters for conflicts and try again</h3>";
+                    toggleMessage('ucb-al-loading', 'none');
+                    toggleMessage('ucb-al-no-results', 'block');
                     return
                 }
 
@@ -75,8 +86,17 @@ function renderArticleList(JSONURL,id='ucb-article-listing',ExcludeCategories=''
                     // console.log('this article tags',thisArticleTags)
 
                     // checks to see if the current article (item) contains a category or tag scheduled for exclusion
-                    let doesIncludeCat = thisArticleCats.filter(element => excludeCatArray.includes(element));
-                    let doesIncludeTag = thisArticleTags.filter(element => excludeTagArray.includes(element));
+                    let doesIncludeCat = thisArticleCats;
+                    let doesIncludeTag = thisArticleTags;
+
+                    // check to see if we need to filter on categories
+                    if(excludeCatArray.length && thisArticleCats.length) {
+                        doesIncludeCat = thisArticleCats.filter(element => excludeCatArray.includes(element));
+                    }
+                    // check to see if we need to filter on tags 
+                    if(excludeTagArray.length && thisArticleTags.length) {
+                        doesIncludeTag = thisArticleTags.filter(element => excludeTagArray.includes(element));
+                    }
 
                     // console.log(excludeCatArray, thisArticleCats,doesIncludeCat)
                     // console.log(excludeTagArray,thisArticleTags,doesIncludeTag)
@@ -85,47 +105,16 @@ function renderArticleList(JSONURL,id='ucb-article-listing',ExcludeCategories=''
                     if(!doesIncludeCat.length==0 || !doesIncludeTag.length==0){
                         console.log("was excluded", item)
                     } else {
-                    //create container for elements
-                    let elDiv = document.createElement("div")
-                    document.getElementById('block-ucb2021-base-content').appendChild(elDiv)
-                    //create article content elements
-                    let contentDiv = document.createElement("article")
-                    let contentImg = document.createElement("img")
-                    let imgLink = document.createElement("a")
-                    let contentDate = document.createElement("p")
-                    let contentHead = document.createElement("a")
-                    let contentBody = document.createElement("p")
-                    let contentLink = document.createElement("a")
-                    
+                        // we need to render the Article Card view for this returned element 
+
+                        
+
+
                     // **ADD DATA**
                     // this is my id of the article body paragraph type we need only if no thumbnail or summary provided
                     let bodyAndImageId = item.relationships.field_ucb_article_content.data[0].id
-
-
-                
-
-                    // // if one of our categories matches one of the excluded categories... bail and continue with the next one
-                    // let checkCats = ExcludeCategories.split(',').filter(cat => parseInt(cat));
-                    // alert("Checking Categories for exclusion : " + checkCats);
-                    // // const CatMatch = myCategories.filter(value => checkCats.includes(value));
-                    // // let CatMatch = intersect(myCategories, checkCats);
-                    // let CatMatch = false;
-                    // console.log("I'm here!!!");
-                    // for(var i = 0; i < myCategories.length; i++) {
-                    //     console.log("My Categories["+i+"] = :"+myCategories[i]+":");
-                    //     if(checkCats.includes(myCategories[i])) {
-                    //         console.log("Match found : " + myCategories[i]);
-                    //         CatMatch = true;
-                    //     }
-                    // }
-                    // for(var i = 0; i < checkCats.length; i++) {
-                    //     console.log("Check Categories["+i+"] = :"+checkCats[i]+":");
-                    // }
-
-                    // alert("Matching Categories are : " + CatMatch);
-
-
-                    // if one of our tags matches one of the excluded tags... bail and continue with the next one
+                    let body = item.attributes.field_ucb_article_summary
+                    let imageSrc = "";
 
                     // if no article summary, use a simplified article body
                     if(!item.attributes.field_ucb_article_summary){
@@ -140,68 +129,57 @@ function renderArticleList(JSONURL,id='ucb-article-listing',ExcludeCategories=''
                             // take only the first 100 words ~ 500 chars
                             let trimmedString = lineBreakStrip.substr(0,500)
                             // if in the middle of the string, take the whole word
-                            trimmedString = trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" ")))
+                            trimmedString = trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" ")));
                             // set the contentBody of Article Summary card to the minified body instead
-                            contentBody.innerText = `${trimmedString}...`
-                        })
-                    } else {
-                        contentBody.innerText = item.attributes.field_ucb_article_summary
-                    }
+                            body = `${trimmedString}...`;
+                            console.log("NO summary, using 500 characters from body : " + body);
+                        });
+                    } 
 
                     // if no thumbnail, show no image
                     if(!item.relationships.field_ucb_article_thumbnail.data){
-                        contentImg.src = ""
+                        imageSrc = ""
                     } else {
                         //Use the idObj as a memo to add the corresponding image url
                         let thumbId = item.relationships.field_ucb_article_thumbnail.data.id
-                        contentImg.src = urlObj[idObj[thumbId]]
+                        imageSrc = urlObj[idObj[thumbId]]
                     }
 
                     //Date - make human readable
-                    contentDate.innerText = new Date(item.attributes.created).toDateString().split(' ').slice(1).join(' ')
-                    contentHead.innerHTML = `<h4>${item.attributes.title}</h4>`
-                    contentHead.href = item.attributes.path.alias
-                    contentHead.target = "_blank"
-                    contentLink.innerHTML = ` READ MORE <i class="fal fa-chevron-double-right"></i>`
+                    let date = new Date(item.attributes.created).toDateString().split(' ').slice(1).join(' ');
+                    let title = item.attributes.title;
+                    let link = item.attributes.path.alias;
 
-                    //add links, opens in new window, doesn't wrap
-                    contentLink.href = item.attributes.path.alias
-                    contentLink.target = "_blank"
-                    contentLink.style.whiteSpace = "nowrap"
-                    imgLink.href = item.attributes.path.alias
-                    imgLink.classList = "my-0 my-md-2"
-                    
-                    //add styles
-                    elDiv.className = "container mb-5 d-flex flex-md-row flex-column"
-                    contentBody.style.display = "inline"
-                    contentDiv.className = "mx-0 mx-md-3"
-                    contentDate.style.fontSize = "0.75rem"
-                    contentDate.style.lineHeight = "0.75rem"
-                    contentDate.style.marginBottom = "10px" 
-                    contentImg.style.minWidth = "100px"
-                    contentImg.style.minHeight = "100px"
-                    contentImg.style.maxWidth = "100px"
-                    contentImg.style.maxHeight = "100px"
-                    contentImg.style.objectFit = "cover"
-                    contentLink.style.fontSize = "0.75rem"
-                    contentLink.style.fontWeight = "bolder"
-                    contentLink.style.display = "block"
+                    let outputHTML = ` 
+                            <article class='ucb-article-card row'>
+                                <div class='col-sm-12 col-md-2 ucb-article-card-img'>
+                                    <a href="${link}"> <img src="${imageSrc}"/> </a></div>
+                                <div class='col-sm-12 col-md-10 ucb-article-card-data'>
+                                    <span class='ucb-article-card-title'><a href="${link}">${title}</a></span>
+                                    <span class='ucb-article-card-date'>${date}</span>
+                                    <span class='ucb-article-card-body'>${body}</span>
+                                    <span class='ucb-article-card-more'> 
+                                        <a href="${link}">Read more <i class="fal fa-chevron-double-right"></i></a></span>
+                                </div>
+                            </article>
+                        `;
 
-                    //append image & article info div to parent div
-                    elDiv.appendChild(imgLink)
-                    imgLink.appendChild(contentImg)
-                    elDiv.appendChild(contentDiv)
-                    contentDiv.appendChild(contentHead)
-                    contentDiv.appendChild(contentDate)
-                    contentDiv.appendChild(contentBody)
-                    contentDiv.appendChild(contentLink)
+                    let dataOutput = document.getElementById('ucb-al-data');
+                    let thisArticle = document.createElement('article');
+                    thisArticle.innerHTML = outputHTML;
+
+                    dataOutput.append(thisArticle);
+
                 }})
             // check if anything was returned, if nothing, prompt user to adjust filters, else remove loading text/error msg
-            if(parentDiv.children.length===1){
-                el.innerHTML = "<h5>No articles currently match your selected included/excluded filters. Please adjust your filters and try again</h5>"
-            } else {
-            el.innerText = "";
-            }
+            // if(el.children.length===1){
+            //     el.innerHTML = "<h5>No articles currently match your selected included/excluded filters. Please adjust your filters and try again</h5>"
+            // } else {
+            // el.innerText = "";
+            // }
+
+            // done loading -- hide the loading spinner graphic 
+            toggleMessage('ucb-al-loading', 'none');
         });
     }
 }
@@ -212,6 +190,9 @@ function renderArticleList(JSONURL,id='ucb-article-listing',ExcludeCategories=''
     let JSONURL = "NOTHING TO SEE HERE"; 
     let CategoryExclude = ""; 
     let TagsExclude = ""; 
+    let lastKnownScrollPosition = 0;
+    let ticking = false;
+
     if(el) {
         JSONURL = el.dataset.jsonapi;
         CategoryExclude = el.dataset.excats;
@@ -219,5 +200,29 @@ function renderArticleList(JSONURL,id='ucb-article-listing',ExcludeCategories=''
     }
 
    renderArticleList(JSONURL,'ucb-article-listing',CategoryExclude, TagsExclude);
+
+//    document.addEventListener('scroll', function(e) {
+//        lastKnownScrollPosition = window.scrollY;
+//        let offsetHeight    = document.getElementById('ucb-article-listing').offsetHeight;
+//        let loadingData = false;
+
+//        if (!ticking && !loadingData) {
+//             window.requestAnimationFrame(function() {
+//                 console.log("Offset Height is : " + offsetHeight);
+//                 console.log("Last known position is : " + lastKnownScrollPosition);
+                
+//                 // check to see if we've scrolled through our content and need to attempt to load more
+//                 if(lastKnownScrollPosition*2 > offsetHeight) {
+//                     // grab the next link from our JSON data object and call the loader 
+//                     loadingData = true;
+//     //                renderArticleList(JSONURL,'ucb-article-listing',CategoryExclude, TagsExclude);
+//                 }
+//                 ticking = false;
+//             });
+
+//             ticking = true;
+//        }
+//    });
+
 
 })();

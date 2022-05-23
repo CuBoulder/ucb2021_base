@@ -67,18 +67,13 @@
  *
  * TODO : 
  *    - Paginataion -- NO PAGINATION - Infinite Load!!! -- will need to happen in multiple cases, edge cases and reaching end of first pull
- *    - Exclude Filter!!!
- *    - Pathauto
  *    - Spinning FontAwesome on load graphic -- make more conspicious 
  *    - Responsive View for Mobile (image on top)
  *       - Set output on Thumbnail to be reasonable size in Article schema 
  *       - Make the image larger and centered on the smallest view  
  *    - Test edge cases
-        - If no exclude cat/tag on article list, skip all that checking logic
-        - If article has no cat/tag, skip the check for exclusion logic
         - All data has been excluded, nothing prints to page, 
             - request data if more, or display an END OF RESULTS message
- *    - Error message on no article found.  -- DONE
  */
 #}
 
@@ -213,6 +208,10 @@
   %}
 {% endif %}
 
+{% set pageCount = 20 %}
+{% set pageCountFilter = 
+    '&page[limit]='~pageCount
+%}
 
 {# Check for Exclude Categories and setup the filter to exclude anything that matches "NOT IN SET" #}
 {# {% if excludeCategories|length %}
@@ -245,14 +244,13 @@
 
 
 {# JSON API Filter logic #}
-
 <article{{ attributes.addClass('container') }}>
 
   <h2>{{ label }}</h2>
 
   <div{{ content_attributes }}>
     <div class="ucb-article-list-body">
-        {{ content.body }}
+      {{ content.body }}
         {# <ul>
           <li>Include Categories</li>
           {% for item in includeCategories %}
@@ -280,15 +278,26 @@
         </ul> #}
 
         {# <h3> Full URL : {{ articlesJSON}}{{ IncludeFilter }}</h3> #}
-        <h3> Exclude Cats : {{ excludeCategories }}</h3>
-        <h3> Exclude Tags : {{ excludeTags }}</h3>
     </div>
     {# <div id="ucb-article-listing" class="ucb-article-list-container" data-jsonapi="{{ articlesJSON }}{{ IncludeFilter }}"> #}
     <div id="ucb-article-listing" class="ucb-article-list-container"  
-      data-jsonapi="{{ articlesJSON }}{{ IncludeFilter }}" 
+      data-jsonapi="{{ articlesJSON }}{{ IncludeFilter }}{{ pageCountFilter }}" 
       data-excats="{{ excludeCategories }}" 
       data-extags="{{ excludeTags }}"
       >
+
+      {# No Data message  #}
+      <div id="ucb-al-no-results" class="ucb-list-msg ucb-no-data">No articles were returned, please check your filters and try again.</div>
+
+      {# dynamically loaded data goes here... #}
+      <div id="ucb-al-data"></div>
+
+      {# Loading message  #}
+      <div id="ucb-al-loading" class="ucb-list-msg ucb-loading-data"><i class="fas fa-spinner fa-3x fa-pulse"></i></div>
+
+      {# No more Data #}
+      <div id="ucb-al-end-of-data" class="ucb-list-msg ucb-end-of-results">No more results matching your filters.</div>
+
     </div>
   </div>
 </article>
