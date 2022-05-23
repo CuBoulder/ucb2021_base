@@ -47,15 +47,13 @@ view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
 		{# Newsletter Promo/Ad One #}
 		<div class="row row-content ucb-newsletter-promo-one">
 			{% if content.field_newsletter_promo_image_one|render %}
-				<div class="col-4 flex-grow-1">
+				{% if content.field_newsletter_promo_link_one|render %}
+					<a href="{{ content.field_newsletter_promo_link_one|render|striptags|trim }}">
 					{{ content.field_newsletter_promo_image_one|render	}}
-				</div>
-			{% endif %}
-
-			{% if content.field_newsletter_promo_text_one|render %}
-				<div class="col-8 flex-grow-1">
-					{{ content.field_newsletter_promo_text_one|render }}
-				</div>
+				</a>
+				{% else %}	
+					{{ content.field_newsletter_promo_image_one|render	}}
+				{% endif %}
 			{% endif %}
 		</div>
 
@@ -84,15 +82,13 @@ view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
 		{# Newsletter Promo/Ad Two #}
 		<div class="row row-content ucb-newsletter-promo-one">
 			{% if content.field_newsletter_promo_image_two|render %}
-				<div class="col-4 flex-grow-1">
+				{% if content.field_newsletter_promo_link_two|render %}
+					<a href="{{ content.field_newsletter_promo_link_two|render|striptags|trim }}">
 					{{ content.field_newsletter_promo_image_two|render	}}
-				</div>
-			{% endif %}
-
-			{% if content.field_newsletter_promo_text_two|render %}
-				<div class="col-8 flex-grow-1">
-					{{ content.field_newsletter_promo_text_two|render }}
-				</div>
+				</a>
+				{% else %}	
+					{{ content.field_newsletter_promo_image_two|render	}}
+				{% endif %}
 			{% endif %}
 		</div>
 	</div>
