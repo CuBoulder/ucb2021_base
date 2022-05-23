@@ -189,7 +189,7 @@ function renderArticleList(
             let link = item.attributes.path.alias
 
             let outputHTML = ` 
-                            <article class='ucb-article-card row'>
+                            <div class='ucb-article-card row'>
                                 <div class='col-sm-12 col-md-2 ucb-article-card-img'>
                                     <a href="${link}"> <img src="${imageSrc}"/> </a></div>
                                 <div class='col-sm-12 col-md-10 ucb-article-card-data'>
@@ -199,7 +199,7 @@ function renderArticleList(
                                     <span class='ucb-article-card-more'> 
                                         <a href="${link}">Read more <i class="fal fa-chevron-double-right"></i></a></span>
                                 </div>
-                            </article>
+                            </div>
                         `
 
             let dataOutput = document.getElementById('ucb-al-data')
@@ -230,6 +230,7 @@ function renderArticleList(
   let TagsExclude = ''
   let lastKnownScrollPosition = 0
   let ticking = false
+  let loadingData = false
 
   if (el) {
     JSONURL = el.dataset.jsonapi
@@ -244,26 +245,22 @@ function renderArticleList(
     TagsExclude,
   )
 
-  //    document.addEventListener('scroll', function(e) {
-  //        lastKnownScrollPosition = window.scrollY;
-  //        let offsetHeight    = document.getElementById('ucb-article-listing').offsetHeight;
-  //        let loadingData = false;
+  document.addEventListener('scroll', function (e) {
+    lastKnownScrollPosition = window.scrollY
 
-  //        if (!ticking && !loadingData) {
-  //             window.requestAnimationFrame(function() {
-  //                 console.log("Offset Height is : " + offsetHeight);
-  //                 console.log("Last known position is : " + lastKnownScrollPosition);
+    if (!ticking && !loadingData) {
+      window.requestAnimationFrame(function () {
+        // check to see if we've scrolled through our content and need to attempt to load more
+        if ( lastKnownScrollPosition + window.innerHeight >= document.documentElement.scrollHeight) {
+          // grab the next link from our JSON data object and call the loader
+          loadingData = true
+          renderArticleList( JSONURL, 'ucb-article-listing', CategoryExclude, TagsExclude,)
+          loadingData = false;
+        }
+        ticking = false
+      })
 
-  //                 // check to see if we've scrolled through our content and need to attempt to load more
-  //                 if(lastKnownScrollPosition*2 > offsetHeight) {
-  //                     // grab the next link from our JSON data object and call the loader
-  //                     loadingData = true;
-  //     //                renderArticleList(JSONURL,'ucb-article-listing',CategoryExclude, TagsExclude);
-  //                 }
-  //                 ticking = false;
-  //             });
-
-  //             ticking = true;
-  //        }
-  //    });
+      ticking = true
+    }
+  })
 })()
