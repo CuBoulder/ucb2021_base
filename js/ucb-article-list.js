@@ -14,8 +14,10 @@ function renderArticleList(JSONURL,id='ucb-article-listing',ExcludeCategories=''
 
     if(JSONURL) {
         let el = document.getElementById(id);
+        // used for checking if new data is appended
+        let parentDiv = document.getElementById("block-ucb2021-base-content")
 
-        el.innerHTML = `<i class="fas fa-spinner fa-pulse"></i> Loading please wait`
+        el.innerHTML = `<h5><i class="fas fa-spinner fa-pulse"></i> Loading please wait</h5>`
 
         fetch(JSONURL)
             .then(reponse => reponse.json())
@@ -36,7 +38,6 @@ function renderArticleList(JSONURL,id='ucb-article-listing',ExcludeCategories=''
                     let filteredData = data.included.filter((url)=> {
                         return url.attributes.uri !== undefined
                     })
-
                     // creates the urlObj, key: data id, value: url
                     filteredData.map((pair)=> {
                         urlObj[pair.id] = pair.attributes.uri.url
@@ -46,13 +47,13 @@ function renderArticleList(JSONURL,id='ucb-article-listing',ExcludeCategories=''
                     let idFilterData = data.included.filter((item)=> {
                         return item.type == "media--image"
                     })
-
                     // using the image-only data, creates the idObj =>  key: thumbnail id, value : data id
                     idFilterData.map((pair)=> {
                         idObj[pair.id] = pair.relationships.thumbnail.data.id
                     })
                 }
-
+                console.log("idObj",idObj)
+                console.log("urlObj", urlObj)
                 //iterate over each item in the array
                 data.data.map((item)=> {
                     let thisArticleCats = [];
@@ -77,8 +78,8 @@ function renderArticleList(JSONURL,id='ucb-article-listing',ExcludeCategories=''
                     let doesIncludeCat = thisArticleCats.filter(element => excludeCatArray.includes(element));
                     let doesIncludeTag = thisArticleTags.filter(element => excludeTagArray.includes(element));
 
-                    console.log(excludeCatArray, thisArticleCats,doesIncludeCat)
-                    console.log(excludeTagArray,thisArticleTags,doesIncludeTag)
+                    // console.log(excludeCatArray, thisArticleCats,doesIncludeCat)
+                    // console.log(excludeTagArray,thisArticleTags,doesIncludeTag)
 
                     // if the doesInclude check for tags or cats returns any number, don't proceed. Else, we want to build the page
                     if(!doesIncludeCat.length==0 || !doesIncludeTag.length==0){
@@ -195,9 +196,13 @@ function renderArticleList(JSONURL,id='ucb-article-listing',ExcludeCategories=''
                     contentDiv.appendChild(contentBody)
                     contentDiv.appendChild(contentLink)
                 }})
-            // remove loading text
+            // check if anything was returned, if nothing, prompt user to adjust filters, else remove loading text/error msg
+            if(parentDiv.children.length===1){
+                el.innerHTML = "<h5>No articles currently match your selected included/excluded filters. Please adjust your filters and try again</h5>"
+            } else {
             el.innerText = "";
-            });
+            }
+        });
     }
 }
 // Init
