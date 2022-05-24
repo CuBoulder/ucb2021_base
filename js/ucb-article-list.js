@@ -36,13 +36,12 @@ function renderArticleList( JSONURL, id = 'ucb-article-listing', ExcludeCategori
       .then((data) => {
         // get the next URL and return that if there is one 
         if(data.links.next) {
-          let nextURL = JSON.stringify(data.links.next.href).split('/jsonapi/');
+          let nextURL = data.links.next.href.split('/jsonapi/');
           NEXTJSONURL = nextURL[1];
         } else {
           NEXTJSONURL = "";
         }
 
-        console.log("Next URL is : " + NEXTJSONURL);
         console.log('data obj', data)
 
         // if no articles of returned, stop the loading spinner and let the user know we received no data that matches their query
@@ -132,7 +131,7 @@ function renderArticleList( JSONURL, id = 'ucb-article-listing', ExcludeCategori
 
           // if the doesInclude check for tags or cats returns any number, don't proceed. Else, we want to build the page
           if (!doesIncludeCat.length == 0 || !doesIncludeTag.length == 0) {
-            console.log('was excluded', item)
+            //console.log('was excluded', item)
           } else {
             // we need to render the Article Card view for this returned element
 
@@ -140,7 +139,7 @@ function renderArticleList( JSONURL, id = 'ucb-article-listing', ExcludeCategori
             // this is my id of the article body paragraph type we need only if no thumbnail or summary provided
             let bodyAndImageId =
               item.relationships.field_ucb_article_content.data[0].id
-            let body = item.attributes.field_ucb_article_summary
+            let body = item.attributes.field_ucb_article_summary?item.attributes.field_ucb_article_summary : ""
             let imageSrc = ''
 
             // if no article summary, use a simplified article body
@@ -168,9 +167,7 @@ function renderArticleList( JSONURL, id = 'ucb-article-listing', ExcludeCategori
                   )
                   // set the contentBody of Article Summary card to the minified body instead
                   body = `${trimmedString}...`
-                  console.log(
-                    'NO summary, using 500 characters from body : ' + body,
-                  )
+                  document.getElementById(`body-${bodyAndImageId}`).innerHTML = body;
                 })
             }
 
@@ -192,15 +189,18 @@ function renderArticleList( JSONURL, id = 'ucb-article-listing', ExcludeCategori
               .join(' ')
             let title = item.attributes.title
             let link = item.attributes.path.alias
+            let image = ""
+            if(link && imageSrc) {
+                image = `<a href="${link}"><img src="${imageSrc}" /></a>`
+            }
 
             let outputHTML = ` 
                             <div class='ucb-article-card row'>
-                                <div class='col-sm-12 col-md-2 ucb-article-card-img'>
-                                    <a href="${link}"> <img src="${imageSrc}"/> </a></div>
+                                <div id='img-${bodyAndImageId}' class='col-sm-12 col-md-2 ucb-article-card-img'>${image}</div>
                                 <div class='col-sm-12 col-md-10 ucb-article-card-data'>
                                     <span class='ucb-article-card-title'><a href="${link}">${title}</a></span>
                                     <span class='ucb-article-card-date'>${date}</span>
-                                    <span class='ucb-article-card-body'>${body}</span>
+                                    <span id='body-${bodyAndImageId}' class='ucb-article-card-body'>${body}</span>
                                     <span class='ucb-article-card-more'> 
                                         <a href="${link}">Read more <i class="fal fa-chevron-double-right"></i></a></span>
                                 </div>
@@ -215,6 +215,7 @@ function renderArticleList( JSONURL, id = 'ucb-article-listing', ExcludeCategori
 
           }
         })
+        
         // check if anything was returned, if nothing, prompt user to adjust filters, else remove loading text/error msg
         // if(el.children.length===1){
         //     el.innerHTML = "<h5>No articles currently match your selected included/excluded filters. Please adjust your filters and try again</h5>"
@@ -224,9 +225,17 @@ function renderArticleList( JSONURL, id = 'ucb-article-listing', ExcludeCategori
 
         // done loading -- hide the loading spinner graphic
         toggleMessage('ucb-al-loading', 'none')
-        console.log("Returning Next URL as : " + NEXTJSONURL);
         resolve(NEXTJSONURL); 
-      });
+      }).catch(function(error) {
+        // catch any fetch errors and let the user know so they're not endlessly watching the spinner
+        console.log("Fetch Error in URL : " + JSONURL)
+        console.log("Fetch Error is : " + error)
+        // turn off spinner 
+        toggleMessage('ucb-al-loading', 'none')
+        // turn on default error message 
+        toggleMessage('ucb-al-error', 'block')
+
+    });
 
   }
   });
@@ -257,7 +266,6 @@ function renderArticleList( JSONURL, id = 'ucb-article-listing', ExcludeCategori
       NEXTJSONURL = '/jsonapi/' + response;
     }
   });
-  console.log("NEXT URL returned from first call is : " + NEXTJSONURL);
 
   document.addEventListener('scroll', function (e) {
     lastKnownScrollPosition = window.scrollY
@@ -269,23 +277,20 @@ function renderArticleList( JSONURL, id = 'ucb-article-listing', ExcludeCategori
           // grab the next link from our JSON data object and call the loader
           loadingData = true
           // if we have another set of data to load, get the next batch.
-          console.log("NEXT URL to load is : " + NEXTJSONURL);
           if(NEXTJSONURL) {
             renderArticleList( NEXTJSONURL, 'ucb-article-listing', CategoryExclude, TagsExclude,).then((response) => {
-                if(response) {
-                  NEXTJSONURL = '/jsonapi/' + response;
-                } else {
-                  NEXTJSONURL = "";
-                }
+              if(response) {
+                NEXTJSONURL = '/jsonapi/' + response;
+                loadingData = false;
+              } else {
+                NEXTJSONURL = "";
+                toggleMessage('ucb-al-end-of-data', 'block')
+              }
             });
-            loadingData = false;
-          } else {
-              toggleMessage('ucb-al-end-of-data', 'block')
           }
         }
         ticking = false
       })
-
       ticking = true
     }
   })
