@@ -18,19 +18,15 @@ function toggleMessage(id, display = 'none') {
   }
 }
 
-function renderArticleList(
-  JSONURL,
-  id = 'ucb-article-listing',
-  ExcludeCategories = '',
-  ExcludeTags = '',
-) {
+function renderArticleList( JSONURL, id = 'ucb-article-listing', ExcludeCategories = '', ExcludeTags = '',) {
+  return new Promise(function(resolve, reject) {
   let excludeCatArray = ExcludeCategories.split(',').map(Number)
   let excludeTagArray = ExcludeTags.split(',').map(Number)
+  // next URL if there is one, will be returned by this funtion
+  let NEXTJSONURL = ""
 
   if (JSONURL) {
     let el = document.getElementById(id)
-    // used for checking if new data is appended
-    let parentDiv = document.getElementById('block-ucb2021-base-content')
 
     // show the loading spinner while we load the data
     toggleMessage('ucb-al-loading', 'block')
@@ -38,13 +34,22 @@ function renderArticleList(
     fetch(JSONURL)
       .then((reponse) => reponse.json())
       .then((data) => {
+        // get the next URL and return that if there is one 
+        if(data.links.next) {
+          let nextURL = JSON.stringify(data.links.next.href).split('/jsonapi/');
+          NEXTJSONURL = nextURL[1];
+        } else {
+          NEXTJSONURL = "";
+        }
+
+        console.log("Next URL is : " + NEXTJSONURL);
         console.log('data obj', data)
 
         // if no articles of returned, stop the loading spinner and let the user know we received no data that matches their query
         if (data.data.length == 0) {
           toggleMessage('ucb-al-loading', 'none')
           toggleMessage('ucb-al-no-results', 'block')
-          return
+          reject;
         }
 
         // Below objects are needed to match images with their corresponding articles. There are two endpoints => data.data (article) and data.included (incl. media), both needed to associate a media library image with its respective article
@@ -207,6 +212,7 @@ function renderArticleList(
             thisArticle.innerHTML = outputHTML
 
             dataOutput.append(thisArticle)
+
           }
         })
         // check if anything was returned, if nothing, prompt user to adjust filters, else remove loading text/error msg
@@ -218,14 +224,22 @@ function renderArticleList(
 
         // done loading -- hide the loading spinner graphic
         toggleMessage('ucb-al-loading', 'none')
-      })
+        console.log("Returning Next URL as : " + NEXTJSONURL);
+        resolve(NEXTJSONURL); 
+      });
+
   }
+  });
 }
+
+
 // Init
-;(function () {
+
+(function () {
   // get the url from the data-jsonapi variable
   let el = document.getElementById('ucb-article-listing')
   let JSONURL = 'NOTHING TO SEE HERE'
+  let NEXTJSONURL = '';
   let CategoryExclude = ''
   let TagsExclude = ''
   let lastKnownScrollPosition = 0
@@ -238,12 +252,12 @@ function renderArticleList(
     TagsExclude = el.dataset.extags
   }
 
-  renderArticleList(
-    JSONURL,
-    'ucb-article-listing',
-    CategoryExclude,
-    TagsExclude,
-  )
+  renderArticleList( JSONURL, 'ucb-article-listing', CategoryExclude, TagsExclude,).then((response) => {
+    if(response) {
+      NEXTJSONURL = '/jsonapi/' + response;
+    }
+  });
+  console.log("NEXT URL returned from first call is : " + NEXTJSONURL);
 
   document.addEventListener('scroll', function (e) {
     lastKnownScrollPosition = window.scrollY
@@ -254,8 +268,20 @@ function renderArticleList(
         if ( lastKnownScrollPosition + window.innerHeight >= document.documentElement.scrollHeight) {
           // grab the next link from our JSON data object and call the loader
           loadingData = true
-          renderArticleList( JSONURL, 'ucb-article-listing', CategoryExclude, TagsExclude,)
-          loadingData = false;
+          // if we have another set of data to load, get the next batch.
+          console.log("NEXT URL to load is : " + NEXTJSONURL);
+          if(NEXTJSONURL) {
+            renderArticleList( NEXTJSONURL, 'ucb-article-listing', CategoryExclude, TagsExclude,).then((response) => {
+                if(response) {
+                  NEXTJSONURL = '/jsonapi/' + response;
+                } else {
+                  NEXTJSONURL = "";
+                }
+            });
+            loadingData = false;
+          } else {
+              toggleMessage('ucb-al-end-of-data', 'block')
+          }
         }
         ticking = false
       })
