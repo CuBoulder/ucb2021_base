@@ -37,7 +37,9 @@
   font-size: 14px;
 }
 
-.paragraph.paragraph--type--slider.bottom-overlay .carousel-inner .carousel-caption {
+.paragraph.paragraph--type--slider.bottom-overlay
+  .carousel-inner
+  .carousel-caption {
   top: auto;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.7);
@@ -45,7 +47,9 @@
   left: 0;
 }
 
-.paragraph.paragraph--type--slider.right-overlay .carousel-inner .carousel-caption {
+.paragraph.paragraph--type--slider.right-overlay
+  .carousel-inner
+  .carousel-caption {
   top: 0;
   right: 0;
   bottom: 0;
@@ -55,16 +59,18 @@
   padding: 1rem;
 }
 
-.paragraph.paragraph--type--slider.center-overlay .carousel-inner .carousel-caption {
+.paragraph.paragraph--type--slider.center-overlay
+  .carousel-inner
+  .carousel-caption {
   top: 25%;
   bottom: 25%;
   margin: auto;
-  right: 0;
-  left: 0;
   background-color: rgba(0, 0, 0, 0.7);
 }
 
-.paragraph.paragraph--type--slider.right-content .carousel-inner .carousel-caption {
+.paragraph.paragraph--type--slider.right-content
+  .carousel-inner
+  .carousel-caption {
   top: 0;
   right: 0;
   bottom: 0;
@@ -74,7 +80,9 @@
   padding: 1rem;
 }
 
-.paragraph.paragraph--type--slider.bottom-content .carousel-inner .carousel-caption {
+.paragraph.paragraph--type--slider.bottom-content
+  .carousel-inner
+  .carousel-caption {
   top: auto;
   bottom: 0;
   background-color: var(--ucb-darker);
@@ -107,34 +115,22 @@
   background-color: rgba(0, 0, 0, 0.6);
 }
 
-.paragraph.paragraph--type--slider.bottom-overlay .carousel-inner .carousel-caption .caption-top {
-  top: 0;
-  bottom: auto;
-}
-
-.paragraph.paragraph--type--slider.bottom-overlay .carousel-inner .carousel-caption .caption-left {
-  top: 0;
-  bottom: auto;
-  right: auto;
-  max-width: 25%;
-  left: 0;
-  height: 100%;
-}
-
-.paragraph.paragraph--type--slider.bottom-overlay .carousel-inner .carousel-caption .caption-right {
-  top: 0;
-  bottom: auto;
-  right: 0;
-  max-width: 25%;
-  left: auto;
-  height: 100%;
+a.slide-link i.fa,
+a.slide-link i.fab {
+  color: #aaa;
 }
 
 /* media queries */
 @media screen and (max-width: 768px) {
-  .paragraph.paragraph--type--slider.right-overlay .carousel-inner .carousel-caption,
-  .paragraph.paragraph--type--slider.right-content .carousel-inner .carousel-caption,
-  .paragraph.paragraph--type--slider.center-overlay .carousel-inner .carousel-caption {
+  .paragraph.paragraph--type--slider.right-overlay
+    .carousel-inner
+    .carousel-caption,
+  .paragraph.paragraph--type--slider.right-content
+    .carousel-inner
+    .carousel-caption,
+  .paragraph.paragraph--type--slider.center-overlay
+    .carousel-inner
+    .carousel-caption {
     top: auto;
     bottom: 0;
     right: 0;
