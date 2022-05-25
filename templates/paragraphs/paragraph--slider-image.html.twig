@@ -15,16 +15,18 @@
 
 {% block paragraph %}
 	{% block content %}
-		{% if paragraph.field_slide_link.value is not empty %}
-			<a href="{{ paragraph.field_slide_link.value }}">
-				{{ content.field_slider_slide_image|render }}
-			</a>
-		{% else %}
-			{{ content.field_slider_slide_image|render }}
-		{% endif %}
+    <div class="slide-image-container">
+      {% if paragraph.field_slide_link.value is not empty %}
+        <a href="{{ paragraph.field_slide_link.value }}">
+          {{ content.field_slider_slide_image|render }}
+        </a>
+      {% else %}
+        {{ content.field_slider_slide_image|render }}
+      {% endif %}
+    </div>
 		{% if paragraph.field_slide_text.value is not empty or paragraph.field_slide_text is not empty %}
 			<div class="carousel-caption d-md-block d-none">
-      <div class="slide-content-container">
+      <div class="slide-text-container">
 				{% if paragraph.field_slide_text is not empty %}
 					<span>
 						<h3>{{ content.field_slide_title|render|striptags|trim }}
