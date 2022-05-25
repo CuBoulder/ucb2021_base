@@ -7,6 +7,9 @@
 
 {{ attach_library('ucb2021_base/ucb-people-list-page') }}
 
+{# Display format variable #}
+{% set displayFormat = content.field_ucb_people_display|render|striptags|trim %}
+
 {# JSON API Endpoint information #}
 {% set peopleJSON = (url('<front>')|render|trim('/'))
   ~ '/jsonapi/node/ucb_person'
@@ -139,8 +142,10 @@
 ]
 %}
 
-
-<article id="ucb-people-list-page"data-JSON={{peopleJSON}} {{attributes.addClass(classes)}}>
+<article id="ucb-people-list-page"
+    data-JSON={{peopleJSON}}{{ IncludeFilter }}{{ sortFilter}}
+    data-format={{ displayFormat }}
+    {{attributes.addClass(classes)}}>
 
 	<div class="container">
 		<h1{{title_attributes}}>
