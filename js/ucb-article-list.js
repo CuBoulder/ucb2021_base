@@ -1,7 +1,12 @@
 async function getArticleParagraph(id) {
-  return await fetch(
-    `/jsonapi/paragraph/article_content/${id}?include[paragraph--article_content]=field_article_image,field_article_text&include=field_article_image.field_media_image&fields[file--file]=uri,url`
-  );
+  if(id) {
+    const response = await fetch(
+      `/jsonapi/paragraph/article_content/${id}?include[paragraph--article_content]=field_article_image,field_article_text&include=field_article_image.field_media_image&fields[file--file]=uri,url`
+    );
+    return response;
+  } else {
+      return "";
+  }
 }
 
 function toggleMessage(id, display = "none") {
