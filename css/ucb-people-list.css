@@ -1,0 +1,27 @@
+.ucb-person-card-list {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.ucb-person-card-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.ucb-person-card-name {
+  font-size: 1.25rem;
+  font-weight: bolder;
+  margin-bottom: 0.25rem;
+}
+
+.ucb-person-card-dept {
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  margin-bottom: 0.25rem;
+}
+
+.ucb-person-card-contact {
+  display: flex;
+  flex-direction: row;
+}

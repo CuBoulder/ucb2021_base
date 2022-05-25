@@ -1,3 +1,6 @@
+/* naughty global variables!!! */
+let Departments = {};
+let JobTypes = {};
 
 function getTaxonomy(taxonomyName) {
     return new Promise(function(resolve, reject) {
@@ -71,6 +74,55 @@ function layoutFooter(Format) {
 
 function displayPersonCard(Format, Person) {
     console.log("Rendering the card for " + Person.Name);
+    let cardHTML = "";
+    // grab the friendly name from the global variable 
+    // note: there may be a race condidtion here as we're also querying 
+    //  to get those friendly names from the API endpoint.  
+    let myDept = Person.Dept ? Departments[Person.Dept] : "";
+    let myPhoto = "";
+    if(Person.PhotoURL) {
+        myPhoto = `<img src="${Person.PhotoURL}"  />`;
+    }
+
+    switch(Format) {
+        case "list": 
+            cardHTML =  `
+                <div class="ucb-person-card-list row">
+                    <div class="col-sm-12 col-md-3 ucb-person-card-img">
+                        ${myPhoto};
+                    </div>
+                    <div class="col-sm-12 col-md-9 ucb-person-card-details">
+                    <span class="ucb-person-card-name">
+                        ${Person.Name?Person.Name:""}
+                    </span>
+                    <span class="ucb-person-card-title">
+                        ${Person.Title?Person.Title:""}
+                    </span>
+                    <span class="ucb-person-card-dept">
+                        ${myDept} 
+                    </span>
+                    <span class="ucb-person-card-body">
+                        ${Person.Body?Person.Body:""}
+                    </span>
+                    <div class="ucb-person-card-contact">
+                        <span class="ucb-person-card-email">
+                            ${Person.Email?Person.Email:""}
+                        </span>
+                        <span class="ucb-person-card-phone">
+                            ${Person.Phone?Person.Phone:""}
+                        </span>
+                    </div>
+                    </div>
+                </div>
+            `
+            break;
+        case "grid":
+            break;
+        case "table":
+            break;
+        default:
+    }
+    return cardHTML;
 }
 
 function displayPeople(JSONURL, DISPLAYFORMAT) {
@@ -85,10 +137,35 @@ fetch(JSONURL)
   .then((response) => response.json())
   .then((data) => {
     console.log(data) // our data obj
+
+    // get all of the include images id => url 
+    let urlObj = {}; // key from data.data to key from data.includes
+    let idObj = {};  // key from data.includes to URL
+    // Remove any blanks from our articles before map
+    if (data.included) {
+      let filteredData = data.included.filter((url) => {
+        return url.attributes.uri !== undefined;
+      })
+      // creates the urlObj, key: data id, value: url
+      filteredData.map((pair) => {
+        urlObj[pair.id] = pair.attributes.uri.url;
+      })
+
+      // removes all other included data besides images in our included media
+      let idFilterData = data.included.filter((item) => {
+        return item.type == "media--image";
+      })
+      // using the image-only data, creates the idObj =>  key: thumbnail id, value : data id
+      idFilterData.map((pair) => {
+        idObj[pair.id] = pair.relationships.thumbnail.data.id;
+      })
+    }
+
     // maps over data
     data.data.map((person) => {
         // get the person data we need 
         let thisPerson = {};
+        let thisPersonCard = ""; // placeholder for the HTML to render this card in the required format
         thisPerson["Name"]      = person.attributes.title;
         thisPerson["Title"]     = person.attributes.field_ucb_person_title[0];
         thisPerson["Dept"]      = person.relationships.field_ucb_person_department.data[0].meta.drupal_internal__target_id;
@@ -103,6 +180,10 @@ fetch(JSONURL)
             myBody.replace( /<\/?[^>]+(>|$)/g,""); // strip out HTML characters
             myBody.replace(/(\r\n|\n|\r)/gm, ""); // strip out line breaks
             thisPerson["Body"] = myBody;
+        }
+        if(thisPerson.PhotoID) {
+            thisPerson["PhotoURL"] = urlObj[idObj[thisPerson.PhotoID]];
+            console.log("Am I an image URL? : " + thisPerson.PhotoURL);
         }
 
         // switch on the given format 
@@ -125,10 +206,17 @@ fetch(JSONURL)
     //   let el = document.getElementById('ucb-people-list-page');
     //   el.appendChild(personDiv)
 
-        displayPersonCard(DISPLAYFORMAT, thisPerson);
+        thisPersonCard = displayPersonCard(DISPLAYFORMAT, thisPerson);
+        let thisCard = document.createElement("article");
+        thisCard.innerHTML = thisPersonCard;
+
+        el.append(thisCard);
     })
   })
-  layoutFooter(DISPLAYFORMAT);
+
+  // done with cards, clean up and close any HTML tags we have opened.  
+  el.append(footerHTML);
+
 // console.log(el.dataset.json)
 }
 
@@ -137,8 +225,6 @@ fetch(JSONURL)
     let el = document.getElementById('ucb-people-list-page');
     let JSONAPI = el.dataset.json;
     let FORMAT = el.dataset.format;
-    let Departments = {};
-    let JobTypes = {};
     console.log("Init");
 
     if(JSONAPI) {
