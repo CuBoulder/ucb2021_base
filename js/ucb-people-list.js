@@ -89,7 +89,7 @@ function displayPersonCard(Format, Person) {
             cardHTML =  `
                 <div class="ucb-person-card-list row">
                     <div class="col-sm-12 col-md-3 ucb-person-card-img">
-                        ${myPhoto};
+                        ${myPhoto}
                     </div>
                     <div class="col-sm-12 col-md-9 ucb-person-card-details">
                     <span class="ucb-person-card-name">
