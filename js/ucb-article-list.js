@@ -31,7 +31,7 @@ function renderArticleList( JSONURL, id = "ucb-article-listing", ExcludeCategori
   let NEXTJSONURL = "";
 
   if (JSONURL) {
-    let el = document.getElementById(id);
+    //let el = document.getElementById(id);
 
     // show the loading spinner while we load the data
     toggleMessage("ucb-al-loading", "block");
@@ -50,7 +50,7 @@ function renderArticleList( JSONURL, id = "ucb-article-listing", ExcludeCategori
         console.log("data obj", data);
 
         // if no articles of returned, stop the loading spinner and let the user know we received no data that matches their query
-        if (data.data.length == 0) {
+        if (!data.data.length) {
           toggleMessage("ucb-al-loading", "none");
           toggleMessage("ucb-al-no-results", "block");
           reject;
@@ -258,7 +258,7 @@ function renderArticleList( JSONURL, id = "ucb-article-listing", ExcludeCategori
     }
   });
 
-  document.addEventListener("scroll", function (e) {
+  document.addEventListener("scroll", function () {
     lastKnownScrollPosition = window.scrollY;
 
     if (!ticking && !loadingData) {
