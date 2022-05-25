@@ -37,19 +37,16 @@
   font-size: 14px;
 }
 
-.paragraph.paragraph--type--slider.bottom-overlay
-  .carousel-inner
-  .carousel-caption {
+.paragraph.paragraph--type--slider.bottom-overlay .carousel-inner .carousel-caption {
   top: auto;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.7);
   right: 0;
   left: 0;
+  text-align: left;
 }
 
-.paragraph.paragraph--type--slider.right-overlay
-  .carousel-inner
-  .carousel-caption {
+.paragraph.paragraph--type--slider.right-overlay .carousel-inner .carousel-caption {
   top: 0;
   right: 0;
   bottom: 0;
@@ -59,18 +56,16 @@
   padding: 1rem;
 }
 
-.paragraph.paragraph--type--slider.center-overlay
-  .carousel-inner
-  .carousel-caption {
-  top: 25%;
-  bottom: 25%;
+.paragraph.paragraph--type--slider.center-overlay .carousel-inner .carousel-caption {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   margin: auto;
   background-color: rgba(0, 0, 0, 0.7);
 }
 
-.paragraph.paragraph--type--slider.right-content
-  .carousel-inner
-  .carousel-caption {
+.paragraph.paragraph--type--slider.right-content .carousel-inner .carousel-caption {
   top: 0;
   right: 0;
   bottom: 0;
@@ -88,6 +83,24 @@
   background-color: var(--ucb-darker);
   right: 0;
   left: 0;
+  text-align: left;
+}
+
+.right-overlay .slide-content-container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.center-overlay .slide-content-container {
+  margin: auto;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: calc(100% - 100px);
 }
 
 .paragraph.paragraph--type--slider .carousel-inner a:hover {
@@ -122,15 +135,9 @@ a.slide-link i.fab {
 
 /* media queries */
 @media screen and (max-width: 768px) {
-  .paragraph.paragraph--type--slider.right-overlay
-    .carousel-inner
-    .carousel-caption,
-  .paragraph.paragraph--type--slider.right-content
-    .carousel-inner
-    .carousel-caption,
-  .paragraph.paragraph--type--slider.center-overlay
-    .carousel-inner
-    .carousel-caption {
+  .paragraph.paragraph--type--slider.right-overlay .carousel-inner .carousel-caption,
+  .paragraph.paragraph--type--slider.right-content .carousel-inner .carousel-caption,
+  .paragraph.paragraph--type--slider.center-overlay .carousel-inner .carousel-caption {
     top: auto;
     bottom: 0;
     right: 0;

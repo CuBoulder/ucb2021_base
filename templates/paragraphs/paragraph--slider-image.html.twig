@@ -24,6 +24,7 @@
 		{% endif %}
 		{% if paragraph.field_slide_text.value is not empty or paragraph.field_slide_text is not empty %}
 			<div class="carousel-caption d-md-block d-none">
+      <div class="slide-content-container">
 				{% if paragraph.field_slide_text is not empty %}
 					<span>
 						<h3>{{ content.field_slide_title|render|striptags|trim }}
@@ -40,6 +41,7 @@
 					<p>{{ content.field_slide_text|render }}</p>
 				{% endif %}
 			</div>
+      </div>
 		{% endif %}
 	{% endblock %}
 {% endblock paragraph %}
