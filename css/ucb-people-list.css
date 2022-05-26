@@ -23,5 +23,5 @@
 
 .ucb-person-card-contact {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }

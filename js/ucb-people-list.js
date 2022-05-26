@@ -109,7 +109,7 @@ function displayPersonCard(Format, Person) {
                         <span class="ucb-person-card-email">
                             ${
                               Person.Email
-                                ? `<a href="mailto:${Person.Email}"><p><i class="fa fa-envelope">${Person.Email}</i></p></a>`
+                                ? `<a href="mailto:${Person.Email}"><p><i class="fa fa-envelope"> ${Person.Email}</i></p></a>`
                                 : ''
                             }
                         </span>
@@ -119,7 +119,7 @@ function displayPersonCard(Format, Person) {
                                 ? `<a href="tel:${Person.Phone.replace(
                                     /[^+\d]+/g,
                                     '',
-                                  )}"><p><i class="fa fa-phone">${
+                                  )}"><p><i class="fa fa-phone"> ${
                                     Person.Phone
                                   }</i></p></a>`
                                 : ''
