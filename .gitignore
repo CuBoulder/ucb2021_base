@@ -352,3 +352,6 @@ MigrationBackup/
 
 # ignore composer
 vendor/
+
+# ignore JetBrains files
+.idea/
