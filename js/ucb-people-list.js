@@ -27,48 +27,80 @@ function getTaxonomy(taxonomyName) {
   })
 }
 
-function layoutHeader(Format) {
-  let displayHTML = ''
+// function layoutHeader(Format) {
+//   let displayHTML = ''
+//   switch (Format) {
+//     case 'list':
+//       break
+//     case 'grid':
+//       displayHTML = `<div class="ucb-people-list-grid row">`
+//       break
+//     case 'table':
+//       displayHTML = `
+//                 <table>
+//                   <thead>
+//                       <tr>
+//                         <th class="sr-only">Photo</th>
+//                         <th>Name</th>
+//                         <th>Contact Information</th>
+//                       </tr>
+//                   </thead>
+//                 <tbody>
+//             `
+//       break
+//     default:
+//   }
+
+//   return displayHTML
+// }
+
+// function layoutFooter(Format) {
+//   let displayHTML = ''
+//   switch (Format) {
+//     case 'list':
+//       break
+//     case 'grid':
+//       displayHTML = '</div>'
+//       break
+//     case 'table':
+//       displayHTML = '</tbody></table>'
+//       break
+//     default:
+//   }
+
+//   return displayHTML
+// }
+
+// Each Format needs a different parent element before people can be inserted, this function ensures the correct parent wrapper element is created for data
+function getParentContainer(Format) {
+  let container = ''
   switch (Format) {
     case 'list':
       break
     case 'grid':
-      displayHTML = `<div class="ucb-people-list-grid row">`
+      container = document.createElement('div')
+      container.classList = 'ucb-people-list-grid row'
       break
     case 'table':
-      displayHTML = `
-                <table>
-                <thead>
-                <tr>
-                    <th class="sr-only">Photo</th>
-                    <th>Name</th>
-                    <th>Contact Information</th>
-                </tr>
-                </thead>
-                <tbody>
-            `
+      container = document.createElement('table')
+      container.classList = 'table  table-bordered table-striped'
+      tableHead = document.createElement('thead')
+      tableHead.classList = 'ucb-people-list-table-head'
+      tableRow = document.createElement('tr')
+      tableRow.innerHTML = `
+            <th class="sr-only">Photo</th>
+            <th>Name</th>
+            <th>Contact Information</th>
+      `
+      tableBody = document.createElement('tbody')
+      tableBody.id = 'ucb-people-list-table-tablebody'
+      tableHead.appendChild(tableRow)
+      container.appendChild(tableHead)
+      container.appendChild(tableBody)
       break
     default:
   }
-
-  return displayHTML
-}
-
-function layoutFooter(Format) {
-  let displayHTML = ''
-  switch (Format) {
-    case 'list':
-      break
-    case 'grid':
-      displayHTML = '</div>'
-      break
-    case 'table':
-      displayHTML = '</tbody></table>'
-      break
-    default:
-  }
-
-  return displayHTML
+  return container
 }
 
 function displayPersonCard(Format, Person) {
@@ -77,6 +109,7 @@ function displayPersonCard(Format, Person) {
   // grab the friendly name from the global variable
   // note: there may be a race condidtion here as we're also querying
   //  to get those friendly names from the API endpoint.
+  console.log('Departments :', Departments)
   let myDept = Person.Dept ? Departments[Person.Dept] : ''
   let myPhoto = ''
   if (Person.PhotoURL) {
@@ -131,8 +164,69 @@ function displayPersonCard(Format, Person) {
             `
       break
     case 'grid':
+      cardHTML = `
+                <div class="col-sm mb-3">
+                    <div class="col-sm-12 ucb-person-card-img-grid">
+                        <a href="${Person.Link}" target="_blank">${myPhoto}</a>
+                    </div>
+                <div>
+                <a href="${Person.Link}" target="_blank">
+                            <span class="ucb-person-card-name">
+                                ${Person.Name ? Person.Name : ''}
+                            </span>
+                        </a>
+                <span class="ucb-person-card-title departments-grid">
+                  ${Person.Title ? Person.Title : ''}
+                </span>
+                <span class="ucb-person-card-dept departments-grid">
+                   ${myDept}
+                 </span>
+                </div>
+                </div>
+        `
       break
     case 'table':
+      cardHTML = `
+
+                  <td>
+                    <a href="${Person.Link}" target="_blank">${myPhoto}</a>  
+                  </td>
+                  <td>
+                    <a href="${Person.Link}" target="_blank">
+                      <span class="ucb-person-card-name">
+                        ${Person.Name ? Person.Name : ''}
+                      </span>
+                    </a>
+                    <span class="ucb-person-card-title departments-grid">
+                  ${Person.Title ? Person.Title : ''}
+                </span>
+                <span class="ucb-person-card-dept departments-grid">
+                   ${myDept}
+                 </span>
+                  </td>
+                  <td>
+                  <span class="ucb-person-card-email">
+                            ${
+                              Person.Email
+                                ? `<a href="mailto:${Person.Email}"><p><i class="fa fa-envelope"> ${Person.Email}</i></p></a>`
+                                : ''
+                            }
+                        </span>
+                        <span class="ucb-person-card-phone">
+                            ${
+                              Person.Phone
+                                ? `<a href="tel:${Person.Phone.replace(
+                                    /[^+\d]+/g,
+                                    '',
+                                  )}"><p><i class="fa fa-phone"> ${
+                                    Person.Phone
+                                  }</i></p></a>`
+                                : ''
+                            }
+                        </span>
+                  </td>
+
+        `
       break
     default:
   }
@@ -143,10 +237,14 @@ function displayPeople(JSONURL, DISPLAYFORMAT) {
   console.log(JSONURL)
   let el = document.getElementById('ucb-people-list-page')
   el.classList = 'container'
-  let headerHTML = layoutHeader(DISPLAYFORMAT)
-  let footerHTML = layoutFooter(DISPLAYFORMAT)
+  // let headerHTML = layoutHeader(DISPLAYFORMAT)
+  // let footerHTML = layoutFooter(DISPLAYFORMAT)
+  let parentContainer = getParentContainer(DISPLAYFORMAT)
 
-  el.append(headerHTML)
+  // TO DO -- issue here with header adding correctly to grid
+  if (DISPLAYFORMAT === 'grid' || DISPLAYFORMAT === 'table') {
+    el.appendChild(parentContainer)
+  }
 
   fetch(JSONURL)
     .then((response) => response.json())
@@ -208,36 +306,36 @@ function displayPeople(JSONURL, DISPLAYFORMAT) {
           console.log('Am I an image URL? : ' + thisPerson.PhotoURL)
         }
 
-        // switch on the given format
-        // display cards in the requested format
-        //   let personDiv = document.createElement('div')
-        //   personDiv.classList = 'container'
-        //   personDiv.innerHTML = `
-        //     <div>
-        //         <h1>${thisPerson.Name}</h1>
-        //         <p>My Job Title: ${thisPerson.Title}</p>
-        //         <p>My department : ${thisPerson.Dept}</p>
-        //         <p>My photo id: ${thisPerson.PhotoID}</p>
-        //         <p>${thisPerson.Email}</p>
-        //         <p>${thisPerson.Phone}</p>
-        //         <p>Body : ${thisPerson.Body}</p>
-        //         <a href=${thisPerson.Link}> Go to my page </a>
-        //     </div>
-        //   `
-        //   //append each completed person div to the DOM
-        //   let el = document.getElementById('ucb-people-list-page');
-        //   el.appendChild(personDiv)
-
         thisPersonCard = displayPersonCard(DISPLAYFORMAT, thisPerson)
-        let thisCard = document.createElement('article')
+
+        let thisCard
+        // Needed to switch types of container for individual person cards => article for grid & list displays, tr for table display
+        if (DISPLAYFORMAT === 'table') {
+          thisCard = document.createElement('tr')
+        } else {
+          thisCard = document.createElement('article')
+        }
+
         thisCard.innerHTML = thisPersonCard
 
-        el.appendChild(thisCard)
+        if (DISPLAYFORMAT === 'list') {
+          el.appendChild(thisCard)
+        } else if (DISPLAYFORMAT === 'grid') {
+          thisCard.classList = 'col-sm-4'
+          thisCard.innerHTML = thisPersonCard
+
+          parentContainer.appendChild(thisCard)
+        } else {
+          let tablebody = document.getElementById(
+            'ucb-people-list-table-tablebody',
+          )
+          tablebody.appendChild(thisCard)
+        }
       })
     })
 
   // done with cards, clean up and close any HTML tags we have opened.
-  el.append(footerHTML)
+  // el.append(footerHTML)
 
   // console.log(el.dataset.json)
 }

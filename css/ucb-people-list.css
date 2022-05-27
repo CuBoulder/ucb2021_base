@@ -25,3 +25,19 @@
   display: flex;
   flex-direction: column;
 }
+
+.departments-grid {
+  text-transform: uppercase;
+  font-size: 65%;
+  line-height: 120%;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.ucb-person-card-img-grid {
+  margin-bottom: 10px;
+}
+
+.ucb-people-list-table-head {
+  width: 100%;
+}
