@@ -1,17 +1,18 @@
 /* naughty global variables!!! */
-let Departments = {};
-let JobTypes = {};
-let ourPepole = {};
+let Departments = {}
+let JobTypes = {}
+let ourPepole = {}
+let renderedTable = 0; 
 
-function toggleMessage(id, display = "none") {
+function toggleMessage(id, display = 'none') {
   if (id) {
-    var toggle = document.getElementById(id);
+    var toggle = document.getElementById(id)
 
     if (toggle) {
-      if (display === "block") {
-        toggle.style.display = "block";
+      if (display === 'block') {
+        toggle.style.display = 'block'
       } else {
-        toggle.style.display = "none";
+        toggle.style.display = 'none'
       }
     }
   }
@@ -33,30 +34,27 @@ function getTaxonomy(taxonomyName) {
             result[key] = value
           })
 
-          resolve(result);
+          resolve(result)
         })
     } else {
       // no taxonomy term to load
       reject
     }
-  });
+  })
 }
 
 function getStaff(JSONAPI) {
   return new Promise(function (resolve, reject) {
-    if(JSONAPI) {
-      
+    if (JSONAPI) {
       fetch(JSONAPI)
-      .then((response) => response.json())
-      .then((data) => {
-        resolve(data);
-      });
-
+        .then((response) => response.json())
+        .then((data) => {
+          resolve(data)
+        })
     } else {
-      reject;
+      reject
     }
-
-  });
+  })
 }
 
 // function layoutHeader(Format) {
@@ -114,7 +112,12 @@ function getParentContainer(Format) {
       container.classList = 'ucb-people-list-grid row'
       break
     case 'table':
+      // we only need to render the table header the first time
+      // this function will be called multiple times so check to 
+      // see if we've already rendered the table header HTML
+      if(!renderedTable) {
       container = document.createElement('table')
+      container.id = 'ucb-pl-table'
       container.classList = 'table  table-bordered table-striped'
       tableHead = document.createElement('thead')
       tableHead.classList = 'ucb-people-list-table-head'
@@ -129,6 +132,10 @@ function getParentContainer(Format) {
       tableHead.appendChild(tableRow)
       container.appendChild(tableHead)
       container.appendChild(tableBody)
+      }else {
+        container = document.getElementById('ucb-pl-table')
+      }
+      renderedTable++; 
       break
     default:
   }
@@ -266,8 +273,9 @@ function displayPersonCard(Format, Person) {
 }
 
 function displayPeople(DISPLAYFORMAT, GROUPBY, groupID) {
-  console.log("Group by : " + GROUPBY);
-  console.log("Group ID is : " + groupID);
+  console.log('Group by : ' + GROUPBY)
+  console.log('Group ID is : ' + groupID)
+  let renderThisGroup = 0; 
   let el = document.getElementById('ucb-people-list-page')
   el.classList = 'container'
   // let headerHTML = layoutHeader(DISPLAYFORMAT)
@@ -283,67 +291,67 @@ function displayPeople(DISPLAYFORMAT, GROUPBY, groupID) {
   //   .then((response) => response.json())
   //   .then((data) => {
   //     console.log(data) // our data obj
-  if(Object.keys(ourPepole) != 0 ) {
-      // get all of the include images id => url
-      let urlObj = {} // key from data.data to key from data.includes
-      let idObj = {} // key from data.includes to URL
-      // Remove any blanks from our articles before map
-      if (ourPepole.included) {
-        let filteredData = ourPepole.included.filter((url) => {
-          return url.attributes.uri !== undefined
-        })
-        // creates the urlObj, key: data id, value: url
-        filteredData.map((pair) => {
-          urlObj[pair.id] = pair.attributes.uri.url
-        })
+  if (Object.keys(ourPepole) != 0) {
+    // get all of the include images id => url
+    let urlObj = {} // key from data.data to key from data.includes
+    let idObj = {} // key from data.includes to URL
+    // Remove any blanks from our articles before map
+    if (ourPepole.included) {
+      let filteredData = ourPepole.included.filter((url) => {
+        return url.attributes.uri !== undefined
+      })
+      // creates the urlObj, key: data id, value: url
+      filteredData.map((pair) => {
+        urlObj[pair.id] = pair.attributes.uri.url
+      })
 
-        // removes all other included data besides images in our included media
-        let idFilterData = ourPepole.included.filter((item) => {
-          return item.type == 'media--image'
-        })
-        // using the image-only data, creates the idObj =>  key: thumbnail id, value : data id
-        idFilterData.map((pair) => {
-          idObj[pair.id] = pair.relationships.thumbnail.data.id
-        })
+      // removes all other included data besides images in our included media
+      let idFilterData = ourPepole.included.filter((item) => {
+        return item.type == 'media--image'
+      })
+      // using the image-only data, creates the idObj =>  key: thumbnail id, value : data id
+      idFilterData.map((pair) => {
+        idObj[pair.id] = pair.relationships.thumbnail.data.id
+      })
+    }
+
+    // maps over data
+    ourPepole.data.map((person) => {
+      // get the person data we need
+      let thisPerson = {}
+      let thisPersonCard = '' // placeholder for the HTML to render this card in the required format
+      thisPerson['Name'] = person.attributes.title
+      thisPerson['Title'] = person.attributes.field_ucb_person_title[0]
+      thisPerson['Dept'] =
+        person.relationships.field_ucb_person_department.data[0].meta.drupal_internal__target_id
+      thisPerson['Jobtype'] =
+        person.relationships.field_ucb_person_job_type.data[0].meta.drupal_internal__target_id
+      thisPerson['PhotoID'] =
+        person.relationships.field_ucb_person_photo.data.id
+      thisPerson['PhotoURL'] = ''
+      thisPerson['Email'] = person.attributes.field_ucb_person_email
+      thisPerson['Phone'] = person.attributes.field_ucb_person_phone
+      thisPerson['Link'] = person.attributes.path.alias
+      // needed to verify body exists on the Person page, if so, use that
+      if (person.attributes.body) {
+        myBody = person.attributes.body.processed
+        myBody.replace(/<\/?[^>]+(>|$)/g, '') // strip out HTML characters
+        myBody.replace(/(\r\n|\n|\r)/gm, '') // strip out line breaks
+        thisPerson['Body'] = myBody
+      } else {
+        // if no body, set to empty
+        thisPerson['Body'] = ''
+      }
+      if (thisPerson.PhotoID) {
+        thisPerson['PhotoURL'] = urlObj[idObj[thisPerson.PhotoID]]
+        // console.log('Am I an image URL? : ' + thisPerson.PhotoURL)
       }
 
-      // maps over data
-      ourPepole.data.map((person) => {
-        // get the person data we need
-        let thisPerson = {}
-        let thisPersonCard = '' // placeholder for the HTML to render this card in the required format
-        thisPerson['Name'] = person.attributes.title
-        thisPerson['Title'] = person.attributes.field_ucb_person_title[0]
-        thisPerson['Dept'] =
-          person.relationships.field_ucb_person_department.data[0].meta.drupal_internal__target_id
-        thisPerson['Jobtype'] =
-          person.relationships.field_ucb_person_job_type.data[0].meta.drupal_internal__target_id
-        thisPerson['PhotoID'] =
-          person.relationships.field_ucb_person_photo.data.id
-        thisPerson['PhotoURL'] = ''
-        thisPerson['Email'] = person.attributes.field_ucb_person_email
-        thisPerson['Phone'] = person.attributes.field_ucb_person_phone
-        thisPerson['Link'] = person.attributes.path.alias
-        // needed to verify body exists on the Person page, if so, use that
-        if (person.attributes.body) {
-          myBody = person.attributes.body.processed
-          myBody.replace(/<\/?[^>]+(>|$)/g, '') // strip out HTML characters
-          myBody.replace(/(\r\n|\n|\r)/gm, '') // strip out line breaks
-          thisPerson['Body'] = myBody
-        } else {
-          // if no body, set to empty
-          thisPerson['Body'] = ''
-        }
-        if (thisPerson.PhotoID) {
-          thisPerson['PhotoURL'] = urlObj[idObj[thisPerson.PhotoID]]
-          // console.log('Am I an image URL? : ' + thisPerson.PhotoURL)
-        }
-
-        // check to see if we need to filter based on a group by seeting 
-        // and if so that this person matches our groupID 
-        if(GROUPBY && groupID && (groupID == thisPerson['Dept'] || groupID == thisPerson['Jobtype'])) {
-          console.log("I'm a match! " + groupID + " = " + thisPerson['Dept'] + " or " + thisPerson['Jobtype']);
-
+      // check to see if we need to filter based on a group by seeting
+      // and if so that this person matches our groupID
+      if ((!GROUPBY || !groupID) || (groupID == thisPerson['Dept'] || groupID == thisPerson['Jobtype'])) {
+        console.log( "I'm a match! " + groupID + ' = ' + thisPerson['Dept'] + ' or ' + thisPerson['Jobtype'],)
+        renderThisGroup++; 
 
         thisPersonCard = displayPersonCard(DISPLAYFORMAT, thisPerson)
 
@@ -359,8 +367,27 @@ function displayPeople(DISPLAYFORMAT, GROUPBY, groupID) {
 
         // This section apprends the generated cards for each respective display type
         if (DISPLAYFORMAT === 'list') {
+          // check to see if this is the first time we're adding in a member of this group
+          // if so, add the name of the group first 
+          if(renderThisGroup === 1 && groupID) {
+            let GroupTitle = document.createElement('div');
+            GroupTitle.innerHTML = ` 
+              <h2>${GROUPBY == 'type' ? JobTypes[groupID] : Departments[groupID]}</h2>`
+            el.appendChild(GroupTitle);
+          }
+
           el.appendChild(thisCard)
         } else if (DISPLAYFORMAT === 'grid') {
+
+          // check to see if this is the first time we're adding in a member of this group
+          // if so, add the name of the group first 
+          if(renderThisGroup === 1 && groupID) {
+            let GroupTitle = document.createElement('div');
+            GroupTitle.classList = "col-12";
+            GroupTitle.innerHTML = `<h2>${GROUPBY == 'type' ? JobTypes[groupID] : Departments[groupID]}</h2>`
+            parentContainer.appendChild(GroupTitle)
+          }
+
           thisCard.classList = 'col-sm-4'
           thisCard.innerHTML = thisPersonCard
 
@@ -370,15 +397,29 @@ function displayPeople(DISPLAYFORMAT, GROUPBY, groupID) {
           let tablebody = document.getElementById(
             'ucb-people-list-table-tablebody',
           )
+
+          // check to see if this is the first time we're adding in a member of this group
+          // if so, add the name of the group first 
+          if(renderThisGroup === 1 && groupID) { 
+            let GroupTitle = document.createElement('tr');
+            let GroupTitleHTML = `
+              <th colspan="3" class="ucb-people-list-group-title-th">
+              ${GROUPBY == 'type' ? JobTypes[groupID] : Departments[groupID]}
+              </th>
+              `
+            GroupTitle.innerHTML = GroupTitleHTML;
+            tablebody.appendChild(GroupTitle);
+          }
+          
           tablebody.appendChild(thisCard)
         }
-        } else {
-          console.log("Not a match! " + groupID + " != " + thisPerson['Dept'] + " or " + thisPerson['Jobtype']);
-        }
-      })
-    } else {
-      console.log("empty staff object, no pople to render ", ourPepole);
-    }  
+      } else {
+        console.log( 'Not a match! ' + groupID + ' != ' + thisPerson['Dept'] + ' or ' + thisPerson['Jobtype'],);
+      }
+    })
+  } else {
+    console.log('empty staff object, no people to render ', ourPepole)
+  }
   // done with cards, clean up and close any HTML tags we have opened.
   // el.append(footerHTML)
 
@@ -386,41 +427,41 @@ function displayPeople(DISPLAYFORMAT, GROUPBY, groupID) {
 }
 
 // INIT
-(function () {
+;(function () {
   let el = document.getElementById('ucb-people-list-page')
-  let JSONAPI = el.dataset.json ? el.dataset.json : "";
-  let FORMAT = el.dataset.format ? el.dataset.format : "";
-  let GROUPBY = el.dataset.groupby ? el.dataset.groupby : "";
-  console.log('Init');
+  let JSONAPI = el.dataset.json ? el.dataset.json : ''
+  let FORMAT = el.dataset.format ? el.dataset.format : ''
+  let GROUPBY = el.dataset.groupby ? el.dataset.groupby : ''
+  console.log('Init')
 
   getTaxonomy('department').then((response) => {
-    Departments = response;
+    Departments = response
     //console.log('Our Departments are : ', Departments);
-  });
+  })
 
   getTaxonomy('ucb_person_job_type').then((response) => {
-    JobTypes = response;
+    JobTypes = response
     //console.log('Our Job types are : ', JobTypes);
-  });
+  })
 
-  toggleMessage("ucb-al-loading", "block");
+  toggleMessage('ucb-al-loading', 'block')
 
-  getStaff(JSONAPI).then((response) => {
-    ourPepole = response;
-  }).then(() => {
-    toggleMessage("ucb-al-loading", "none");
-    if(GROUPBY == "department") {
-      for( const [key, value] of Object.entries(Departments)) {
-        displayPeople(FORMAT, GROUPBY, key);
+  getStaff(JSONAPI)
+    .then((response) => {
+      ourPepole = response
+    })
+    .then(() => {
+      toggleMessage('ucb-al-loading', 'none')
+      if (GROUPBY == 'department') {
+        for (const [key, value] of Object.entries(Departments)) {
+          displayPeople(FORMAT, GROUPBY, key)
+        }
+      } else if (GROUPBY == 'type') {
+        for (const [key, value] of Object.entries(JobTypes)) {
+          displayPeople(FORMAT, GROUPBY, key)
+        }
+      } else {
+        displayPeople(FORMAT, '', '')
       }
-    } else if(GROUPBY == "type") {
-      for( const [key, value] of Object.entries(JobTypes)) {
-        displayPeople(FORMAT, GROUPBY, key);
-      }
-    } else {
-      displayPeople(FORMAT, "", "");
-    }
-  });
-
-
+    })
 })()
