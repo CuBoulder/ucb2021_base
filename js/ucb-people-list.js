@@ -1,6 +1,21 @@
 /* naughty global variables!!! */
-let Departments = {}
-let JobTypes = {}
+let Departments = {};
+let JobTypes = {};
+let ourPepole = {};
+
+function toggleMessage(id, display = "none") {
+  if (id) {
+    var toggle = document.getElementById(id);
+
+    if (toggle) {
+      if (display === "block") {
+        toggle.style.display = "block";
+      } else {
+        toggle.style.display = "none";
+      }
+    }
+  }
+}
 
 function getTaxonomy(taxonomyName) {
   return new Promise(function (resolve, reject) {
@@ -18,13 +33,30 @@ function getTaxonomy(taxonomyName) {
             result[key] = value
           })
 
-          resolve(result)
+          resolve(result);
         })
     } else {
       // no taxonomy term to load
       reject
     }
-  })
+  });
+}
+
+function getStaff(JSONAPI) {
+  return new Promise(function (resolve, reject) {
+    if(JSONAPI) {
+      
+      fetch(JSONAPI)
+      .then((response) => response.json())
+      .then((data) => {
+        resolve(data);
+      });
+
+    } else {
+      reject;
+    }
+
+  });
 }
 
 // function layoutHeader(Format) {
@@ -88,7 +120,7 @@ function getParentContainer(Format) {
       tableHead.classList = 'ucb-people-list-table-head'
       tableRow = document.createElement('tr')
       tableRow.innerHTML = `
-            <th class="sr-only">Photo</th>
+            <th><span class="sr-only">Photo</span></th>
             <th>Name</th>
             <th>Contact Information</th>
       `
@@ -109,7 +141,7 @@ function displayPersonCard(Format, Person) {
   // grab the friendly name from the global variable
   // note: there may be a race condidtion here as we're also querying
   //  to get those friendly names from the API endpoint.
-  console.log('Departments :', Departments)
+  // console.log('Departments :', Departments)
   let myDept = Person.Dept ? Departments[Person.Dept] : ''
   let myPhoto = ''
   if (Person.PhotoURL) {
@@ -233,8 +265,9 @@ function displayPersonCard(Format, Person) {
   return cardHTML
 }
 
-function displayPeople(JSONURL, DISPLAYFORMAT) {
-  console.log(JSONURL)
+function displayPeople(DISPLAYFORMAT, GROUPBY, groupID) {
+  console.log("Group by : " + GROUPBY);
+  console.log("Group ID is : " + groupID);
   let el = document.getElementById('ucb-people-list-page')
   el.classList = 'container'
   // let headerHTML = layoutHeader(DISPLAYFORMAT)
@@ -246,17 +279,17 @@ function displayPeople(JSONURL, DISPLAYFORMAT) {
     el.appendChild(parentContainer)
   }
 
-  fetch(JSONURL)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data) // our data obj
-
+  // fetch(JSONURL)
+  //   .then((response) => response.json())
+  //   .then((data) => {
+  //     console.log(data) // our data obj
+  if(Object.keys(ourPepole) != 0 ) {
       // get all of the include images id => url
       let urlObj = {} // key from data.data to key from data.includes
       let idObj = {} // key from data.includes to URL
       // Remove any blanks from our articles before map
-      if (data.included) {
-        let filteredData = data.included.filter((url) => {
+      if (ourPepole.included) {
+        let filteredData = ourPepole.included.filter((url) => {
           return url.attributes.uri !== undefined
         })
         // creates the urlObj, key: data id, value: url
@@ -265,7 +298,7 @@ function displayPeople(JSONURL, DISPLAYFORMAT) {
         })
 
         // removes all other included data besides images in our included media
-        let idFilterData = data.included.filter((item) => {
+        let idFilterData = ourPepole.included.filter((item) => {
           return item.type == 'media--image'
         })
         // using the image-only data, creates the idObj =>  key: thumbnail id, value : data id
@@ -275,7 +308,7 @@ function displayPeople(JSONURL, DISPLAYFORMAT) {
       }
 
       // maps over data
-      data.data.map((person) => {
+      ourPepole.data.map((person) => {
         // get the person data we need
         let thisPerson = {}
         let thisPersonCard = '' // placeholder for the HTML to render this card in the required format
@@ -303,8 +336,14 @@ function displayPeople(JSONURL, DISPLAYFORMAT) {
         }
         if (thisPerson.PhotoID) {
           thisPerson['PhotoURL'] = urlObj[idObj[thisPerson.PhotoID]]
-          console.log('Am I an image URL? : ' + thisPerson.PhotoURL)
+          // console.log('Am I an image URL? : ' + thisPerson.PhotoURL)
         }
+
+        // check to see if we need to filter based on a group by seeting 
+        // and if so that this person matches our groupID 
+        if(GROUPBY && groupID && (groupID == thisPerson['Dept'] || groupID == thisPerson['Jobtype'])) {
+          console.log("I'm a match! " + groupID + " = " + thisPerson['Dept'] + " or " + thisPerson['Jobtype']);
+
 
         thisPersonCard = displayPersonCard(DISPLAYFORMAT, thisPerson)
 
@@ -333,9 +372,13 @@ function displayPeople(JSONURL, DISPLAYFORMAT) {
           )
           tablebody.appendChild(thisCard)
         }
+        } else {
+          console.log("Not a match! " + groupID + " != " + thisPerson['Dept'] + " or " + thisPerson['Jobtype']);
+        }
       })
-    })
-
+    } else {
+      console.log("empty staff object, no pople to render ", ourPepole);
+    }  
   // done with cards, clean up and close any HTML tags we have opened.
   // el.append(footerHTML)
 
@@ -343,23 +386,41 @@ function displayPeople(JSONURL, DISPLAYFORMAT) {
 }
 
 // INIT
-;(function () {
+(function () {
   let el = document.getElementById('ucb-people-list-page')
-  let JSONAPI = el.dataset.json
-  let FORMAT = el.dataset.format
-  console.log('Init')
-
-  if (JSONAPI) {
-    displayPeople(JSONAPI, FORMAT)
-  }
+  let JSONAPI = el.dataset.json ? el.dataset.json : "";
+  let FORMAT = el.dataset.format ? el.dataset.format : "";
+  let GROUPBY = el.dataset.groupby ? el.dataset.groupby : "";
+  console.log('Init');
 
   getTaxonomy('department').then((response) => {
-    Departments = response
+    Departments = response;
     //console.log('Our Departments are : ', Departments);
-  })
+  });
 
   getTaxonomy('ucb_person_job_type').then((response) => {
-    JobTypes = response
+    JobTypes = response;
     //console.log('Our Job types are : ', JobTypes);
-  })
+  });
+
+  toggleMessage("ucb-al-loading", "block");
+
+  getStaff(JSONAPI).then((response) => {
+    ourPepole = response;
+  }).then(() => {
+    toggleMessage("ucb-al-loading", "none");
+    if(GROUPBY == "department") {
+      for( const [key, value] of Object.entries(Departments)) {
+        displayPeople(FORMAT, GROUPBY, key);
+      }
+    } else if(GROUPBY == "type") {
+      for( const [key, value] of Object.entries(JobTypes)) {
+        displayPeople(FORMAT, GROUPBY, key);
+      }
+    } else {
+      displayPeople(FORMAT, "", "");
+    }
+  });
+
+
 })()

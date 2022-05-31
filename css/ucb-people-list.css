@@ -1,3 +1,15 @@
+
+.ucb-list-msg {
+  font-size: 1.25em;
+  font-weight: bolder;
+  text-align: center;
+  display: none;
+}
+
+.ucb-loading-data {
+  color: #01579b;
+}
+
 .ucb-person-card-list {
   margin-bottom: 20px;
   padding-bottom: 20px;
