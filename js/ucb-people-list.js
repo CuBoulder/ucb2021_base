@@ -142,7 +142,7 @@ function displayPersonCard(Format, Person) {
                         <span class="ucb-person-card-email">
                             ${
                               Person.Email
-                                ? `<a href="mailto:${Person.Email}"><p><i class="fa fa-envelope"> ${Person.Email}</i></p></a>`
+                                ? `<a href="mailto:${Person.Email}"><i class="fa fa-envelope people-list-icon"><span class="ucb-people-list-contact">  ${Person.Email}</span></i></a>`
                                 : ''
                             }
                         </span>
@@ -152,9 +152,9 @@ function displayPersonCard(Format, Person) {
                                 ? `<a href="tel:${Person.Phone.replace(
                                     /[^+\d]+/g,
                                     '',
-                                  )}"><p><i class="fa fa-phone"> ${
+                                  )}"><p><i class="fa fa-phone people-list-icon"><span class="ucb-people-list-contact">  ${
                                     Person.Phone
-                                  }</i></p></a>`
+                                  }</span></i></p></a>`
                                 : ''
                             }
                         </span>
@@ -188,7 +188,7 @@ function displayPersonCard(Format, Person) {
     case 'table':
       cardHTML = `
 
-                  <td>
+                  <td class="ucb-people-list-table-photo">
                     <a href="${Person.Link}" target="_blank">${myPhoto}</a>  
                   </td>
                   <td>
@@ -208,7 +208,7 @@ function displayPersonCard(Format, Person) {
                   <span class="ucb-person-card-email">
                             ${
                               Person.Email
-                                ? `<a href="mailto:${Person.Email}"><p><i class="fa fa-envelope"> ${Person.Email}</i></p></a>`
+                                ? `<a href="mailto:${Person.Email}"><i class="fa fa-envelope people-list-icon"><span class="ucb-people-list-contact"> ${Person.Email}</span></i></p></a>`
                                 : ''
                             }
                         </span>
@@ -218,9 +218,9 @@ function displayPersonCard(Format, Person) {
                                 ? `<a href="tel:${Person.Phone.replace(
                                     /[^+\d]+/g,
                                     '',
-                                  )}"><p><i class="fa fa-phone"> ${
-                                    Person.Phone
-                                  }</i></p></a>`
+                                  )}"><p><i class="fa fa-phone people-list-icon">
+                                    <span class="ucb-people-list-contact"> 
+                                  ${Person.Phone}</span></i></p></a>`
                                 : ''
                             }
                         </span>
@@ -318,6 +318,7 @@ function displayPeople(JSONURL, DISPLAYFORMAT) {
 
         thisCard.innerHTML = thisPersonCard
 
+        // This section apprends the generated cards for each respective display type
         if (DISPLAYFORMAT === 'list') {
           el.appendChild(thisCard)
         } else if (DISPLAYFORMAT === 'grid') {
@@ -326,6 +327,7 @@ function displayPeople(JSONURL, DISPLAYFORMAT) {
 
           parentContainer.appendChild(thisCard)
         } else {
+          // if table display, append to inner tablebody instead of parent element
           let tablebody = document.getElementById(
             'ucb-people-list-table-tablebody',
           )

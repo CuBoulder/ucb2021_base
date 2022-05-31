@@ -34,10 +34,35 @@
   margin-bottom: 5px;
 }
 
+/* This is setup to resize images on list & grid */
+/* .ucb-person-card-img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+} */
+
 .ucb-person-card-img-grid {
   margin-bottom: 10px;
 }
 
 .ucb-people-list-table-head {
   width: 100%;
+}
+
+.ucb-people-list-table-photo {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.people-list-icon {
+  color: #aaa;
+}
+
+.ucb-people-list-contact {
+  color: #0277bd;
+  font-family: Roboto;
+  font-weight: 400;
 }
