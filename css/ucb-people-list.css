@@ -78,3 +78,17 @@
   font-family: Roboto;
   font-weight: 400;
 }
+
+.ucb-person-card-dept-ul {
+  display: flex;
+  flex-direction: row;
+  padding-left: 0;
+}
+
+.ucb-person-card-dept-ul li {
+  margin-right: 2em;
+}
+
+.ucb-person-card-dept-ul li:first-of-type {
+  list-style: none;
+}

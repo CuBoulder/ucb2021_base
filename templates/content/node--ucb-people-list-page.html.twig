@@ -3,10 +3,9 @@
  * Theme layout to display a People List Page.
  *
  * TODO: 
- *  - Order By 
- *  - Group By
  *  - Image styles (try : https://www.drupal.org/project/consumer_image_styles )
  *  - Display filters on rendered page 
+ *  - Grid display of cards breaks on rows too soon in multi-pass mode 
  */
 #}
 
@@ -138,6 +137,8 @@
 {# Group By paramater #}
 {% set GroupBy = content.field_ucb_people_group_by|render|striptags|trim %}
 
+{# Order By paramater #}
+{% set OrderBy = content.field_ucb_people_order_by|render|striptags|trim %}
 
 {%
   set classes = [
@@ -154,6 +155,7 @@
     data-JSON={{peopleJSON}}{{ IncludeFilter }}{{ sortFilter}}
     data-format={{ displayFormat }}
     data-groupby={{ GroupBy }}
+    data-orderby={{ OrderBy }}
     {{attributes.addClass(classes)}}>
 
 	<div class="ucb-people-list-title">
