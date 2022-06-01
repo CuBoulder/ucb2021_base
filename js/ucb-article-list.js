@@ -1,3 +1,7 @@
+/**  
+ * Get additional data from the paragraph content attached to the Article node
+ * @param {string} id - internal id used by Drupal to get the specific paragraph
+ */ 
 async function getArticleParagraph(id) {
   if(id) {
     const response = await fetch(
@@ -9,6 +13,11 @@ async function getArticleParagraph(id) {
   }
 }
 
+/**
+ * Helper function to show/hide elements in the DOM
+ * @param {string} id - CSS ID of the element to target
+ * @param {string} display - display mode for that element (block | none) 
+ */
 function toggleMessage(id, display = "none") {
   if (id) {
     var toggle = document.getElementById(id);
@@ -23,7 +32,15 @@ function toggleMessage(id, display = "none") {
   }
 }
 
-function renderArticleList( JSONURL, id = "ucb-article-listing", ExcludeCategories = "", ExcludeTags = "") {
+/**
+ * Main function that will load the initial data from the given URL and start processing it for display
+ * @param {string} JSONURL - URL for the JSON:API endpoint with filters, sort and pagination 
+ * @param {string} id - target DOM element to add the content to 
+ * @param {string} ExcludeCategories - array of categories to filter out when rendering 
+ * @param {string} ExcludeTags - array of tags to filter out when rendering
+ * @returns - Promise with resolve or reject
+ */
+function renderArticleList( JSONURL, ExcludeCategories = "", ExcludeTags = "") {
   return new Promise(function(resolve, reject) {
   let excludeCatArray = ExcludeCategories.split(",").map(Number);
   let excludeTagArray = ExcludeTags.split(",").map(Number);
@@ -47,7 +64,7 @@ function renderArticleList( JSONURL, id = "ucb-article-listing", ExcludeCategori
           NEXTJSONURL = "";
         }
 
-        console.log("data obj", data);
+        //console.log("data obj", data);
 
         // if no articles of returned, stop the loading spinner and let the user know we received no data that matches their query
         if (!data.data.length) {
@@ -78,8 +95,8 @@ function renderArticleList( JSONURL, id = "ucb-article-listing", ExcludeCategori
             idObj[pair.id] = pair.relationships.thumbnail.data.id;
           })
         }
-        console.log("idObj", idObj);
-        console.log("urlObj", urlObj);
+        // console.log("idObj", idObj);
+        // console.log("urlObj", urlObj);
         //iterate over each item in the array
         data.data.map((item) => {
           let thisArticleCats = [];
@@ -123,24 +140,23 @@ function renderArticleList( JSONURL, id = "ucb-article-listing", ExcludeCategori
           // console.log(excludeCatArray, thisArticleCats,doesIncludeCat)
           // console.log(excludeTagArray,thisArticleTags,doesIncludeTag)
 
-          // if the doesInclude check for tags or cats returns any number, don't proceed. Else, we want to build the page
-          if (!doesIncludeCat.length == 0 || !doesIncludeTag.length == 0) {
-            //console.log('was excluded', item)
-          } else {
+          // if we didn't match any of the filtered tags or cats, then render the content
+          if (doesIncludeCat.length == 0 || doesIncludeTag.length == 0) {
             // we need to render the Article Card view for this returned element
 
             // **ADD DATA**
             // this is my id of the article body paragraph type we need only if no thumbnail or summary provided
             let bodyAndImageId = item.relationships.field_ucb_article_content.data[0].id;
             let body = item.attributes.field_ucb_article_summary?item.attributes.field_ucb_article_summary : "";
+            body = body.trim();
             let imageSrc = "";
 
             // if no article summary, use a simplified article body
-            if (!item.attributes.field_ucb_article_summary) {
+            if (!body.length) {
               getArticleParagraph(bodyAndImageId)
                 .then((response) => response.json())
                 .then((data) => {
-                  console.log("2nd call", data);
+                  // console.log("2nd call", data);
                   // Remove any html tags within the article
                   let htmlStrip = data.data.attributes.field_article_text.processed.replace(
                     /<\/?[^>]+(>|$)/g,
@@ -232,32 +248,37 @@ function renderArticleList( JSONURL, id = "ucb-article-listing", ExcludeCategori
   });
 }
 
-
-// Init
-
+/**
+ * Initilization and start of code 
+ */
 (function () {
   // get the url from the data-jsonapi variable
   let el = document.getElementById("ucb-article-listing");
-  let JSONURL = "NOTHING TO SEE HERE";
-  let NEXTJSONURL = "";
-  let CategoryExclude = "";
-  let TagsExclude = "";
-  let lastKnownScrollPosition = 0;
-  let ticking = false;
-  let loadingData = false;
+  let JSONURL = ""; // JSON:API URL 
+  let NEXTJSONURL = ""; // next link for pagination 
+  let CategoryExclude = ""; // categories to exclude
+  let TagsExclude = ""; // tags to exclude 
+  let lastKnownScrollPosition = 0; // scroll position to determine if we need to load more articles
+  /* Note that event tracking on scroll is expensive and noisy -- these two flag will help to make sure
+      that we're not overwhelming the system by tracking scroll events when we don't need to */
+  let ticking = false; // flag to know if we're currently scrolling 
+  let loadingData = false; // flag to know if we're currently getting additional articles
 
+  // check to see if we have the data we need to work with.  
   if (el) {
     JSONURL = el.dataset.jsonapi;
     CategoryExclude = el.dataset.excats;
     TagsExclude = el.dataset.extags;
   }
-
-  renderArticleList( JSONURL, "ucb-article-listing", CategoryExclude, TagsExclude,).then((response) => {
+  
+  // attempt to render the data requested 
+  renderArticleList( JSONURL, CategoryExclude, TagsExclude,).then((response) => {
     if(response) {
       NEXTJSONURL = "/jsonapi/" + response;
     }
   });
 
+  // watch for scrolling and determine if we're at the bottom of the content and need to request more 
   document.addEventListener("scroll", function () {
     lastKnownScrollPosition = window.scrollY;
 
@@ -269,7 +290,7 @@ function renderArticleList( JSONURL, id = "ucb-article-listing", ExcludeCategori
           loadingData = true;
           // if we have another set of data to load, get the next batch.
           if(NEXTJSONURL) {
-            renderArticleList( NEXTJSONURL, "ucb-article-listing", CategoryExclude, TagsExclude,).then((response) => {
+            renderArticleList( NEXTJSONURL, CategoryExclude, TagsExclude,).then((response) => {
               if(response) {
                 NEXTJSONURL = "/jsonapi/" + response;
                 loadingData = false;

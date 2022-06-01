@@ -69,6 +69,7 @@
  *  - Set output on Thumbnail to be reasonable size in Article schema 
  *  - if no Thumbnail, get the image from the first included paragraph  
  *  - clean up console log message 
+ *  - expose filters on the client side as requested
  */
 #}
 
@@ -266,33 +267,7 @@
   <div {{ content_attributes }}>
     <div class="ucb-article-list-body">
       {{ content.body }}
-      {# <ul>
-          <li>Include Categories</li>
-          {% for item in includeCategories %}
-            <li>{{ item }}</li>
-          {% endfor %}
-        </ul>
-        <ul>
-          <li>Include Tags</li>
-          {% for item in includeTags %}
-            <li>{{ item }}</li>
-          {% endfor %}
-        </ul> #}
-      {#
-        <ul>
-          <li>Exclude Categories</li>
-          {% for item in excludeCategories %}
-            <li>{{ item }}</li>
-          {% endfor %}
-        </ul>
-        <ul>
-          <li>Exclude Tags</li>
-          {% for item in excludeTags %}
-            <li>{{ item }}</li>
-          {% endfor %}
-        </ul> #}
-
-      {# <h3> Full URL : {{ articlesJSON}}{{ IncludeFilter }}</h3> #}
+      {# <h3> Full URL : {{ articlesJSON}}{{ IncludeFilter }}{{ pageCountFilter }}{{ sortFilter }}</h3>  #}
     </div>
     {# <div id="ucb-article-listing" class="ucb-article-list-container" data-jsonapi="{{ articlesJSON }}{{ IncludeFilter }}"> #}
     <div id="ucb-article-listing"
