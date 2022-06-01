@@ -1,4 +1,3 @@
-
 .ucb-list-msg {
   font-size: 1.25em;
   font-weight: bolder;
@@ -7,13 +6,13 @@
 }
 
 .ucb-loading-data {
-  color: #01579B;
+  color: #01579b;
 }
 
 .ucb-person-card-list {
   margin-bottom: 20px;
   padding-bottom: 20px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  border-bottom: 1px solid rgba(0, 0, 0, 12%);
 }
 
 .ucb-person-card-details {
@@ -46,13 +45,6 @@
   margin-bottom: 5px;
 }
 
-/* This is setup to resize images on list & grid */
-/* .ucb-person-card-img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-} */
-
 .ucb-person-card-img-grid {
   margin-bottom: 10px;
 }
@@ -70,12 +62,12 @@
 }
 
 .people-list-icon {
-  color: #AAA;
+  color: #aaa;
 }
 
 .ucb-people-list-contact {
-  color: #0277BD;
-  font-family: Roboto;
+  color: #0277bd;
+  font-family: Roboto, 'Helvetica', sans-serif;
   font-weight: 400;
 }
 
@@ -94,9 +86,9 @@
 }
 
 thead.ucb-people-list-table-head {
-  background: #CCC;
+  background: #ccc;
 }
 
 tbody#ucb-people-list-table-tablebody {
-  background: #FAFAFA;
+  background: #fafafa;
 }
