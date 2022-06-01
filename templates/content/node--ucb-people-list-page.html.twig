@@ -5,7 +5,6 @@
  * TODO: 
  *  - Image styles (try : https://www.drupal.org/project/consumer_image_styles )
  *  - Display filters on rendered page 
- *  - Grid display of cards breaks on rows too soon in multi-pass mode 
  */
 #}
 
@@ -143,6 +142,7 @@
 {%
   set classes = [
   'node',
+  'container',
   'node--type-' ~ node.bundle|clean_class,
   node.isPromoted() ? 'node--promoted',
   node.isSticky() ? 'node--sticky',
@@ -164,7 +164,7 @@
 		</h1>
 	</div>
 
-	<div class="ucb-people-list-content">
+	<div id="ucb-pl-content" class="ucb-people-list-content">
     <!--  <h3>{{ peopleJSON }}{{ IncludeFilter }}{{ sortFilter }}</h3> -->
 		<div class="row">
 			{{ content.body }}

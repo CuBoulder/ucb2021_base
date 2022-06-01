@@ -5,6 +5,11 @@ let ourPepole = {} // all of the pepole that match our filter
 let renderedTable = 0;  // flag to know if we've rendered the table header or not yet
 let firstPassCount = 0; // count for the first pass per group.  
 
+/**
+ * Helper function to toggle show hide on an element 
+ * @param {string} id // element id to toggle
+ * @param {string} display // value to change it to (block | none)
+ */
 function toggleMessage(id, display = 'none') {
   if (id) {
     var toggle = document.getElementById(id)
@@ -19,6 +24,12 @@ function toggleMessage(id, display = 'none') {
   }
 }
 
+/**
+ * Helper function to load the data for a taxonomy from the JSON:API endpoint 
+ * we need this to get the human-friendly names of the items in this vocabulary
+ * @param {string} taxonomyName // Drupal machine name of the taxonomy to retrieve 
+ * @returns Promise with resolve or reject 
+ */
 function getTaxonomy(taxonomyName) {
   return new Promise(function (resolve, reject) {
     if (taxonomyName) {
@@ -28,7 +39,7 @@ function getTaxonomy(taxonomyName) {
       fetch(taxonomyURL)
         .then((response) => response.json())
         .then((data) => {
-          console.log("Taxonomy Object : ", data)
+          // console.log("Taxonomy Object : ", data)
           data.data.map((attributes) => {
             let id = attributes.attributes.drupal_internal__tid
             let name = attributes.attributes.name
@@ -48,10 +59,21 @@ function getTaxonomy(taxonomyName) {
   })
 }
 
+/**
+ * Find the taxonomy that matches the id ... makes it easier to retrieve the name
+ * @param {*} taxonomy // taxonomy vocab to searh 
+ * @param {*} tid // id to find in the array of hashes
+ * @returns hash {{ name => "name", id => "id"}}
+ */
 function getTaxonomyName(taxonomy, tid) {
   return taxonomy.find( ({ id }) => id === tid );
 }
 
+/**
+ * Main function to get People nodes based on the JSON:API URL  
+ * @param {string} JSONAPI // JSON:API enpoint URL with required filters and sorts
+ * @returns Promise with resolve or reject
+ */
 function getStaff(JSONAPI) {
   return new Promise(function (resolve, reject) {
     if (JSONAPI) {
@@ -59,67 +81,33 @@ function getStaff(JSONAPI) {
         .then((response) => response.json())
         .then((data) => {
           console.log("Person Data is : ", data)
+          if(data.data.length === 0) {
+            console.log("No people matching the filter returned.")
+            toggleMessage('ucb-al-end-of-data', 'block')
+          }
           resolve(data)
         })
     } else {
+      toggleMessage('ucb-al-error', 'block')
       reject
     }
   })
 }
 
-// function layoutHeader(Format) {
-//   let displayHTML = ''
-//   switch (Format) {
-//     case 'list':
-//       break
-//     case 'grid':
-//       displayHTML = `<div class="ucb-people-list-grid row">`
-//       break
-//     case 'table':
-//       displayHTML = `
-//                 <table>
-//                   <thead>
-//                       <tr>
-//                         <th class="sr-only">Photo</th>
-//                         <th>Name</th>
-//                         <th>Contact Information</th>
-//                       </tr>
-//                   </thead>
-//                 <tbody>
-//             `
-//       break
-//     default:
-//   }
-
-//   return displayHTML
-// }
-
-// function layoutFooter(Format) {
-//   let displayHTML = ''
-//   switch (Format) {
-//     case 'list':
-//       break
-//     case 'grid':
-//       displayHTML = '</div>'
-//       break
-//     case 'table':
-//       displayHTML = '</tbody></table>'
-//       break
-//     default:
-//   }
-
-//   return displayHTML
-// }
-
-// Each Format needs a different parent element before people can be inserted, this function ensures the correct parent wrapper element is created for data
+/**
+ * Each Format needs a different parent element before people can be inserted
+ * this function ensures the correct parent wrapper element is created for data
+ * @param {string} Format // display format in use (grid | list | table) 
+ * @returns document.elment 
+ */
 function getParentContainer(Format) {
   let container = ''
   switch (Format) {
     case 'list':
       break
     case 'grid':
-      container = document.createElement('div')
-      container.classList = 'ucb-people-list-grid row'
+      container = document.getElementById('ucb-pl-content')
+      container.classList = "row ucb-people-list-content"
       break
     case 'table':
       // we only need to render the table header the first time
@@ -152,8 +140,14 @@ function getParentContainer(Format) {
   return container
 }
 
+/**
+ * Function to render the indivdual person card in the correct format  
+ * @param {string} Format // display format (grid | list | table)
+ * @param {object} Person // person object containing the content to render the card
+ * @returns HTML string to be rendered
+ */
 function displayPersonCard(Format, Person) {
-  console.log('Rendering the card for ' + Person.Name)
+  // console.log('Rendering the card for ' + Person.Name)
   let cardHTML = ''
   // grab the friendly name from the global variable
   // note: there may be a race condidtion here as we're also querying
@@ -293,6 +287,14 @@ function displayPersonCard(Format, Person) {
   return cardHTML
 }
 
+/**
+ * Main function to display a collection of people in a given format in the group identified
+ * by groupID 
+ * @param {string} DISPLAYFORMAT // format to use (grid | list | table)
+ * @param {string} GROUPBY // which taxonomy to group people in (department | type | none)
+ * @param {string} groupID // which department or type we're currently working on rendering
+ * @param {string} ORDERBY // do we sort the current group by last or type+last 
+ */
 function displayPeople(DISPLAYFORMAT, GROUPBY, groupID, ORDERBY) {
   let renderThisGroup = 0; 
   let el = document.getElementById('ucb-people-list-page')
@@ -303,7 +305,7 @@ function displayPeople(DISPLAYFORMAT, GROUPBY, groupID, ORDERBY) {
   } else if(GROUPBY === "type") {
     thisTypeName = getTaxonomyName(JobTypes, groupID).name
   }
-  el.classList = 'container'
+  // el.classList = 'container'
   // let headerHTML = layoutHeader(DISPLAYFORMAT)
   // let footerHTML = layoutFooter(DISPLAYFORMAT)
   let parentContainer = getParentContainer(DISPLAYFORMAT)
@@ -430,8 +432,8 @@ function displayPeople(DISPLAYFORMAT, GROUPBY, groupID, ORDERBY) {
           if(renderThisGroup === 1 && groupID) {
             // we may be on a second pass and have already rendered the title in the first pass
             // if so, skip the title so we don't end up with two 
-            console.log("First Pass Count is : " + firstPassCount)
-            console.log("Render pass is : " + ORDERBY)
+            // console.log("First Pass Count is : " + firstPassCount)
+            // console.log("Render pass is : " + ORDERBY)
             if((ORDERBY === "secondpass" && !firstPassCount) || ORDERBY != "secondpass") {
               let GroupTitle = document.createElement('div');
               GroupTitle.innerHTML = ` 
@@ -456,7 +458,7 @@ function displayPeople(DISPLAYFORMAT, GROUPBY, groupID, ORDERBY) {
             }
           }
 
-          thisCard.classList = 'col-sm-12 col-md-4'
+          thisCard.classList = 'col-sm-12 col-md-6 col-lg-4'
           thisCard.innerHTML = thisPersonCard
 
           parentContainer.appendChild(thisCard)
@@ -492,6 +494,7 @@ function displayPeople(DISPLAYFORMAT, GROUPBY, groupID, ORDERBY) {
     })
   } else {
     console.log('empty staff object, no people to render ', ourPepole)
+    toggleMessage('ucb-al-end-of-data', 'block')
   }
   // done with cards, clean up and close any HTML tags we have opened.
   // el.append(footerHTML)
@@ -506,8 +509,8 @@ function displayPeople(DISPLAYFORMAT, GROUPBY, groupID, ORDERBY) {
   let FORMAT = el.dataset.format ? el.dataset.format : ''
   let GROUPBY = el.dataset.groupby ? el.dataset.groupby : ''
   let ORDERBY = el.dataset.orderby ? el.dataset.orderby : ''
-  console.log('Init')
-  console.log("Order by is : " + ORDERBY)
+  // console.log('Init')
+  // console.log("Order by is : " + ORDERBY)
 
   getTaxonomy('department').then((response) => {
     Departments = response
@@ -516,7 +519,7 @@ function displayPeople(DISPLAYFORMAT, GROUPBY, groupID, ORDERBY) {
 
   getTaxonomy('ucb_person_job_type').then((response) => {
     JobTypes = response
-    console.log('Our Job types are : ', JobTypes);
+    // console.log('Our Job types are : ', JobTypes);
   })
 
   toggleMessage('ucb-al-loading', 'block')
@@ -528,7 +531,7 @@ function displayPeople(DISPLAYFORMAT, GROUPBY, groupID, ORDERBY) {
     .then(() => {
       toggleMessage('ucb-al-loading', 'none')
       if (GROUPBY == 'department') {
-        for (const [key, value] of Object.entries(Departments)) {
+        for (const [key] of Object.entries(Departments)) {
           // let thisDeptID = Departments[key].id
           // let thisDeptName = getTaxonomyName(Departments, thisDeptID);
           // console.log("Group by Dept : " + thisDeptID)
@@ -543,7 +546,7 @@ function displayPeople(DISPLAYFORMAT, GROUPBY, groupID, ORDERBY) {
           }
         }
       } else if (GROUPBY == 'type') {
-        for (const [key, value] of Object.entries(JobTypes)) {
+        for (const [key] of Object.entries(JobTypes)) {
           // let thisTypeID = JobTypes[key].id
           // let thisTypeName = getTaxonomyName(JobTypes, thisTypeID) 
           // console.log("Group by Type : " + thisTypeID)

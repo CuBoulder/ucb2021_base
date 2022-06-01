@@ -7,7 +7,7 @@
 }
 
 .ucb-loading-data {
-  color: #01579b;
+  color: #01579B;
 }
 
 .ucb-person-card-list {
@@ -70,11 +70,11 @@
 }
 
 .people-list-icon {
-  color: #aaa;
+  color: #AAA;
 }
 
 .ucb-people-list-contact {
-  color: #0277bd;
+  color: #0277BD;
   font-family: Roboto;
   font-weight: 400;
 }
@@ -91,4 +91,12 @@
 
 .ucb-person-card-dept-ul li:first-of-type {
   list-style: none;
+}
+
+thead.ucb-people-list-table-head {
+  background: #CCC;
+}
+
+tbody#ucb-people-list-table-tablebody {
+  background: #FAFAFA;
 }
