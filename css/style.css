@@ -17,10 +17,10 @@ body {
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  font: 16px/24px "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font: 16px/24px Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+  text-rendering: optimizelegibility;
 }
 
 main {
@@ -32,7 +32,7 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 a:link,
@@ -75,7 +75,7 @@ input[type="submit"] {
 
 /********* Fonts *************/
 .ucb-roboto-bold {
-  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: bold;
 }
 
@@ -146,7 +146,7 @@ header#ucb-header-block {
 
 /*********** Navigations **************/
 section.ucb-main-nav-section {
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px rgba(0 0 0 /10%);
   background: white;
   height: 40px;
 }
@@ -181,7 +181,7 @@ li.main-menu-item a.nav-link {
 .ucb-menu a.nav-link {
   font-size: 0.85rem;
   vertical-align: baseline;
-  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 600;
   line-height: 1rem;
   margin: 0.5rem;
@@ -279,7 +279,7 @@ li.main-menu-item a.nav-link.active {
 }
 
 .ucb-local-tasks ul li:hover {
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(255 255 255 / 15%);
   transition: background-color 200ms;
 }
 
@@ -313,7 +313,7 @@ li.main-menu-item a.nav-link.active {
 }
 
 .ucb-footer-top .ucb-menu a.nav-link:hover {
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 5px rgba(0 0 0 /30%);
 }
 
 .ucb-footer-nav-block .ucb-menu.nav {
@@ -341,7 +341,7 @@ li.main-menu-item a.nav-link.active {
 .ucb-footer-nav-container .ucb-menu-title {
   color: white;
   font-size: 1.4rem;
-  font-family: "Roboto Condensed", 'Roboto', "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Roboto Condensed", Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: bold;
 }
 
