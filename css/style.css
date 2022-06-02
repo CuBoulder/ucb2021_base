@@ -57,13 +57,13 @@ input[type="submit"] {
   color: var(--ucb-gold);
 }
 
-.ucb-local-tasks li > a {
-  color: var(--ucb-light-contrast);
-}
-
 .toolbar-menu a,
 .toolbar-menu a:visited {
   color: #565656;
+}
+
+.ucb-local-tasks li > a {
+  color: var(--ucb-light-contrast);
 }
 
 .ucb-homepage-footer a:hover {
@@ -87,7 +87,7 @@ input[type="submit"] {
 
 /********* Fonts *************/
 .ucb-roboto-bold {
-  font-family: 
+  font-family:
     Roboto,
     "Helvetica Neue",
     Helvetica,
@@ -97,7 +97,7 @@ input[type="submit"] {
 }
 
 .ucb-roboto-condensed-bold {
-  font-family: 
+  font-family:
     "Roboto Condensed",
     "Helvetica Neue",
     Helvetica,
@@ -297,7 +297,7 @@ li.main-menu-item a.nav-link.active {
 .ucb-breadcrumb li li::before {
   padding-right: 0.25rem;
   color: #444;
-  content: '>';
+  content: ">";
   font-weight: normal;
 }
 
