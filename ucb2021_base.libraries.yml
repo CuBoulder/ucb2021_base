@@ -139,6 +139,14 @@ ucb-video-reveal:
   css:
     theme:
       css/paragraphs/video-reveal.css: {}
+
+ucb-people-list-page:
+  version: 1.x
+  js:
+    js/ucb-people-list.js: {}
+  css:
+    theme:
+      css/ucb-people-list.css: {}
       
 ucb-article-list:
   version: 1.x
