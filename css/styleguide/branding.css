@@ -13,29 +13,33 @@ body {
 }
 
 *,
-*:before,
-*:after {
+*::before,
+*::after {
   box-sizing: inherit;
 }
 
 a:link,
 a:visited {
   color: #0277bd;
-  transition: background-color 0.25s ease, border-color 0.25s ease,
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
     color 0.25s ease;
   text-decoration: none;
-  text-decoration-color: rgba(2, 119, 189, 0.65);
-  -webkit-text-decoration-color: rgba(2, 119, 189, 0.65);
+  text-decoration-color: rgba(2 119 189 / 65%);
+  -webkit-text-decoration-color: rgba(2 119 189 / 65%);
 }
+
 a:hover {
   color: #b71c1c;
-  text-decoration-color: rgba(183, 28, 28, 0.65);
-  -webkit-text-decoration-color: rgba(183, 28, 28, 0.65);
+  text-decoration-color: rgba(183 28 28 / 65%);
+  -webkit-text-decoration-color: rgba(183 28 28 / 65%);
 }
+
 a:active {
   color: #b71c1c;
-  text-decoration-color: rgba(183, 28, 28, 0.65);
-  -webkit-text-decoration-color: rgba(183, 28, 28, 0.65);
+  text-decoration-color: rgba(183 28 28 / 65%);
+  -webkit-text-decoration-color: rgba(183 28 28 / 65%);
 }
 
 /** Branding styles */
@@ -45,22 +49,24 @@ a:active {
 
 header.white {
   background: #fff;
-  color: #111111;
+  color: #111;
 }
+
 header.white a:link,
 header.white a:visited,
 header.white a:hover {
-  color: #111111;
+  color: #111;
 }
 
 header.light {
-  background: #eeeeee;
-  color: #111111;
+  background: #eee;
+  color: #111;
 }
+
 header.light a:link,
 header.light a:visited,
 header.light a:hover {
-  color: #111111;
+  color: #111;
 }
 
 header.dark {
@@ -77,6 +83,7 @@ header.black {
   background: #000;
   color: #fff;
 }
+
 header.black a:link,
 header.black a:visited,
 header.black a:hover {
@@ -90,16 +97,18 @@ header.ucb {
   font-size: 20px;
   padding: 15px 0;
   font-weight: 750;
-  font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
   line-height: 1.1;
 }
+
 header.ucb .site-name,
 header.ucb h1.site-name {
   font-size: 20px;
   font-weight: 750;
-  font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
   line-height: 1.1;
 }
+
 @media screen and (min-width: 768px) {
   header.ucb,
   header.ucb .site-name,
@@ -107,6 +116,7 @@ header.ucb h1.site-name {
     font-size: 30px;
   }
 }
+
 header.ucb .site-name-wrapper {
   flex-grow: 1;
   padding-right: 40px;
@@ -123,6 +133,7 @@ header.ucb .site-name-wrapper {
   padding-top: 5px;
   font-weight: bold;
 }
+
 .banner-black .header-wrapper .affiliation,
 .banner-black .header-wrapper .affiliation a:link,
 .banner-black .header-wrapper .affiliation a:visited,
@@ -131,6 +142,7 @@ header.ucb.black .affiliation a:link,
 header.ucb.black .affiliation a:visited {
   color: #aaa;
 }
+
 .banner-dark .header-wrapper .affiliation,
 .banner-dark .header-wrapper .affiliation a:link,
 .banner-dark .header-wrapper .affiliation a:visited,
@@ -139,6 +151,7 @@ header.ucb.dark .affiliation a:link,
 header.ucb.dark .affiliation a:visited {
   color: #9b9b9b;
 }
+
 .banner-white .header-wrapper .affiliation,
 .banner-white .header-wrapper .affiliation a:link,
 .banner-white .header-wrapper .affiliation a:visited,
@@ -147,6 +160,7 @@ header.ucb.white .affiliation a:link,
 header.ucb.white .affiliation a:visited {
   color: #757575;
 }
+
 .banner-light .header-wrapper .affiliation,
 .banner-light .header-wrapper .affiliation a:link,
 .banner-light .header-wrapper .affiliation a:visited,
