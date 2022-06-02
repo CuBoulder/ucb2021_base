@@ -73,6 +73,7 @@ header.dark {
   background: #424242;
   color: #fff;
 }
+
 header.dark a:link,
 header.dark a:visited,
 header.dark a:hover {
@@ -101,6 +102,11 @@ header.ucb {
   line-height: 1.1;
 }
 
+.site-name {
+  padding: 0;
+  margin: 0;
+}
+
 header.ucb .site-name,
 header.ucb h1.site-name {
   font-size: 20px;
@@ -122,11 +128,6 @@ header.ucb .site-name-wrapper {
   padding-right: 40px;
 }
 
-.site-name {
-  padding: 0;
-  margin: 0;
-}
-
 .affiliation {
   text-transform: uppercase;
   font-size: 50%;
@@ -134,13 +135,13 @@ header.ucb .site-name-wrapper {
   font-weight: bold;
 }
 
-.banner-black .header-wrapper .affiliation,
-.banner-black .header-wrapper .affiliation a:link,
-.banner-black .header-wrapper .affiliation a:visited,
-header.ucb.black .affiliation,
-header.ucb.black .affiliation a:link,
-header.ucb.black .affiliation a:visited {
-  color: #aaa;
+.banner-light .header-wrapper .affiliation,
+.banner-light .header-wrapper .affiliation a:link,
+.banner-light .header-wrapper .affiliation a:visited,
+header.ucb.light .affiliation,
+header.ucb.light .affiliation a:link,
+header.ucb.light .affiliation a:visited {
+  color: #6e6e6e;
 }
 
 .banner-dark .header-wrapper .affiliation,
@@ -161,11 +162,11 @@ header.ucb.white .affiliation a:visited {
   color: #757575;
 }
 
-.banner-light .header-wrapper .affiliation,
-.banner-light .header-wrapper .affiliation a:link,
-.banner-light .header-wrapper .affiliation a:visited,
-header.ucb.light .affiliation,
-header.ucb.light .affiliation a:link,
-header.ucb.light .affiliation a:visited {
-  color: #6e6e6e;
+.banner-black .header-wrapper .affiliation,
+.banner-black .header-wrapper .affiliation a:link,
+.banner-black .header-wrapper .affiliation a:visited,
+header.ucb.black .affiliation,
+header.ucb.black .affiliation a:link,
+header.ucb.black .affiliation a:visited {
+  color: #aaa;
 }
