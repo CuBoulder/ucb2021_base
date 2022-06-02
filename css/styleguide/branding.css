@@ -135,13 +135,13 @@ header.ucb .site-name-wrapper {
   font-weight: bold;
 }
 
-.banner-light .header-wrapper .affiliation,
-.banner-light .header-wrapper .affiliation a:link,
-.banner-light .header-wrapper .affiliation a:visited,
-header.ucb.light .affiliation,
-header.ucb.light .affiliation a:link,
-header.ucb.light .affiliation a:visited {
-  color: #6e6e6e;
+.banner-black .header-wrapper .affiliation,
+.banner-black .header-wrapper .affiliation a:link,
+.banner-black .header-wrapper .affiliation a:visited,
+header.ucb.black .affiliation,
+header.ucb.black .affiliation a:link,
+header.ucb.black .affiliation a:visited {
+  color: #aaa;
 }
 
 .banner-dark .header-wrapper .affiliation,
@@ -153,6 +153,15 @@ header.ucb.dark .affiliation a:visited {
   color: #9b9b9b;
 }
 
+.banner-light .header-wrapper .affiliation,
+.banner-light .header-wrapper .affiliation a:link,
+.banner-light .header-wrapper .affiliation a:visited,
+header.ucb.light .affiliation,
+header.ucb.light .affiliation a:link,
+header.ucb.light .affiliation a:visited {
+  color: #6e6e6e;
+}
+
 .banner-white .header-wrapper .affiliation,
 .banner-white .header-wrapper .affiliation a:link,
 .banner-white .header-wrapper .affiliation a:visited,
@@ -162,11 +171,4 @@ header.ucb.white .affiliation a:visited {
   color: #757575;
 }
 
-.banner-black .header-wrapper .affiliation,
-.banner-black .header-wrapper .affiliation a:link,
-.banner-black .header-wrapper .affiliation a:visited,
-header.ucb.black .affiliation,
-header.ucb.black .affiliation a:link,
-header.ucb.black .affiliation a:visited {
-  color: #aaa;
-}
+
