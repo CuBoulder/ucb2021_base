@@ -17,7 +17,7 @@ body {
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  font: 16px/24px Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font: 16px/24px Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizelegibility;
@@ -32,7 +32,7 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 a:link,
@@ -49,8 +49,20 @@ button {
   border: none;
 }
 
-input[type="submit"] {
+input[type='submit'] {
   border: none;
+}
+
+.ucb-homepage-footer a {
+  color: var(--ucb-gold);
+}
+
+.ucb-homepage-footer a:hover {
+  color: var(--ucb-white);
+}
+
+.ucb-local-tasks li > a {
+  color: var(--ucb-light-contrast);
 }
 
 .toolbar-menu a,
@@ -75,17 +87,18 @@ input[type="submit"] {
 
 /********* Fonts *************/
 .ucb-roboto-bold {
-  font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: bold;
 }
 
 .ucb-roboto-condensed-bold {
-  font-family: "Roboto Condensed", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Roboto Condensed', 'Helvetica Neue', Helvetica, Arial,
+    sans-serif;
   font-weight: bold;
 }
 
 .ucb-roboto {
-  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .font-white {
@@ -131,6 +144,11 @@ header#ucb-header-block {
   flex-shrink: 0;
 }
 
+article img {
+  max-width: 100%;
+  height: auto;
+}
+
 .homepage-logo img {
   max-width: 320px;
   min-width: 180px;
@@ -165,6 +183,24 @@ ul.ucb-main-menu.nav {
   flex-grow: 1;
 }
 
+.ucb-footer-top .ucb-menu a.nav-link {
+  color: white;
+  font-size: 1.25em;
+  padding: 0.5rem;
+  border-radius: 0.2rem;
+}
+
+.ucb-menu a.nav-link {
+  font-size: 0.85rem;
+  vertical-align: baseline;
+  font-family: Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 600;
+  line-height: 1rem;
+  margin: 0.5rem;
+  color: var(--ucb-darker);
+  padding: 0.5rem;
+}
+
 li.main-menu-item a.nav-link {
   color: var(--ucb-darker);
   border-bottom: 2px solid #fff;
@@ -178,21 +214,17 @@ li.main-menu-item a.nav-link {
 }
 
 /********** Secondary Menu **********/
-.ucb-menu a.nav-link {
-  font-size: 0.85rem;
-  vertical-align: baseline;
-  font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 600;
-  line-height: 1rem;
-  margin: 0.5rem;
-  color: var(--ucb-darker);
-  padding: 0.5rem;
-}
 
 .ucb-menu a.nav-link:hover {
   color: var(--ucb-black);
   background: var(--ucb-light-contrast);
   border-radius: 3px;
+}
+
+.ucb-footer-nav-block .ucb-menu.nav {
+  flex-direction: column;
+  flex-grow: 1;
+  padding-right: 2em;
 }
 
 li.main-menu-item a.nav-link:hover {
@@ -245,7 +277,7 @@ li.main-menu-item a.nav-link.active {
 .ucb-breadcrumb li li::before {
   padding-right: 0.25rem;
   color: #444;
-  content: ">";
+  content: '>';
   font-weight: normal;
 }
 
@@ -283,10 +315,6 @@ li.main-menu-item a.nav-link.active {
   transition: background-color 200ms;
 }
 
-.ucb-local-tasks li > a {
-  color: var(--ucb-light-contrast);
-}
-
 .ucb-local-tasks li > a:hover {
   color: #fff;
 }
@@ -305,21 +333,8 @@ li.main-menu-item a.nav-link.active {
   text-align: center;
 }
 
-.ucb-footer-top .ucb-menu a.nav-link {
-  color: white;
-  font-size: 1.25em;
-  padding: 0.5rem;
-  border-radius: 0.2rem;
-}
-
 .ucb-footer-top .ucb-menu a.nav-link:hover {
   box-shadow: 0 2px 5px rgba(0 0 0 /30%);
-}
-
-.ucb-footer-nav-block .ucb-menu.nav {
-  flex-direction: column;
-  flex-grow: 1;
-  padding-right: 2em;
 }
 
 .ucb-footer-nav-block {
@@ -341,7 +356,8 @@ li.main-menu-item a.nav-link.active {
 .ucb-footer-nav-container .ucb-menu-title {
   color: white;
   font-size: 1.4rem;
-  font-family: "Roboto Condensed", Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Roboto Condensed', Roboto, 'Helvetica Neue', Helvetica, Arial,
+    sans-serif;
   font-weight: bold;
 }
 
@@ -386,14 +402,6 @@ li.social-media-item.menu-item {
   padding-right: 0.5rem;
 }
 
-.ucb-homepage-footer a {
-  color: var(--ucb-gold);
-}
-
-.ucb-homepage-footer a:hover {
-  color: var(--ucb-white);
-}
-
 .be-boulder-container {
   display: flex;
   align-items: center;
@@ -423,10 +431,6 @@ li.social-media-item.menu-item {
 }
 
 /**** Responsive Images ******/
-article img {
-  max-width: 100%;
-  height: auto;
-}
 
 article .align-right img,
 article .align-right .media-image-caption p {
