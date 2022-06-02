@@ -57,21 +57,18 @@ input[type="submit"] {
   color: var(--ucb-gold);
 }
 
+.ucb-local-tasks li > a {
+  color: var(--ucb-light-contrast);
+}
+
 .toolbar-menu a,
 .toolbar-menu a:visited {
   color: #565656;
 }
 
-.ucb-local-tasks li > a {
-  color: var(--ucb-light-contrast);
-}
-
-
-
 .ucb-homepage-footer a:hover {
   color: var(--ucb-white);
 }
-
 
 .dialog-off-canvas-main-canvas {
   min-height: 100vh;
@@ -90,13 +87,22 @@ input[type="submit"] {
 
 /********* Fonts *************/
 .ucb-roboto-bold {
-  font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 
+    Roboto,
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    sans-serif;
   font-weight: bold;
 }
 
 .ucb-roboto-condensed-bold {
   font-family: 
-    "Roboto Condensed", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    "Roboto Condensed",
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    sans-serif;
   font-weight: bold;
 }
 
@@ -189,7 +195,7 @@ ul.ucb-main-menu.nav {
 .ucb-menu a.nav-link {
   font-size: 0.85rem;
   vertical-align: baseline;
-  font-family: Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 600;
   line-height: 1rem;
   margin: 0.5rem;
@@ -228,6 +234,17 @@ li.main-menu-item a.nav-link {
   flex-direction: column;
   flex-grow: 1;
   padding-right: 2em;
+}
+
+.ucb-footer-nav-block .ucb-menu a.nav-link {
+  color: #cfb87b;
+  background: transparent;
+  text-align: left;
+  font-size: 14px;
+  border-bottom: 1px solid #555;
+  border-radius: 0;
+  padding: 0.5rem 0;
+  margin: 0.5rem 0;
 }
 
 li.main-menu-item a.nav-link:hover {
@@ -335,16 +352,6 @@ li.main-menu-item a.nav-link.active {
   flex-grow: 1;
   text-align: center;
 }
-.ucb-footer-nav-block .ucb-menu a.nav-link {
-  color: #cfb87b;
-  background: transparent;
-  text-align: left;
-  font-size: 14px;
-  border-bottom: 1px solid #555;
-  border-radius: 0;
-  padding: 0.5rem 0;
-  margin: 0.5rem 0;
-}
 
 .ucb-footer-top .ucb-menu a.nav-link:hover {
   box-shadow: 0 2px 5px rgba(0 0 0 /30%);
@@ -370,7 +377,12 @@ li.main-menu-item a.nav-link.active {
   color: white;
   font-size: 1.4rem;
   font-family:
-    "Roboto Condensed", Roboto, "Helvetica Neue", Helvetica, Arial,sans-serif;
+    "Roboto Condensed",
+    Roboto,
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    sans-serif;
   font-weight: bold;
 }
 
