@@ -132,6 +132,12 @@ ucb-events-calendar:
     theme:
       css/paragraphs/events-calendar.css: {}
 
+ucb-newsletter:
+  version: 1.x
+  css:
+    theme:
+      css/ucb-newsletter.css: {}
+      
 ucb-video-reveal:
   version: 1.x
   js:
