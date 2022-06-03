@@ -16,6 +16,7 @@ ucb-global:
       css/styleguide/icons.css: {}
   js:
     js/bootstrap/bootstrap.bundle.min.js: {}
+    js/fontawesome/all.min.js: {}
     js/ucb-main.js: {}
   dependencies:
     - core/drupal
@@ -144,3 +145,19 @@ ucb-video-reveal:
   css:
     theme:
       css/paragraphs/video-reveal.css: {}
+
+ucb-people-list-page:
+  version: 1.x
+  js:
+    js/ucb-people-list.js: {}
+  css:
+    theme:
+      css/ucb-people-list.css: {}
+      
+ucb-article-list:
+  version: 1.x
+  js:
+    js/ucb-article-list.js: {}
+  css:
+    theme:
+      css/ucb-article-list.css: {}
