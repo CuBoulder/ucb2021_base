@@ -19,5 +19,12 @@
     </div>
     {{ page.content }}
   </div>
+{# Render Social Share Buttons #}
+  {% if page.social_share|render %}
+      <div class="ucb-social-share-container container">
+        {{ page.social_share }}
+      </div>
+    {% endif %}
 </main>
+
 {{ block("page_footer", "page.html.twig") }}
