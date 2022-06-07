@@ -1,7 +1,7 @@
 {
     "rules": {
-        "no-descending-specificity": false,
-        "value-no-vendor-prefix": false,
-        "selector-class-pattern": false
+        "no-descending-specificity": null,
+        "value-no-vendor-prefix": null,
+        "selector-class-pattern": null
     }
 }
