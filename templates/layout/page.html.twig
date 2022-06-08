@@ -43,6 +43,31 @@
  * @see html.html.twig
  */
 #}
+
+
+{# Adding Style Classes for Social Share Content #}
+{#    
+      0('None'),
+      1('Left Side (Desktop) / Below Title (Mobile)'),
+      2('Left Side (Desktop) / Below Content (Mobile)'),
+      3('Below Content'),
+      4('Below Title'),
+       #}
+       
+{% set social_share_button_position = drupal_config('ucb2021_base.settings', 'ucb_social_share_position')%}
+{% set social_share_class = "" %}
+{% if social_share_button_position == "0"%}
+  {% set social_share_class = "social-share-none" %}
+{% elseif social_share_button_position=="1"%}
+  {% set social_share_class = "social-share-left-side-below-content" %}
+{% elseif social_share_button_position=="2"%}
+  {% set social_share_class = "social-share-left-side-below-title" %}
+{% elseif social_share_button_position == "3" %}
+  {% set social_share_class = "social-share-below-content"%}
+{% else %} 
+  {% set social_share_class = "social-share-below-title" %}
+{% endif %}
+
 {% block page_header %}
   {{ attach_library('ucb2021_base/ucb-social-media') }}
 
@@ -158,7 +183,7 @@
 
 {# Render Social Share Buttons #}
   {% if page.social_share|render %}
-      <div class="ucb-social-share-container container">
+      <div id={{social_share_class}} class="ucb-social-share-container">
         {{ page.social_share }}
       </div>
     {% endif %}

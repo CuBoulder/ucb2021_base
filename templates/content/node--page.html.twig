@@ -19,7 +19,6 @@
 %}
 
 {% set sidebar_position = drupal_config('ucb2021_base.settings', 'ucb_sidebar_position') %}
-
 <article{{attributes.addClass(classes)}}>
   {% if content.field_above_content.0 is not null %}
     {{ content.field_above_content }}
