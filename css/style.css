@@ -452,5 +452,5 @@ article .align-left .media-image-caption p {
 
 .social-sharing-buttons__button:hover{
   -webkit-transition-duration: 300ms;
-  -webkit-transform: translateX(10px);
+  -webkit-transform: translateX(5px);
 }
