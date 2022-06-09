@@ -1,1 +1,21 @@
 /* placeholder for layout styles */
+.social-sharing-buttons{
+    flex-direction: column;
+  }
+  
+   #social-share-none{
+    display: none;
+  }
+  
+  #social-share-left-side{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 50px;
+    top: 35%;
+  }
+  
+  .social-sharing-buttons__button:hover{
+    padding-left: 25px;
+    transition: 0.5s ease;
+  }

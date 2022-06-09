@@ -437,3 +437,22 @@ article .align-left img,
 article .align-left .media-image-caption p {
   padding-right: 1em;
 }
+
+.social-sharing-buttons{
+  flex-direction: column;
+}
+#social-share-none{
+  display: none;
+}
+
+#social-share-left-side{
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 50px;
+}
+
+.social-sharing-buttons__button:hover{
+  margin-left: 25px;
+  transition: 0.5s ease;
+}
