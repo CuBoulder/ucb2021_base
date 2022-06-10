@@ -454,3 +454,21 @@ article .align-left .media-image-caption p {
   -webkit-transition-duration: 300ms;
   -webkit-transform: translateX(5px);
 }
+
+@media only screen and (max-width: 600px) {
+  .social-sharing-buttons{
+    flex-direction: row;
+    position: relative;
+    top: 95%;
+    left: 0;
+    right: 0;
+    align-self: center;
+    width: auto;
+    justify-content: center;
+  }
+  .social-sharing-buttons__button:hover{
+    -webkit-transition-duration: 300ms;
+    -webkit-transform: translateY(-5px);
+  }
+}
+
