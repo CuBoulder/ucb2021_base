@@ -21,6 +21,7 @@
 {% else %} 
   {% set social_share_class = "social-share-below-title" %}
 {% endif %}
+
 {{ page.highlighted }}
 
 {{ page.help }}
@@ -33,11 +34,13 @@
     {{ page.content }}
   </div>
 {# Render Social Share Buttons #}
+{% if social_share_button_position != "4"%}
   {% if page.social_share|render %}
       <div id={{social_share_class}} class="ucb-social-share-container">
         {{ page.social_share }}
       </div>
     {% endif %}
+{% endif %}
 </main>
 
 {{ block("page_footer", "page.html.twig") }}

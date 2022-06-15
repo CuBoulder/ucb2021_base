@@ -7,6 +7,20 @@
 
 {{ attach_library('ucb2021_base/ucb-page') }}
 
+{% set social_share_button_position = drupal_config('ucb2021_base.settings', 'ucb_social_share_position')%}
+{% set social_share_class = "" %}
+{% if social_share_button_position == "0"%}
+  {% set social_share_class = "social-share-none" %}
+{% elseif social_share_button_position=="1"%}
+  {% set social_share_class = "social-share-left-side-below-title" %}
+{% elseif social_share_button_position=="2"%}
+  {% set social_share_class = "social-share-left-side-below-content" %}
+{% elseif social_share_button_position == "3" %}
+  {% set social_share_class = "social-share-below-content"%}
+{% else %} 
+  {% set social_share_class = "social-share-below-title" %}
+{% endif %}
+
 {%
   set classes = [
   'node',
@@ -27,6 +41,15 @@
 
   <div class="container">
     <h1{{ title_attributes }}> {{ label }} </h1>
+    {# {% if page.social_share|render %} #}
+    {# TO DO : condition render #}
+    {% if social_share_button_position == "4"%}
+      <div id={{social_share_class}} class="ucb-social-share-container">
+        {{ drupal_block("social_sharing_buttons_block") }}
+      </div>
+    {% endif %}
+
+    {# {% endif %} #}
   </div>
 
   <div class="container mb-4">

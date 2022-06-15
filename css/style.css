@@ -471,6 +471,15 @@ article .align-left .media-image-caption p {
   -webkit-transform: translateY(-5px);
 }
 
+#social-share-below-title .social-sharing-buttons{
+  justify-content: flex-start;
+}
+
+#social-share-below-title .social-sharing-buttons__button:hover{
+  -webkit-transition-duration: 300ms;
+  -webkit-transform: translateY(-5px);
+}
+
 #social-share-none{
   display: none;
 }
