@@ -484,6 +484,28 @@ article .align-left .media-image-caption p {
   display: none;
 }
 
+.layout-content + #social-share-left-side-below-title .social-sharing-buttons{
+  flex-direction: column;
+  position: absolute;
+  top: 35%;
+  left: -10px;
+  width: auto;
+  display: initial;
+}
+
+.layout-content + #social-share-left-side-below-title .social-sharing-buttons__button:hover{
+-webkit-transition-duration: 300ms;
+-webkit-transform: translateX(5px);
+}
+
+h1 + #social-share-left-side-below-title{
+  display: none;
+}
+/* needed for article share */
+span + #social-share-left-side-below-title{
+  display: none;
+}
+
 @media only screen and (max-width: 600px) {
   #social-share-left-side-below-content{
     flex-direction: row;
@@ -513,5 +535,27 @@ article .align-left .media-image-caption p {
     -webkit-transition-duration: 300ms;
     -webkit-transform: translateY(-5px);
   }
+
+  h1 + #social-share-left-side-below-title{
+    display: block;
+    justify-content: flex-start;
+  }
+
+  span + #social-share-left-side-below-title{
+    display: block;
+  }
+
+  h1 + #social-share-left-side-below-title .social-sharing-buttons{
+    justify-content: flex-start;
+  }
+
+  span + #social-share-left-side-below-title .social-sharing-buttons{
+    justify-content: flex-start;
+  }
+
+  .layout-content + #social-share-left-side-below-title{
+    display: none;
+  }
+
 }
 

@@ -43,7 +43,7 @@
     <h1{{ title_attributes }}> {{ label }} </h1>
     {# {% if page.social_share|render %} #}
     {# TO DO : condition render #}
-    {% if social_share_button_position == "4"%}
+    {% if social_share_button_position == "4" or social_share_button_position == "1"%}
       <div id={{social_share_class}} class="ucb-social-share-container">
         {{ drupal_block("social_sharing_buttons_block") }}
       </div>
