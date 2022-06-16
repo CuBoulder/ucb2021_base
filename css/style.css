@@ -562,5 +562,10 @@ span + #social-share-left-side-below-title{
     display: none;
   }
 
+  span + #social-share-left-side-below-title .social-sharing-buttons__button:hover{
+    -webkit-transition-duration: 300ms;
+    -webkit-transform: translateY(-5px);
+    }
+
 }
 
