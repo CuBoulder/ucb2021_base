@@ -506,6 +506,11 @@ span + #social-share-left-side-below-title{
   display: none;
 }
 
+/* TO DO - figure out bug with social share, when rendered using twig tweak print button ALWAYS shows up */
+#print-social-share-btn{
+  display: none;
+}
+
 @media only screen and (max-width: 600px) {
   #social-share-left-side-below-content{
     flex-direction: row;
