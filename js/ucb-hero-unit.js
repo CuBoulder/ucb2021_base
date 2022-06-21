@@ -19,18 +19,20 @@ function enableVideoHero(videoURL, videoPlayerWrapperElementId) {
 
 function createVideoHeroPlayer(videoURL, videoPlayerWrapperElementId) {
     const
-        videoWrapperElement = document.getElementById(videoPlayerWrapperElementId).parentElement,
+        videoPlayerWrapperElement = document.getElementById(videoPlayerWrapperElementId),
+        videoWrapperElement = videoPlayerWrapperElement.parentElement,
+        playPauseButton = videoWrapperElement.querySelector('.ucb-hero-unit-video-play-pause'),
         videoPlayer = new Vimeo.Player(videoPlayerWrapperElementId, {
             url: videoURL,
             background: true,
             muted: true
         });
     // The video will resize automatically to fit its container
-    let videoWidth = -1, videoHeight = -1;
+    let videoWidth = -1, videoHeight = -1, videoPlaying = false;
     const enableVideoHeroAutoresize = function() {
         if(videoWidth > -1 && videoHeight > -1) {
-            resizeVideoHero(videoWrapperElement, videoPlayer, videoWidth, videoHeight);
-            window.addEventListener('resize', () => resizeVideoHero(videoWrapperElement, videoPlayer, videoWidth, videoHeight));    
+            resizeVideoHero(videoPlayerWrapperElement, videoPlayer, videoWidth, videoHeight);
+            window.addEventListener('resize', () => resizeVideoHero(videoPlayerWrapperElement, videoPlayer, videoWidth, videoHeight));    
         }
     }
     // Video width and height come back from the Vimeo player API as Promises
@@ -45,19 +47,32 @@ function createVideoHeroPlayer(videoURL, videoPlayerWrapperElementId) {
     videoPlayer.on('loaded', function() {
         videoWrapperElement.removeAttribute('hidden');
     });
+    videoPlayer.on('play', function() {
+        videoPlaying = true;
+        playPauseButton.innerHTML = '<i class="fa fa-pause"></i>';
+    });
+    videoPlayer.on('pause', function() {
+        videoPlaying = false;
+        playPauseButton.innerHTML = '<i class="fa fa-play"></i>';
+    });
+    playPauseButton.onclick = function() {
+        if(videoPlaying)
+            videoPlayer.pause()
+        else videoPlayer.play();
+    };
 }
 
-function resizeVideoHero(videoWrapperElement, videoPlayer, videoWidth, videoHeight) {
+function resizeVideoHero(videoPlayerWrapperElement, videoPlayer, videoWidth, videoHeight) {
     const 
-        heroElement = videoWrapperElement.parentElement,
+        heroElement = videoPlayerWrapperElement.parentElement.parentElement,
         heroWidth = heroElement.offsetWidth,
         heroHeight = heroElement.offsetHeight,
         videoPlayerElement = videoPlayer.element,
         dimensions = calculateAspectRatioFit(videoWidth, videoHeight, heroWidth, heroHeight);
     videoPlayerElement.width = dimensions.width;
-    videoWrapperElement.style.width = heroWidth + 'px';
+    videoPlayerWrapperElement.style.width = heroWidth + 'px';
     videoPlayerElement.height = dimensions.height;
-    videoWrapperElement.style.height = heroHeight + 'px';
+    videoPlayerWrapperElement.style.height = heroHeight + 'px';
     videoPlayerElement.style.marginTop = ((heroHeight - dimensions.height) / 2) + 'px';
     videoPlayerElement.style.marginLeft = ((heroWidth - dimensions.width) / 2) + 'px';
 }

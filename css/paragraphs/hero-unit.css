@@ -37,11 +37,16 @@
 
 .paragraph.paragraph--type--hero-unit .ucb-hero-unit-content {
   position: relative;
-  z-index: 1;
+  z-index: 0;
 }
 
 .ucb-hero-unit-video-wrapper {
   position: absolute;
+  display: block;
+}
+
+.ucb-hero-unit-video-player-wrapper {
+  position: relative;
   display: block;
   overflow: hidden;
 }
@@ -63,4 +68,15 @@
 .paragraph.paragraph--type--hero-unit.size-small .ucb-hero-unit-video-wrapper {
   margin-top: -1rem;
   margin-left: -1rem;
+}
+
+.ucb-hero-unit-video-controls-wrapper {
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+  padding: .25em .5em
+}
+
+.ucb-hero-unit-video-control-button {
+  display: inline-block;
 }
