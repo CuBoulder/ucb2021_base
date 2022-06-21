@@ -16,6 +16,7 @@
     paragraph.field_text_color.value
   ]
 %}
+{% set paragraphId = paragraph.id() %}
 
 {# set style for backgroung settings #}
 {% if paragraph.field_solid_colors.value is defined %}
@@ -27,6 +28,11 @@
 {# A background image will be used over a solid color #}
 {% if paragraph.field_background_image.entity.field_media_image.entity is defined %}
   {% set bgValue = "background-image:url(#{ file_url(paragraph.field_background_image.entity.field_media_image.entity.fileuri) });background-repeat:no-repeat;background-position:center;background-size:cover;" %}
+{% endif %}
+
+{# URL if a video is used instead of an image #}
+{% if paragraph.field_background_video.entity.field_media_oembed_video is defined %}
+  {% set videoURL = paragraph.field_background_video.entity.field_media_oembed_video.value %}
 {% endif %}
 
 {# set classes for the size of the component #}
@@ -53,10 +59,16 @@
 
 {% block paragraph %}
   <div{{ attributes.addClass(classes).setAttribute("style","#{bgValue}").addClass(size, overlayClass) }}>
+    {% if videoURL is defined %}
+      <div hidden class="ucb-hero-unit-video-wrapper">
+          <div class="ucb-hero-unit-video-player-wrapper" id="ucb_hero_unit_video_player_{{ paragraphId }}"></div>
+      </div>
+      <script type="text/javascript">window.addEventListener('load', () => enableVideoHero('{{ videoURL }}', 'ucb_hero_unit_video_player_{{ paragraphId }}'));</script>
+    {% endif %}
     {% block content %}
       {% set linkColor = paragraph.field_link_color.value %}
       {# Dont let twig render the links #}
-      <div class="container">
+      <div class="container ucb-hero-unit-content">
         <div class="row">
           {% if paragraph.field_text_align.value == "text-righthalf" %}
               <div class="col-12 col-md-6"></div>
