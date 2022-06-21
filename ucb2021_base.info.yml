@@ -9,10 +9,6 @@ libraries:
   - ucb2021_base/ucb-global
   - ucb2021_base/ucb-paragraphs
 
-ckeditor_stylesheets:
-  - css/styleguide/type.css
-  - css/fontawesome/all.min.css
-
 regions:
   header: "Header"
   primary_menu: "Main Menu"
