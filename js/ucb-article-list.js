@@ -56,6 +56,7 @@ function renderArticleList( JSONURL, ExcludeCategories = "", ExcludeTags = "") {
     fetch(JSONURL)
       .then((reponse) => reponse.json())
       .then((data) => {
+        console.log(data)
         // get the next URL and return that if there is one
         if(data.links.next) {
           let nextURL = data.links.next.href.split("/jsonapi/");
@@ -76,6 +77,7 @@ function renderArticleList( JSONURL, ExcludeCategories = "", ExcludeTags = "") {
         // Below objects are needed to match images with their corresponding articles. There are two endpoints => data.data (article) and data.included (incl. media), both needed to associate a media library image with its respective article
         let urlObj = {};
         let idObj = {};
+        let altObj = {};
         // Remove any blanks from our articles before map
         if (data.included) {
           let filteredData = data.included.filter((url) => {
@@ -90,13 +92,25 @@ function renderArticleList( JSONURL, ExcludeCategories = "", ExcludeTags = "") {
           let idFilterData = data.included.filter((item) => {
             return item.type == "media--image";
           })
+
+          let altFilterData = data.included.filter((item) => {
+            return item.type == 'file--file';
+          });
+
+          // console.log('alt filter data', altFilterData)
+
+          altFilterData.map((item)=>{
+            altObj[item.id] = item.links.medium.href
+          })
+
           // using the image-only data, creates the idObj =>  key: thumbnail id, value : data id
           idFilterData.map((pair) => {
             idObj[pair.id] = pair.relationships.thumbnail.data.id;
           })
         }
-        // console.log("idObj", idObj);
-        // console.log("urlObj", urlObj);
+        console.log("idObj", idObj);
+        console.log("urlObj", urlObj);
+        console.log('altObj', altObj)
         //iterate over each item in the array
         data.data.map((item) => {
           let thisArticleCats = [];
@@ -186,7 +200,7 @@ function renderArticleList( JSONURL, ExcludeCategories = "", ExcludeTags = "") {
             } else {
               //Use the idObj as a memo to add the corresponding image url
               let thumbId = item.relationships.field_ucb_article_thumbnail.data.id;
-              imageSrc = urlObj[idObj[thumbId]];
+              imageSrc = altObj[idObj[thumbId]];
             }
 
             //Date - make human readable
