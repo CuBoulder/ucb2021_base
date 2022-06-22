@@ -1,47 +1,47 @@
 window.onload = function generateJSONLD() {
-  var dynamicJSONLD = '\n{\n "@context": "https:/schema.org",\n "@type": "HowTo",\n';
+  var dynamicJSONLD = '\n{\n \t"@context": "https://schema.org",\n\t "@type": "HowTo",\n';
 
   const title = document.getElementById("titleValue");
-  dynamicJSONLD +=  '"name": "' + title.innerText + '",\n';
+  dynamicJSONLD +=  '\t"name": "' + title.innerText + '",\n';
 
   const initImage = document.querySelector('.initialImage img');
-  dynamicJSONLD += ' "image": {\n"@type": "ImageObject",\n "url": "'+ initImage.src + '",\n "height": "406",\n "width": "305"\n},\n';
+  dynamicJSONLD += ' \t"image": {\n\t\t"@type": "ImageObject",\n\t\t "url": "'+ initImage.src + '",\n\t\t "height": "406",\n\t\t "width": "305"\n\t},\n';
 
   const estimatedCost = document.getElementById("estimatedCostValue").innerText;
-  dynamicJSONLD += '"estimatedCost": {\n"@type": "MonetaryAmount",\n"currency": "USD",\n"value": "' + estimatedCost + '"\n},\n'
+  dynamicJSONLD += '\t"estimatedCost": {\n\t\t"@type": "MonetaryAmount",\n\t\t"currency": "USD",\n\t\t"value": "' + estimatedCost + '"\n\t},\n'
 
   const materialList = document.getElementsByClassName("materialValue");
-  dynamicJSONLD += ' "supply": [ ';
+  dynamicJSONLD += '\t"supply": [ ';
   for( material of materialList) {
-    dynamicJSONLD += ' \n{\n "@type": "HowToSupply",\n "name": "' + material.innerText + '"\n},';
+    dynamicJSONLD += ' \n\t\t{\n\t\t\t"@type": "HowToSupply",\n\t\t\t"name": "' + material.innerText + '"\n\t\t},';
   }
   dynamicJSONLD = dynamicJSONLD.slice(0,-1);
-  dynamicJSONLD += '\n],\n';
+  dynamicJSONLD += '\n\t],\n';
 
   
   const toolList = document.getElementsByClassName("toolValue");
-  dynamicJSONLD += ' "tool": [ ';
+  dynamicJSONLD += '\t"tool": [ ';
   for( tool of toolList) {
-    dynamicJSONLD += ' \n{\n "@type": "HowToTool", "name": "' + tool.innerText + '"\n},';
+    dynamicJSONLD += ' \n\t\t{\n\t\t\t"@type": "HowToTool", \t\t\t"name": "' + tool.innerText + '"\n\t\t},';
   }
   dynamicJSONLD = dynamicJSONLD.slice(0,-1);
-  dynamicJSONLD += '\n],\n';
+  dynamicJSONLD += '\n\t],\n';
 
   const stepList = document.getElementsByClassName("howToStep");
-  dynamicJSONLD += '"step":[\n';
+  dynamicJSONLD += '\t"step":[\n';
   for( step of stepList) {
-    dynamicJSONLD += '{\n "@type": "HowToStep", \n';
+    dynamicJSONLD += '\t\t{\n \t\t\t"@type": "HowToStep", \n';
     stepTitle = step.querySelector('.stepTitle');
-    dynamicJSONLD += ' "name": "' + stepTitle.innerText + '", \n';
+    dynamicJSONLD += '\t\t\t"name": "' + stepTitle.innerText + '", \n';
     stepText = step.querySelector('.stepText');
-    dynamicJSONLD += ' "text": "' + stepText.innerText + '", \n';
+    dynamicJSONLD += '\t\t\t"text": "' + stepText.innerText + '", \n';
     stepImg = step.querySelector('.eachStepImage img');
-    dynamicJSONLD += ' "image": "' + stepImg.src + '" \n';
-    dynamicJSONLD += '},'
+    dynamicJSONLD += '\t\t\t"image": "' + stepImg.src + '" \n';
+    dynamicJSONLD += '\t\t},'
   }
 
   dynamicJSONLD = dynamicJSONLD.slice(0,-1);
-  dynamicJSONLD += '\n] }';
+  dynamicJSONLD += '\n\t] \n}\n';
 
   const script = document.createElement("script");
   script.setAttribute("type", "application/ld+json");

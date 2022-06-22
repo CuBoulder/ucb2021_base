@@ -24,9 +24,13 @@
 		</h1>
 	</div>
 	<div class="container mb-4">
-		{% for key, item in node.field_how_to_initial_image if key|first != '#' %}
-			{% set initialImage = url('<current>') ~ file_url(item.entity.field_media_image.entity.fileuri) %}
-		{% endfor %}
+
+      <!--
+			{% for key, item in content.field_how_to_steps_node if key|first != '#' %}
+			<h1>AA{{item.attributes.field_how_to_step_title|render}}ZZ</h1>
+			<h1>AdA{{item.entity.how_to_individual_step|render}}Zw</h1>
+			{% endfor %}
+      -->
 		<div class="initialStepDiv eachStepDiv">
 			<div class="requirementsDiv verticalFlex">
 				{{ content.field_how_to_materials }}
