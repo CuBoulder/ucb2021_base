@@ -10,10 +10,9 @@ const videoHeroSupportedSites = {
                     videoPlayerElement = document.createElement('div');
                 videoPlayerElement.id = videoPlayerElementId;
                 videoPlayerWrapperElement.appendChild(videoPlayerElement);
-                let videoPlaying = false;
                 const videoPlayer = new YT.Player(videoPlayerElementId, {
                     videoId: videoURL.searchParams.get('v'),
-                    playerVars: { autoplay: 1, controls: 0, mute: 1, disablekb: 1 },
+                    playerVars: { autoplay: 1, controls: 0, mute: 1, disablekb: 1, rel: 0, playsinline: 1 },
                     events: {
                         onReady: function(event){
                             enableVideoHeroAutoresize(videoWrapperElement, videoPlayerWrapperElement, document.getElementById(videoPlayerElementId), 800, 450);
@@ -23,11 +22,9 @@ const videoHeroSupportedSites = {
                             const playerState = event.data;
                             switch(playerState) {
                                 case YT.PlayerState.PLAYING:
-                                    videoPlaying = true;
                                     showVideoHeroPauseIcon(playPauseButtonElement);
                                 break;
                                 case YT.PlayerState.PAUSED:
-                                    videoPlaying = false;
                                     showVideoHeroPlayIcon(playPauseButtonElement);
                                 break;
                                 case YT.PlayerState.ENDED: // This will loop the video
@@ -35,10 +32,10 @@ const videoHeroSupportedSites = {
                                     videoPlayer.playVideo();
                             }
                             playPauseButtonElement.onclick = function() {
-                                if(videoPlaying)
-                                    videoPlayer.pauseVideo()
-                                else videoPlayer.playVideo();
-                            };                
+                                if(videoPlayer.getPlayerState() == YT.PlayerState.PAUSED)
+                                    videoPlayer.playVideo()
+                                else videoPlayer.pauseVideo();
+                            };
                         }
                     }
                 }); 

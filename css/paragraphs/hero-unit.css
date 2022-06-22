@@ -73,10 +73,13 @@
 .ucb-hero-unit-video-controls-wrapper {
   position: absolute;
   bottom: 0;
-  z-index: 1;
-  padding: .25em .5em
+  z-index: 15;
 }
 
 .ucb-hero-unit-video-control-button {
+  position: relative;
   display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin: .5em
 }
