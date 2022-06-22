@@ -56,7 +56,6 @@ function renderArticleList( JSONURL, ExcludeCategories = "", ExcludeTags = "") {
     fetch(JSONURL)
       .then((reponse) => reponse.json())
       .then((data) => {
-        console.log(data)
         // get the next URL and return that if there is one
         if(data.links.next) {
           let nextURL = data.links.next.href.split("/jsonapi/");
@@ -80,14 +79,6 @@ function renderArticleList( JSONURL, ExcludeCategories = "", ExcludeTags = "") {
         let altObj = {};
         // Remove any blanks from our articles before map
         if (data.included) {
-          let filteredData = data.included.filter((url) => {
-            return url.attributes.uri !== undefined;
-          })
-          // creates the urlObj, key: data id, value: url
-          filteredData.map((pair) => {
-            urlObj[pair.id] = pair.attributes.uri.url;
-          })
-
           // removes all other included data besides images in our included media
           let idFilterData = data.included.filter((item) => {
             return item.type == "media--image";
@@ -96,11 +87,9 @@ function renderArticleList( JSONURL, ExcludeCategories = "", ExcludeTags = "") {
           let altFilterData = data.included.filter((item) => {
             return item.type == 'file--file';
           });
-
-          // console.log('alt filter data', altFilterData)
-
+          // finds the focial point version of the thumbnail
           altFilterData.map((item)=>{
-            altObj[item.id] = item.links.medium.href
+            altObj[item.id] = item.links.focal_image.href
           })
 
           // using the image-only data, creates the idObj =>  key: thumbnail id, value : data id
@@ -108,9 +97,9 @@ function renderArticleList( JSONURL, ExcludeCategories = "", ExcludeTags = "") {
             idObj[pair.id] = pair.relationships.thumbnail.data.id;
           })
         }
-        console.log("idObj", idObj);
-        console.log("urlObj", urlObj);
-        console.log('altObj', altObj)
+        // console.log("idObj", idObj);
+        // console.log("urlObj", urlObj);
+        // console.log('altObj', altObj)
         //iterate over each item in the array
         data.data.map((item) => {
           let thisArticleCats = [];
