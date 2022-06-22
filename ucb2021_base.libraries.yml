@@ -129,3 +129,11 @@ ucb-video-reveal:
   css:
     theme:
       css/paragraphs/video-reveal.css: {}
+
+ucb-how-to-page:
+  version: 1.x
+  js:
+    js/ucb-how-to-page.js: {}
+  css:
+    theme:
+      css/ucb-how-to-page.css: {}

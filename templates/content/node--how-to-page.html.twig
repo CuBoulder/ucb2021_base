@@ -1,0 +1,46 @@
+{#
+/**
+ * Theme layout to display a Basic Page.
+ *
+ */
+#}
+
+{{ attach_library('ucb2021_base/ucb-how-to-page') }}
+{%
+  set classes = [
+  'node',
+  'node--type-' ~ node.bundle|clean_class,
+  node.isPromoted() ? 'node--promoted',
+  node.isSticky() ? 'node--sticky',
+  not node.isPublished() ? 'node--unpublished',
+  view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+]
+%}
+
+<article{{attributes.addClass(classes)}}>
+	<div class="container">
+		<h1{{title_attributes}}>
+			<span id = "titleValue">{{ label }}</span>
+		</h1>
+	</div>
+	<div class="container mb-4">
+		{% for key, item in node.field_how_to_initial_image if key|first != '#' %}
+			{% set initialImage = url('<current>') ~ file_url(item.entity.field_media_image.entity.fileuri) %}
+		{% endfor %}
+		<div class="initialStepDiv eachStepDiv">
+			<div class="requirementsDiv verticalFlex">
+				{{ content.field_how_to_materials }}
+				{{ content.field_how_to_tools }}
+			</div>
+			<div class="costDiv" >
+				Estimated Cost: $<span id = "estimatedCostValue">{{content.field_how_to_estimated_costs}}</span>
+			</div>
+			<div class="initialImage">
+				{{ content.field_how_to_initial_image }}
+			</div>
+		</div>
+		{{ content.body }}
+		{{ content.field_how_to_steps_node }}
+
+	</div>
+</article>
