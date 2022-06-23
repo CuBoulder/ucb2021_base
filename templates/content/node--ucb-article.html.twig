@@ -28,8 +28,10 @@ view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
   {% set social_share_class = "social-share-left-side-below-content" %}
 {% elseif social_share_button_position == "3" %}
   {% set social_share_class = "social-share-below-content"%}
-{% else %} 
+{% elseif social_share_button_position == "4" %}
   {% set social_share_class = "social-share-below-title" %}
+{% else %} 
+  {% set social_share_class = "social-share-none" %}
 {% endif %}
 
 {#Dummy variable to ensure that all content tags are set for caching purposes#}

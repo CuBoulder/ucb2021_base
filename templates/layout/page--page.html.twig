@@ -18,8 +18,10 @@
   {% set social_share_class = "social-share-left-side-below-content" %}
 {% elseif social_share_button_position == "3" %}
   {% set social_share_class = "social-share-below-content"%}
-{% else %} 
+{% elseif social_share_button_position == "4" %}
   {% set social_share_class = "social-share-below-title" %}
+{% else %} 
+  {% set social_share_class = "social-share-none" %}
 {% endif %}
 
 {{ page.highlighted }}
