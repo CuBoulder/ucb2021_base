@@ -5,7 +5,7 @@
 async function getArticleParagraph(id) {
   if(id) {
     const response = await fetch(
-      `/jsonapi/paragraph/article_content/${id}?include[paragraph--article_content]=field_article_image,field_article_text&include=field_article_image.field_media_image&fields[file--file]=uri,url`
+      `/jsonapi/paragraph/article_content/${id}`
     );
     return response;
   } else {
@@ -159,7 +159,6 @@ function renderArticleList( JSONURL, ExcludeCategories = "", ExcludeTags = "") {
               getArticleParagraph(bodyAndImageId)
                 .then((response) => response.json())
                 .then((data) => {
-                  // console.log("2nd call", data);
                   // Remove any html tags within the article
                   let htmlStrip = data.data.attributes.field_article_text.processed.replace(
                     /<\/?[^>]+(>|$)/g,
@@ -170,15 +169,18 @@ function renderArticleList( JSONURL, ExcludeCategories = "", ExcludeTags = "") {
                   // take only the first 100 words ~ 500 chars
                   let trimmedString = lineBreakStrip.substr(0, 500);
                   // if in the middle of the string, take the whole word
-                  trimmedString = trimmedString.substr(
-                    0,
-                    Math.min(
-                      trimmedString.length,
-                      trimmedString.lastIndexOf(" ")
+                  if(trimmedString.length > 100){
+                    trimmedString = trimmedString.substr(
+                      0,
+                      Math.min(
+                        trimmedString.length,
+                        trimmedString.lastIndexOf(" ")
+                      )
                     )
-                  )
+                    body = `${trimmedString}...`;
+                  }
                   // set the contentBody of Article Summary card to the minified body instead
-                  body = `${trimmedString}...`;
+                  body = `${trimmedString}`;
                   document.getElementById(`body-${bodyAndImageId}`).innerHTML = body;
                 })
             }
