@@ -13,11 +13,11 @@
   {% set social_share_class = "social-share-none" %}
 {% elseif social_share_button_position=="1"%}
   {% set social_share_class = "social-share-left-side-below-title" %}
-{% elseif social_share_button_position=="2"%}
+{% elseif social_share_button_position == "2"%}
   {% set social_share_class = "social-share-left-side-below-content" %}
 {% elseif social_share_button_position == "3" %}
   {% set social_share_class = "social-share-below-content"%}
-{% elseif social_share_class == "4" %}
+{% elseif social_share_button_position == "4" %}
   {% set social_share_class = "social-share-below-title" %}
 {% else %} 
   {% set social_share_class = "social-share-none" %}
