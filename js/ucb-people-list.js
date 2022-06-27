@@ -336,7 +336,7 @@ function displayPeople(DISPLAYFORMAT, GROUPBY, groupID, ORDERBY) {
       })
       // creates the urlObj, key: data id, value: url
       filteredData.map((pair) => {
-        urlObj[pair.id] = pair.attributes.uri.url
+        urlObj[pair.id] = pair.links.focal_image.href
       })
 
       // removes all other included data besides images in our included media
