@@ -43,6 +43,33 @@
  * @see html.html.twig
  */
 #}
+
+
+{# Adding Style Classes for Social Share Content #}
+{#    
+      0('None'),
+      1('Left Side (Desktop) / Below Title (Mobile)'),
+      2('Left Side (Desktop) / Below Content (Mobile)'),
+      3('Below Content'),
+      4('Below Title'),
+       #}
+       
+{% set social_share_button_position = drupal_config('ucb2021_base.settings', 'ucb_social_share_position')%}
+{% set social_share_class = "" %}
+{% if social_share_button_position == "0"%}
+  {% set social_share_class = "social-share-none" %}
+{% elseif social_share_button_position=="1"%}
+  {% set social_share_class = "social-share-left-side-below-title" %}
+{% elseif social_share_button_position == "2"%}
+  {% set social_share_class = "social-share-left-side-below-content" %}
+{% elseif social_share_button_position == "3" %}
+  {% set social_share_class = "social-share-below-content"%}
+{% elseif social_share_button_position == "4" %}
+  {% set social_share_class = "social-share-below-title" %}
+{% else %} 
+  {% set social_share_class = "social-share-none" %}
+{% endif %}
+
 {% block page_header %}
   {{ attach_library('ucb2021_base/ucb-social-media') }}
 
@@ -146,6 +173,7 @@
         </div>
       {% endif %}
     {% else %}
+
       {{ page.content }}
     {% endif %}
   </div>{# /.layout-content #}
@@ -155,6 +183,16 @@
       {{ page.below_content }}
     </div>
   {% endif %}
+
+{# Render Social Share Buttons #}
+{% if social_share_button_position != "4"%}
+  {% if page.social_share|render %}
+      <div id={{social_share_class}} class="ucb-social-share-container">
+        {{ page.social_share }}
+      </div>
+    {% endif %}
+{% endif %}
+
 </main>
 {# FOOTER BLOCK #}
 {% block page_footer %}
@@ -198,6 +236,7 @@
         {{ page.social }}
       </div>
     {% endif %}
+
     {% if page.footer|render %}
       <div class="container">
         {{ page.footer }}
