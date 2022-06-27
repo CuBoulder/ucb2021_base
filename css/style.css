@@ -473,6 +473,11 @@ article .align-left .media-image-caption p {
   -webkit-transform: translateX(5px);
 }
 
+#social-share-left-side-below-title .social-sharing-buttons a svg{
+  width: 48px;
+  height: 48px;
+}
+
 #social-share-below-content{
   flex-direction: row;
   position: relative;
@@ -492,6 +497,11 @@ article .align-left .media-image-caption p {
 /* Below title */
 #social-share-below-title .social-sharing-buttons{
   justify-content: flex-start;
+}
+
+#social-share-below-title .social-sharing-buttons a svg{
+  width: 48px;
+  height: 48px;
 }
 
 #social-share-below-title .social-sharing-buttons__button:hover{
