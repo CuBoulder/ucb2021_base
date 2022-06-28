@@ -24,6 +24,8 @@ ucb-global:
 
 ucb-paragraphs:
   version: 1.x
+  js:
+    js/ucb-hero-unit.js: {}
   css:
     theme:
       css/paragraphs/article-content.css: {}
