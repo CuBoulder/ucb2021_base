@@ -57,6 +57,7 @@ function ucb2021_base_preprocess_page(array &$variables) {
   $variables['ucb_campus_header_color'] = theme_get_setting('ucb_campus_header_color');
   $variables['ucb_header_color'] = theme_get_setting('ucb_header_color');
   $variables['ucb_be_boulder'] = theme_get_setting('ucb_be_boulder');
+  $variables['ucb_social_share_position'] = theme_get_setting('ucb_social_share_position');
 
   // check to see if we're on the homepage or not
   try {
@@ -197,6 +198,21 @@ function ucb2021_base_form_system_theme_settings_alter(&$form, \Drupal\Core\Form
     '#title'          => t('Display the standard Boulder menus in the header footer region.'),
     '#default_value'    => theme_get_setting('ucb_footer_menu'),
     '#description'    => t("Check this box if you would like to display the default Boulder footer menu links in the footer."),
+  );
+// Choose where social share buttons are positioned on each page
+  $form['ucb_social_share_position'] = array(
+    '#type'           => 'select',
+    '#title'          => t('Where your social media sharing links render'),
+    '#default_value'    => theme_get_setting('ucb_social_share_position'),
+    '#options'        => array(
+      t('None'),
+      t('Left Side (Desktop) / Below Title (Mobile)'),
+      t('Left Side (Desktop) / Below Content (Mobile)'),
+      t('Below Content'),
+      t('Below Title'),
+    ),
+
+    '#description'    => t("Select the location for social sharing links (Facebook, Twitter, etc) to appear on your pages."),
   );
 
 }
