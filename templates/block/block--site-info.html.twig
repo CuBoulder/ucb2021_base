@@ -28,7 +28,11 @@
 <div{{ attributes }}>
   <h5> <a href="/"> {{ site_name }} </a> </h5>
   {% block content %}
-    {{ content }}
+    {% for fieldName, fieldValue in content['#data'] %}
+      {% if fieldValue != '' %}
+        <div class="ucb_site_info_footer_{{ fieldName }}">{{ fieldValue }}</div>
+      {% endif %}
+    {% endfor %}
   {% endblock %}
 </div>
 
