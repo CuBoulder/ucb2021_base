@@ -169,10 +169,10 @@ function displayPersonCard(Format, Person) {
       cardHTML = `
                 <div class="ucb-person-card-list row">
                     <div class="col-sm-12 col-md-3 ucb-person-card-img">
-                        <a href="${Person.Link}" target="_blank">${myPhoto}</a>
+                        <a href="${Person.Link}">${myPhoto}</a>
                     </div>
                     <div class="col-sm-12 col-md-9 ucb-person-card-details">
-                        <a href="${Person.Link}" target="_blank">
+                        <a href="${Person.Link}">
                             <span class="ucb-person-card-name">
                                 ${Person.Name ? Person.Name : ''}
                             </span>
@@ -217,10 +217,10 @@ function displayPersonCard(Format, Person) {
       cardHTML = `
                 <div class="col-sm mb-3">
                     <div class="col-sm-12 ucb-person-card-img-grid">
-                        <a href="${Person.Link}" target="_blank">${myPhoto}</a>
+                        <a href="${Person.Link}">${myPhoto}</a>
                     </div>
                 <div>
-                <a href="${Person.Link}" target="_blank">
+                <a href="${Person.Link}">
                             <span class="ucb-person-card-name">
                                 ${Person.Name ? Person.Name : ''}
                             </span>
@@ -241,10 +241,10 @@ function displayPersonCard(Format, Person) {
       cardHTML = `
 
                   <td class="ucb-people-list-table-photo">
-                    <a href="${Person.Link}" target="_blank">${myPhoto}</a>  
+                    <a href="${Person.Link}">${myPhoto}</a>  
                   </td>
                   <td>
-                    <a href="${Person.Link}" target="_blank">
+                    <a href="${Person.Link}">
                       <span class="ucb-person-card-name">
                         ${Person.Name ? Person.Name : ''}
                       </span>
