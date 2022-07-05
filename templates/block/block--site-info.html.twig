@@ -25,14 +25,80 @@
  * @see template_preprocess_block()
  */
 #}
-<div{{ attributes }}>
-  <h5> <a href="/"> {{ site_name }} </a> </h5>
+{{ attach_library('ucb2021_base/ucb-site-contact-info-footer') }}
+{% set data = content['#data'] %}
+{%
+  set classes = [
+    data.seperate_departments == '1' ? '-ucb-seperate-departments',
+    data.address_visible == '1' ? '-ucb-addresses-visible',
+    data.email_visible == '1' ? '-ucb-emails-visible',
+    data.phone_visible == '1' ? '-ucb-phones-visible'
+  ]
+%}
+<div{{ attributes.addClass(classes) }}>
+  <h5><a href="/"> {{ site_name }} </a> </h5>
   {% block content %}
-    {% for fieldName, fieldValue in content['#data'] %}
-      {% if fieldValue != '' %}
-        <div class="ucb_site_info_footer_{{ fieldName }}">{{ fieldValue }}</div>
+    <div class="ucb-site-contact-info-footer">
+      {% if data.seperate_departments == '1' %}
+        <div class="ucb-site-contact-info-footer-departments">
+          {% for index, department in data.department if department.visible == '1' %}
+            <div class="ucb-site-contact-info-footer-department">
+              {% if department.label %}
+                {% if department.value %}
+                  <a class="ucb-site-contact-info-footer-label ucb-site-contact-info-footer-department-label" href="{{ department.value }}">{{ department.label }}</a>
+                {% else %}
+                  <span class="ucb-site-contact-info-footer-label ucb-site-contact-info-footer-department-label">{{ department.label }}</span>
+                {% endif %}
+              {% endif %}
+              {% set address = data.address[index] %}
+              {% set email = data.email[index] %}
+              {% set phone = data.phone[index] %}
+              {% if address.visible == '1' %}
+                <div class="ucb-site-contact-info-footer-address">
+                  {% if address.label %}<span class="ucb-site-contact-info-footer-label ucb-site-contact-info-footer-address-label">{{ address.label }}: </span>{% endif %}
+                  <span class="ucb-site-contact-info-footer-content ucb-site-contact-info-footer-address-content">{{ address.value | nl2br }}</span>
+                  {% if address.map_link %}<br><a target="_blank" class="ucb-site-contact-info-footer-address-map-link" href="{{ address.map_link }}">View Map</a>{% endif %}
+                </div>
+              {% endif %}
+              {% if email.visible == '1' %}
+                <div class="ucb-site-contact-info-footer-email">{% if email.label %}<span class="ucb-site-contact-info-footer-label ucb-site-contact-info-footer-email-label">{{ email.label }}: </span>{% endif %}<a class="ucb-site-contact-info-footer-content ucb-site-contact-info-footer-email-content" href="mailto:{{ email.value }}">{{ email.value }}</a></div>
+              {% endif %}
+              {% if phone.visible == '1' %}
+                <div class="ucb-site-contact-info-footer-phone">{% if phone.label %}<span class="ucb-site-contact-info-footer-label ucb-site-contact-info-footer-phone-label">{{ phone.label }}: </span>{% endif %}<a class="ucb-site-contact-info-footer-content ucb-site-contact-info-footer-phone-content" href="tel:{{ phone.value }}">{{ phone.value }}</a></div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        {% if data.address_visible == '1' %}
+        <div class="ucb-site-contact-info-footer-left">
+          {% for address in data.address if address.visible == '1' %}
+            <div class="ucb-site-contact-info-footer-address">
+              {% if address.label %}<span class="ucb-site-contact-info-footer-label ucb-site-contact-info-footer-address-label">{{ address.label }}: </span>{% endif %}
+              <span class="ucb-site-contact-info-footer-content ucb-site-contact-info-footer-address-content">{{ address.value | nl2br }}</span>
+              {% if address.map_link %}<br><a target="_blank" class="ucb-site-contact-info-footer-address-map-link" href="{{ address.map_link }}">View Map</a>{% endif %}
+            </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+        <div class="ucb-site-contact-info-footer-right">
+          {% if data.email_visible == '1' %}
+          <div class="ucb-site-contact-info-footer-emails">
+            {% for email in data.email if email.visible == '1' %}
+              <div class="ucb-site-contact-info-footer-email">{% if email.label %}<span class="ucb-site-contact-info-footer-label ucb-site-contact-info-footer-email-label">{{ email.label }}: </span>{% endif %}<a class="ucb-site-contact-info-footer-content ucb-site-contact-info-footer-email-content" href="mailto:{{ email.value }}">{{ email.value }}</a></div>
+            {% endfor %}
+          </div>
+          {% endif %}
+          {% if data.phone_visible == '1' %}
+          <div class="ucb-site-contact-info-footer-phones">
+            {% for phone in data.phone if phone.visible == '1' %}
+              <div class="ucb-site-contact-info-footer-phone">{% if phone.label %}<span class="ucb-site-contact-info-footer-label ucb-site-contact-info-footer-phone-label">{{ phone.label }}: </span>{% endif %}<a class="ucb-site-contact-info-footer-content ucb-site-contact-info-footer-phone-content" href="tel:{{ phone.value }}">{{ phone.value }}</a></div>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
       {% endif %}
-    {% endfor %}
+    </div>
   {% endblock %}
 </div>
 
