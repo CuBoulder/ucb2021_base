@@ -16,11 +16,13 @@
 
 {# set classes for the size of the component #}
 {% if paragraph.field_size.value is same as("0") %}
-  {% set size = "size-large" %}
+  {% set size = "size-ultrawide" %}
 {% elseif paragraph.field_size.value is same as("1") %}
-  {% set size = "size-medium" %}
+  {% set size = "size-widescreen" %}
+{% elseif paragraph.field_size.value is same as("2") %}
+  {% set size = "size-threetwo" %}
 {% else %}
-  {% set size = "size-small" %}
+  {% set size = "size-large" %}
 {% endif %}
 
 {% set id = "carousel-" ~ paragraph.id() %}
