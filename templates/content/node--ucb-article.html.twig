@@ -36,9 +36,9 @@ view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
 
 {#Dummy variable to ensure that all content tags are set for caching purposes#}
 {% set content_render = content|render %}
-
 {% if not content.field_ucb_article_external_url|render %}
 <article{{attributes.addClass(classes)}}>
+    {{content.field_ucb_related_articles_parag}}
     <div class="container ucb-article" itemscope itemtype="https://schema.org/Article">
         {{ label }}
         {# TO DO - conditional render #}
