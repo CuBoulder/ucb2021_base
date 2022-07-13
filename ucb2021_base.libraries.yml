@@ -163,3 +163,8 @@ ucb-article-list:
   css:
     theme:
       css/ucb-article-list.css: {}
+
+ucb-site-contact-info-footer:
+  css:
+    theme:
+      css/ucb-site-contact-info-footer.css: {}
