@@ -163,3 +163,11 @@ ucb-article-list:
   css:
     theme:
       css/ucb-article-list.css: {}
+
+ucb-related-articles:
+  version: 1.x
+  js:
+    js/ucb-related-articles.js: {}
+  css:
+    theme:
+      css/ucb-related-articles.css: {}
