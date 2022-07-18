@@ -33,10 +33,10 @@ if(relatedShown){
     // Using tags and categories, construct an API call
     const rootURL = `/jsonapi/node/ucb_article?include[node--ucb_article]=uid,title,ucb_article_content,created,field_ucb_article_summary,field_ucb_article_categories,field_ucb_article_tags,field_ucb_article_thumbnail&include=field_ucb_article_thumbnail.field_media_image&fields[file--file]=uri,url%20&filter[published][group][conjunction]=AND&filter[publish-check][condition][path]=status&filter[publish-check][condition][value]=1&filter[publish-check][condition][memberOf]=published`;
 
-    buildTagFilter(myTags)
-    buildCatFilter(myCats)
+    const tagQuery = buildTagFilter(myTags)
+    const catQuery = buildCatFilter(myCats)
     function buildTagFilter(array){
-        let string = `${rootURL}`
+        let string = `&filter[cat-include][group][conjunction]=OR`
 
         /*  ?filter[a-label][condition][path]=field_first_name
             &filter[a-label][condition][operator]=%3D  <- encoded "=" symbol
@@ -45,7 +45,7 @@ if(relatedShown){
             let tagFilterString = `&filter[filter-tag${value}][condition][path]=field_ucb_article_tags.meta.drupal_internal__target_id&filter[filter-tag${value}][condition][value]=${value}&filter[filter-tag${value}][condition][memberOf]=tag-include`;
             string += tagFilterString
         });
-        console.log(string)
+        // console.log(string)
         return string
         // let tagFilterString = ``
     }
@@ -72,23 +72,24 @@ if(relatedShown){
             string += catFilterString
 
         });
-        console.log(string)
+        // console.log(string)
         return string
     }
     // console.log("my cats", myCats)
 
-
+    const URL = `${catQuery}${tagQuery}`
 
     // Fetch
-        async function getArticles(rootURL){
-            fetch(rootURL)
+        async function getArticles(URL){
+            console.log(URL)
+            fetch(URL)
             .then(response=>response.json())
             .then(data=> {
-                console.log(data.data)
+                console.log(data)
             })
         }
         
-        getArticles(rootURL)
+        getArticles(URL)
         //http://localhost:50370/jsonapi/node/ucb_article?include[node--ucb_article]=uid,title,ucb_article_content,created,field_ucb_article_summary,field_ucb_article_categories,field_ucb_article_tags,field_ucb_article_thumbnail&include=field_ucb_article_thumbnail.field_media_image&fields[file--file]=uri,url
 
         /* 
