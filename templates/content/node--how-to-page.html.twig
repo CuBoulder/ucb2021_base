@@ -16,35 +16,79 @@
   view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
 ]
 %}
+{% set jsonLD = '\n{\n \t"@context": "https://schema.org",\n\t "@type": "HowTo",\n' %}
 
 <article{{attributes.addClass(classes)}}>
 	<div class="container">
 		<h1{{title_attributes}}>
-			<span id = "titleValue">{{ label }}</span>
-		</h1>
-	</div>
-	<div class="container mb-4">
+			<span id="titleValue">{{ label }}</span>
 
-      <!--
-			{% for key, item in content.field_how_to_steps_node if key|first != '#' %}
-			<h1>AA{{item.attributes.field_how_to_step_title|render}}ZZ</h1>
-			<h1>AdA{{item.entity.how_to_individual_step|render}}Zw</h1>
-			{% endfor %}
-      -->
-		<div class="initialStepDiv eachStepDiv">
-			<div class="requirementsDiv verticalFlex">
-				{{ content.field_how_to_materials }}
-				{{ content.field_how_to_tools }}
-			</div>
-			<div class="costDiv" >
-				Estimated Cost: $<span id = "estimatedCostValue">{{content.field_how_to_estimated_costs}}</span>
-			</div>
-			<div class="initialImage">
-				{{ content.field_how_to_initial_image }}
+			{% set titleValue = '\t"name": "' + title.innerText + '",\n' %}
+		</div>
+		<div class="container mb-4">
+
+
+			<div class="initialStepDiv eachStepDiv">
+				<div class="requirementsDiv verticalFlex">
+					{% set matList = '\t"supply": [ ' %}
+					{% for key, item in content.field_how_to_materials if key|first != '#' %}
+						<h1>Value:</h1>
+						{% set jsonLD2 = item.value %}
+						<h1>AAA</h1>
+						{{jsonLD2}}
+						<h1>YYY</h1>
+						{{item.value}}
+						<h1>GGG</h1>
+
+					{% endfor %}
+					{% set toolList = '\t"tool": [ ' %}
+					{% for key, item in content.field_how_to_tools if key|first != '#' %}
+
+						<h1>Value:</h1>
+						{% set jsonLD2 = item.value %}
+						<h1>AAA</h1>
+						{{jsonLD2}}
+						<h1>YYY</h1>
+						{{item.value}}
+						<h1>GGG</h1>
+						{{item|render}}
+
+					{% endfor %}
+				</div>
+				<div class="costDiv">
+					Estimated Cost: $<span id="estimatedCostValue">
+						{% for key, item in content.field_how_to_estimated_costs if key|first != '#' %}
+							{{item|render}}
+							{% estimatedC = '\t"estimatedCost": {\n\t\t"@type": "MonetaryAmount",\n\t\t"currency": "USD",\n\t\t"value": "' + item.value|striptags + '"\n\t},\n' %}
+
+						{% endfor %}
+					</span>
+				</div>
+				<div class="initialImage">
+					{% for key, item in content.field_how_to_initial_image if key|first != '#' %}
+						{{item|render}}
+						{% set initImage = ' \t"image": {\n\t\t"@type": "ImageObject",\n\t\t "url": "'+ item.src + '",\n\t\t "height": "406",\n\t\t "width": "305"\n\t},\n' %}
+
+					{% endfor %}
+				</span>
 			</div>
 		</div>
 		{{ content.body }}
-		{{ content.field_how_to_steps_node }}
+		{% set stepList = '\t"step":[\n'%}
+		{% for key, item in node.field_how_to_steps_node if key|first != '#' %}
+
+			{% set stepList  = stepList ~ '\t\t{\n \t\t\t"@type": "HowToStep", \n'%}
+			<h1>{{item.entity.field_how_to_step_title|view}}</h1>
+			{% set stepList  = stepList ~ '\t\t\t"name": "' + stepTitle.innerText + '", \n'%}
+			<h1>{{item.entity.field_how_to_step_text|view}}</h1>
+			{% set stepList  = stepList ~ '\t\t\t"text": "' + stepText.innerText + '", \n'%}
+			<h1>{{item.entity.field_how_to_step_image|view}}</h1>
+			{% set stepList  = stepList ~ '\t\t\t"image": "' + stepImg.src + '" \n' %}
+			{% set stepList  = stepList ~ '\t\t},' %}
+			{{jsonLD}}
+		{% endfor %}
+		{% set stepList = stepList ~ '\n\t] \n}\n' %}
+
 
 	</div>
 </article>
