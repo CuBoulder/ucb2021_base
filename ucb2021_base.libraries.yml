@@ -16,6 +16,7 @@ ucb-global:
       css/styleguide/icons.css: {}
   js:
     js/bootstrap/bootstrap.bundle.min.js: {}
+    js/fontawesome/all.min.js: {}
     js/ucb-main.js: {}
   dependencies:
     - core/drupal
@@ -23,6 +24,8 @@ ucb-global:
 
 ucb-paragraphs:
   version: 1.x
+  js:
+    js/ucb-hero-unit.js: {}
   css:
     theme:
       css/paragraphs/article-content.css: {}
@@ -116,12 +119,27 @@ ucb-image-gallery:
       css/paragraphs/image-gallery.css: {}
       js/glightbox/glightbox.min.css: {}
 
+ucb-form-page:
+  version: 1.x
+  js:
+    js/ucb-form-page.js: {}
+  css:
+    theme:
+      css/ucb-form-page.css: {}
+  
+      
 ucb-events-calendar:
   version: 1.x
   css:
     theme:
       css/paragraphs/events-calendar.css: {}
 
+ucb-newsletter:
+  version: 1.x
+  css:
+    theme:
+      css/ucb-newsletter.css: {}
+      
 ucb-video-reveal:
   version: 1.x
   js:
@@ -137,3 +155,23 @@ ucb-how-to-page:
   css:
     theme:
       css/ucb-how-to-page.css: {}
+ucb-people-list-page:
+  version: 1.x
+  js:
+    js/ucb-people-list.js: {}
+  css:
+    theme:
+      css/ucb-people-list.css: {}
+      
+ucb-article-list:
+  version: 1.x
+  js:
+    js/ucb-article-list.js: {}
+  css:
+    theme:
+      css/ucb-article-list.css: {}
+
+ucb-site-contact-info-footer:
+  css:
+    theme:
+      css/ucb-site-contact-info-footer.css: {}
