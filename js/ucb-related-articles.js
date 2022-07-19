@@ -16,7 +16,7 @@ if(relatedShown){
         myTagIDs.push(tagJSON[n]["#cache"].tags[0])
         n++;
     }
-    const myTags = myTagIDs.map((id)=> id.replace(/\D/g,'')) // get only the ID#s
+    const myTags = myTagIDs.map((id)=> id.replace(/\D/g,'')) // remove blanks, get only the tag ID#s
 
     // console.log("my tags", myTags)
 
@@ -28,13 +28,15 @@ if(relatedShown){
         x++;
     }
 
-    const myCats = myCatsID.map((id)=> id.replace(/\D/g,''))// get only the ID#s
+    const myCats = myCatsID.map((id)=> id.replace(/\D/g,''))// remove blanks, get only the cat ID#s
 
     // Using tags and categories, construct an API call
     const rootURL = `/jsonapi/node/ucb_article?include[node--ucb_article]=uid,title,ucb_article_content,created,field_ucb_article_summary,field_ucb_article_categories,field_ucb_article_tags,field_ucb_article_thumbnail&include=field_ucb_article_thumbnail.field_media_image&fields[file--file]=uri,url%20&filter[published][group][conjunction]=AND&filter[publish-check][condition][path]=status&filter[publish-check][condition][value]=1&filter[publish-check][condition][memberOf]=published`;
 
     const tagQuery = buildTagFilter(myTags)
     const catQuery = buildCatFilter(myCats)
+
+    // Constructs the tag portion of the API filter
     function buildTagFilter(array){
         let string = `&filter[cat-include][group][conjunction]=OR`
 
@@ -49,23 +51,9 @@ if(relatedShown){
         return string
         // let tagFilterString = ``
     }
+    // Constructs the category portion of the API filter
     function buildCatFilter(array){
         let string = `${rootURL}`
-
-        /*
-        '&filter[filter-cat'
-      ~ (item|trim)
-      ~ '][condition][path]=field_ucb_article_categories.meta.drupal_internal__target_id'
-      ~ '&filter[filter-cat'
-      ~ (item|trim)
-      ~ '][condition][value]='
-      ~ (item|trim)
-      ~ '&filter[filter-cat'
-      ~ (item|trim)
-      ~ '][condition][memberOf]=cat-include'
-        
-        
-        */
        /// WORKS!
         array.forEach(value=>{
             let catFilterString = `&filter[filter-cat${value}][condition][path]=field_ucb_article_categories.meta.drupal_internal__target_id&filter[filter-cat${value}][condition][value]=${value}&filter[filter-cat${value}][condition][memberOf]=cat-include`
@@ -77,15 +65,65 @@ if(relatedShown){
     }
     // console.log("my cats", myCats)
 
-    const URL = `${catQuery}${tagQuery}`
+    const URL = `${catQuery}`
 
     // Fetch
-        async function getArticles(URL){
-            console.log(URL)
-            fetch(URL)
+    async function getArticles(URL){
+        console.log(URL)
+        fetch(URL)
             .then(response=>response.json())
             .then(data=> {
-                console.log(data)
+            console.log(data)
+            // remove article rendering the block from related options
+
+            let returnedArticles = data.data
+            // console.log("all article cats" , returnedArticles[0].relationships.field_ucb_article_categories.data)
+
+            let articleArrayWithScores = []
+            returnedArticles.map((article)=> {
+                // create an object out of 
+                let articleObj ={}
+                articleObj.id = article.id
+                articleObj.catMatches = article.relationships.field_ucb_article_categories.data.length
+                // articleObj.tagMatches = article.relationships.field_ucb_article_tags.data.length
+                // articleObj.matchedScore = (articleObj.catMatches*2) + articleObj.tagMatches
+                articleObj.article = article
+                articleArrayWithScores.push(articleObj)
+                console.log('---------------------------------------------------------------------------')
+                console.log(`I have ${article.relationships.field_ucb_article_categories.data.length} matching categories`, article.relationships.field_ucb_article_categories)
+            })
+            // after getting matching articles, order by the number of matching categories decending
+            articleArrayWithScores.sort((a, b) => a.catMatches - b.catMatches).reverse();
+
+            
+            console.log("My articles with scores", articleArrayWithScores)
+
+            
+            // data.data[n]
+            // Return 3 articles that match
+            // Check for matching categories and tags
+                // returnedArticles[0].relationships.field_ucb_article_categories.data[n].meta.drupal_internal__target_id   --  cat ids
+                // returnedArticles[0].relationships.field_ucb_article_tags.data[n].meta.drupal_internal__target_id     --  tag ids
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             })
         }
         
@@ -104,7 +142,6 @@ if(relatedShown){
         // &page[limit]=10 -- page limiter
 
 
-    // Return 3 articles that match
 
     // Render to page
 
