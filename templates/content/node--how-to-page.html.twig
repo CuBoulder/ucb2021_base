@@ -16,79 +16,107 @@
   view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
 ]
 %}
-{% set jsonLD = '\n{\n \t"@context": "https://schema.org",\n\t "@type": "HowTo",\n' %}
-
+{% set jsonLD2 =  ' "@context": "https://schema.org", "@type": "HowTo",' %}
 <article{{attributes.addClass(classes)}}>
 	<div class="container">
 		<h1{{title_attributes}}>
 			<span id="titleValue">{{ label }}</span>
-
-			{% set titleValue = '\t"name": "' + title.innerText + '",\n' %}
+			{% set jsonLD2 = jsonLD2 ~ '"name": "' ~ label|render|striptags ~ '",'%}
 		</div>
 		<div class="container mb-4">
 
-
 			<div class="initialStepDiv eachStepDiv">
 				<div class="requirementsDiv verticalFlex">
-					{% set matList = '\t"supply": [ ' %}
-					{% for key, item in content.field_how_to_materials if key|first != '#' %}
-						<h1>Value:</h1>
-						{% set jsonLD2 = item.value %}
-						<h1>AAA</h1>
-						{{jsonLD2}}
-						<h1>YYY</h1>
-						{{item.value}}
-						<h1>GGG</h1>
+					<div class="descriptionBody">
+						{{ content.body }}
+					</div>
+					<div class="horizontalFlex stepText">
+						<div>
+							{% if items in content.field_how_to_materials %}
+								<h2>Materials
+								</h2>
+								{% set matList = '"supply": [' %}
+								<ul>
+									{% for key, item in content.field_how_to_materials if key|first != '#' %}
+										{% set matList = matList ~ '{ "@type": "HowToSupply", "name": "' ~ item|render|striptags|trim ~ '" },' %}
+										<li>{{item|render}}</li>
+									{% endfor %}
+								</ul>
+								{% set matList = matList|slice(0, -1) ~ '],' %}
+							{% endif %}
 
-					{% endfor %}
-					{% set toolList = '\t"tool": [ ' %}
-					{% for key, item in content.field_how_to_tools if key|first != '#' %}
+							{% if items in content.field_how_to_tools %}
+								<h2>Tools
+								</h2>
+								{% set toolList = '"tool": [' %}
+								<ul>
+									{% for key, item in content.field_how_to_tools if key|first != '#' %}
 
-						<h1>Value:</h1>
-						{% set jsonLD2 = item.value %}
-						<h1>AAA</h1>
-						{{jsonLD2}}
-						<h1>YYY</h1>
-						{{item.value}}
-						<h1>GGG</h1>
-						{{item|render}}
+										{% set toolList = toolList ~ '{ "@type": "HowToTool", "name": "' ~ item|render|striptags|trim ~ '" },' %}
+										<li>{{item|render}}</li>
 
-					{% endfor %}
-				</div>
-				<div class="costDiv">
-					Estimated Cost: $<span id="estimatedCostValue">
-						{% for key, item in content.field_how_to_estimated_costs if key|first != '#' %}
-							{{item|render}}
-							{% estimatedC = '\t"estimatedCost": {\n\t\t"@type": "MonetaryAmount",\n\t\t"currency": "USD",\n\t\t"value": "' + item.value|striptags + '"\n\t},\n' %}
+									{% endfor %}
+								</ul>
+								{% set toolList = toolList|slice(0, -1) ~ '],' %}
+							{% endif %}
+						</div>
+						{% if items in content.field_how_to_estimated_costs %}
+							<div class="costDiv">
+									<h2>Estimated Cost:
+											<span id="estimatedCostValue">
+												{% for key, item in content.field_how_to_estimated_costs if key|first != '#' %}
+													{% set estimatedC = '"estimatedCost": { "@type": "MonetaryAmount", "currency": "USD", "value": "' ~item|render|striptags|trim ~'" },'  %}
+													${{item|render}}
+												{% endfor %}
+											</span>
+										</h2>
+							</div>
+						{% endif %}
 
-						{% endfor %}
-					</span>
+					</div>
 				</div>
 				<div class="initialImage">
-					{% for key, item in content.field_how_to_initial_image if key|first != '#' %}
-						{{item|render}}
-						{% set initImage = ' \t"image": {\n\t\t"@type": "ImageObject",\n\t\t "url": "'+ item.src + '",\n\t\t "height": "406",\n\t\t "width": "305"\n\t},\n' %}
-
+					{% for key, item in node.field_how_to_initial_image if key|first != '#' %}
+						{% set initialImageJSON = '"image": { "@type": "ImageObject","url": "' ~ file_url(item.entity.field_media_image.entity.fileuri) ~ '", "height": "406", "width": "305"},' %}
+						{{item|view}}
 					{% endfor %}
-				</span>
+				</div>
 			</div>
+			{% set stepList = '"step": [' %}
+			{% for key, item in node.field_how_to_steps if key|first != '#' %}
+				<div class="howToStep eachStepDiv">
+					<div class="eachStepImage">
+						{{item.entity.field_how_to_step_image|view}}
+						{% set imgURL =  file_url(item.entity.field_how_to_step_image.entity.field_media_image.entity.fileuri) %}
+							{% set stepImage = '"image": { "@type": "ImageObject","url": "' ~ imgURL ~ '", "height": "406", "width": "305"}' %}
+					</div>
+					<div class="eachStepContentDiv stepFlex">
+						{% set stepList = stepList ~ '{"@type": "HowToStep",' %}
+						<h1 id="step{{key}}">{{item.entity.field_how_to_step_title|view}}</h1>
+						{% set stepList = stepList ~ '"url": "' ~ url("<current>")|render ~ '#step' ~ key ~'",' %}
+						{% set stepList = stepList ~ '"name": "' ~ item.entity.field_how_to_step_title.value|render|striptags|trim ~ '",' %}
+					
+
+						{% set stepList = stepList ~ '"itemListElement": [' %}
+						<ul>
+							{% for key2, item2 in item.entity.field_how_to_sub_steps if key2|first != '#' %}
+
+								<li>{{item2|view}}</li>
+								{% set stepList = stepList ~  '{ "@type": "HowToDirection", "text": "' ~ item2.value|render|striptags|trim ~ '"},' %}
+							{% endfor %}
+						</ul>
+						{% set stepList = stepList|slice(0,-1) ~ '],' %}
+						{% set stepList = stepList ~ stepImage %}
+						{% set stepList = stepList ~ '},' %}
+					</div>
+				</div>
+
+			{% endfor %}
+			{% set stepList = stepList|slice(0,-1) ~ ']' %}
 		</div>
-		{{ content.body }}
-		{% set stepList = '\t"step":[\n'%}
-		{% for key, item in node.field_how_to_steps_node if key|first != '#' %}
-
-			{% set stepList  = stepList ~ '\t\t{\n \t\t\t"@type": "HowToStep", \n'%}
-			<h1>{{item.entity.field_how_to_step_title|view}}</h1>
-			{% set stepList  = stepList ~ '\t\t\t"name": "' + stepTitle.innerText + '", \n'%}
-			<h1>{{item.entity.field_how_to_step_text|view}}</h1>
-			{% set stepList  = stepList ~ '\t\t\t"text": "' + stepText.innerText + '", \n'%}
-			<h1>{{item.entity.field_how_to_step_image|view}}</h1>
-			{% set stepList  = stepList ~ '\t\t\t"image": "' + stepImg.src + '" \n' %}
-			{% set stepList  = stepList ~ '\t\t},' %}
-			{{jsonLD}}
-		{% endfor %}
-		{% set stepList = stepList ~ '\n\t] \n}\n' %}
-
-
-	</div>
-</article>
+		<script type="application/ld+json">
+			{
+			{{jsonLD2|raw}}{{initialImageJSON|raw}}{{estimatedC|raw}}{{matList|raw}}{{toolList|raw}}{{stepList|raw}}
+			}
+		</script>
+	</article>
