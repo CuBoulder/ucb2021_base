@@ -98,47 +98,47 @@ if(relatedShown){
                     return article;
                 }
             })
-            console.log("post filter", articleArrayWithScores)
             articleArrayWithScores.sort((a, b) => a.catMatches - b.catMatches).reverse();
+
+
+            // TO DO -- if less than 3, grab the most tags
+            
+            // if more than 3 articles, take the top 3
+            if(articleArrayWithScores.length>3){
+                articleArrayWithScores.length = 3
+            }
 
     // Render to page
     let relatedArticlesDiv = document.createElement('div')
+    relatedArticlesDiv.classList = "row"
     relatedArticlesBlock.appendChild(relatedArticlesDiv)
 
     articleArrayWithScores.map((article)=>{
         console.log(article)
         let articleCard = document.createElement('div')
+        articleCard.classList = "ucb-article-card"
         let title = article.article.attributes.title;
         let link = article.article.attributes.path.alias;
         let image = "";
-        let body = article.article.attributes.body;
+        let body = article.article.attributes.field_ucb_article_summary;
         let imageSrc = "https://images.unsplash.com/photo-1658241817660-b0c1ad84313d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2664&q=80"
         if(link && imageSrc) {
             image = `<a href="${link}"><img src="${imageSrc}" /></a>`;
         }
         let outputHTML = `
-        <div class='ucb-article-card row'>
             <div id='img' class='col-sm-12 col-md-2 ucb-article-card-img'>${image}</div>
             <div class='col-sm-12 col-md-10 ucb-article-card-data'>
                 <span class='ucb-article-card-title'><a href="${link}">${title}</a></span>
-                <span class='ucb-article-card-date'>DATE HERE</span>
                 <span id='body' class='ucb-article-card-body'>${body}</span>
-                <span class='ucb-article-card-more'>
-                    <a href="${link}">Read more <i class="fal fa-chevron-double-right"></i></a></span>
             </div>
-        </div>
     `;
+
     articleCard.innerHTML = outputHTML
     relatedArticlesDiv.appendChild(articleCard)
-    })           
-            // Return 3 articles that match
+        })           
 
-
-                // returnedArticles[0].relationships.field_ucb_article_categories.data[n].meta.drupal_internal__target_id   --  cat ids
-                // returnedArticles[0].relationships.field_ucb_article_tags.data[n].meta.drupal_internal__target_id     --  tag ids
-
-            })
-        }
+    })
+}
         
         getArticles(URL)
         //http://localhost:50370/jsonapi/node/ucb_article?include[node--ucb_article]=uid,title,ucb_article_content,created,field_ucb_article_summary,field_ucb_article_categories,field_ucb_article_tags,field_ucb_article_thumbnail&include=field_ucb_article_thumbnail.field_media_image&fields[file--file]=uri,url
