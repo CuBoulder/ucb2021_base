@@ -77,52 +77,65 @@ if(relatedShown){
             // remove article rendering the block from related options
 
             let returnedArticles = data.data
-            // console.log("all article cats" , returnedArticles[0].relationships.field_ucb_article_categories.data)
-
             let articleArrayWithScores = []
+            // Create an array of options to render with additional checks
             returnedArticles.map((article)=> {
                 // create an object out of 
                 let articleObj ={}
                 articleObj.id = article.id
-                articleObj.catMatches = article.relationships.field_ucb_article_categories.data.length
-                // articleObj.tagMatches = article.relationships.field_ucb_article_tags.data.length
-                // articleObj.matchedScore = (articleObj.catMatches*2) + articleObj.tagMatches
-                articleObj.article = article
-                articleArrayWithScores.push(articleObj)
+                articleObj.catMatches = article.relationships.field_ucb_article_categories.data.length // count the number of matches
+                articleObj.article = article // contain the existing article
+                articleArrayWithScores.push(articleObj) // add to running array of possible matches
                 console.log('---------------------------------------------------------------------------')
                 console.log(`I have ${article.relationships.field_ucb_article_categories.data.length} matching categories`, article.relationships.field_ucb_article_categories)
             })
-            // after getting matching articles, order by the number of matching categories decending
+
+            // Remove current article from those availabile in the block
+            articleArrayWithScores.filter((article)=>{
+                if(article.article.attributes.path.alias == window.location.pathname){
+                    articleArrayWithScores.splice(articleArrayWithScores.indexOf(article),1)
+                } else {
+                    return article;
+                }
+            })
+            console.log("post filter", articleArrayWithScores)
             articleArrayWithScores.sort((a, b) => a.catMatches - b.catMatches).reverse();
 
-            
-            console.log("My articles with scores", articleArrayWithScores)
+    // Render to page
+    let relatedArticlesDiv = document.createElement('div')
+    relatedArticlesBlock.appendChild(relatedArticlesDiv)
 
-            
-            // data.data[n]
+    articleArrayWithScores.map((article)=>{
+        console.log(article)
+        let articleCard = document.createElement('div')
+        let title = article.article.attributes.title;
+        let link = article.article.attributes.path.alias;
+        let image = "";
+        let body = article.article.attributes.body;
+        let imageSrc = "https://images.unsplash.com/photo-1658241817660-b0c1ad84313d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2664&q=80"
+        if(link && imageSrc) {
+            image = `<a href="${link}"><img src="${imageSrc}" /></a>`;
+        }
+        let outputHTML = `
+        <div class='ucb-article-card row'>
+            <div id='img' class='col-sm-12 col-md-2 ucb-article-card-img'>${image}</div>
+            <div class='col-sm-12 col-md-10 ucb-article-card-data'>
+                <span class='ucb-article-card-title'><a href="${link}">${title}</a></span>
+                <span class='ucb-article-card-date'>DATE HERE</span>
+                <span id='body' class='ucb-article-card-body'>${body}</span>
+                <span class='ucb-article-card-more'>
+                    <a href="${link}">Read more <i class="fal fa-chevron-double-right"></i></a></span>
+            </div>
+        </div>
+    `;
+    articleCard.innerHTML = outputHTML
+    relatedArticlesDiv.appendChild(articleCard)
+    })           
             // Return 3 articles that match
-            // Check for matching categories and tags
+
+
                 // returnedArticles[0].relationships.field_ucb_article_categories.data[n].meta.drupal_internal__target_id   --  cat ids
                 // returnedArticles[0].relationships.field_ucb_article_tags.data[n].meta.drupal_internal__target_id     --  tag ids
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             })
         }
@@ -143,9 +156,9 @@ if(relatedShown){
 
 
 
-    // Render to page
+    
 
-    // Reveal related block after 
+    // Reveal related block after creating cards
     relatedArticlesBlock.style.display = "block"
 
 } else {
