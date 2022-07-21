@@ -15,3 +15,7 @@
   .ucb-article-card {
     margin-bottom: 2em;
   }
+
+  .ucb-related-article-card-body{
+    font-size: 85%;
+  }

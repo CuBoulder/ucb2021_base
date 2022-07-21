@@ -102,11 +102,18 @@ if(relatedShown){
 
 
             // TO DO -- if less than 3, grab the most tags
-            
+
             // if more than 3 articles, take the top 3
             if(articleArrayWithScores.length>3){
                 articleArrayWithScores.length = 3
+            } else {
+                getArticlesWithTags()
             }
+
+
+
+
+
 
     // Render to page
     let relatedArticlesDiv = document.createElement('div')
@@ -116,20 +123,25 @@ if(relatedShown){
     articleArrayWithScores.map((article)=>{
         console.log(article)
         let articleCard = document.createElement('div')
-        articleCard.classList = "ucb-article-card"
+        articleCard.classList = "ucb-article-card col-sm-1 col-md-2 col-lg-4"
         let title = article.article.attributes.title;
         let link = article.article.attributes.path.alias;
         let image = "";
-        let body = article.article.attributes.field_ucb_article_summary;
+        let body = ""
+
+        if( article.article.attributes.field_ucb_article_summary != null){
+            body = article.article.attributes.field_ucb_article_summary;
+        }
+
         let imageSrc = "https://images.unsplash.com/photo-1658241817660-b0c1ad84313d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2664&q=80"
         if(link && imageSrc) {
             image = `<a href="${link}"><img src="${imageSrc}" /></a>`;
         }
         let outputHTML = `
-            <div id='img' class='col-sm-12 col-md-2 ucb-article-card-img'>${image}</div>
-            <div class='col-sm-12 col-md-10 ucb-article-card-data'>
+            <div id='img' class='ucb-article-card-img'>${image}</div>
+            <div class='ucb-article-card-data'>
                 <span class='ucb-article-card-title'><a href="${link}">${title}</a></span>
-                <span id='body' class='ucb-article-card-body'>${body}</span>
+                <span id='body' class='ucb-related-article-card-body'>${body}</span>
             </div>
     `;
 
