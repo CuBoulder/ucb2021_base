@@ -3,6 +3,29 @@ const relatedArticlesBlock = document.querySelector(".ucb-related-articles-block
 // Related Shown? 
 const relatedShown = relatedArticlesBlock.getAttribute('data-relatedshown') != "Off" ? true : false;
 
+// This function returns a total of matched categories or tags
+function checkMatches(data, ids){
+    let count = 0;
+    let numberArr = ids.map(Number)
+    data.forEach((article)=>{
+        if(numberArr.includes(article.meta.drupal_internal__target_id)){
+            count++
+        }
+    })
+    return count
+}
+// This function takes in the tag endpoint and current array of related articles, returns the array of related articles once it has a count of 3. 
+async function getArticlesWithTags(url, array){
+    // console.log("=================================")
+    // console.log(url)
+    // console.log("THis is my array", array)
+    fetch(url)
+    .then(response => response.json())
+    .then(data=>{
+        console.log("TAG DATA", data)
+    })
+}
+
 // If related articles is toggled on create section, run the fetch
 if(relatedShown){
     // Iterate through the json data of the articles tags and categories, store the values
@@ -38,7 +61,7 @@ if(relatedShown){
 
     // Constructs the tag portion of the API filter
     function buildTagFilter(array){
-        let string = `&filter[cat-include][group][conjunction]=OR`
+        let string = `${rootURL}`
 
         /*  ?filter[a-label][condition][path]=field_first_name
             &filter[a-label][condition][operator]=%3D  <- encoded "=" symbol
@@ -73,9 +96,30 @@ if(relatedShown){
         fetch(URL)
             .then(response=>response.json())
             .then(data=> {
-            console.log(data)
-            // remove article rendering the block from related options
+            // console.log(data)
 
+            // Below objects are needed to match images with their corresponding articles. There are two endpoints => data.data (article) and data.included (incl. media), both needed to associate a media library image with its respective article
+        let urlObj = {};
+        let idObj = {};
+        // Remove any blanks from our articles before map
+        if (data.included) {
+          let filteredData = data.included.filter((url) => {
+            return url.attributes.uri !== undefined;
+          })
+          // creates the urlObj, key: data id, value: url
+          filteredData.map((pair) => {
+            urlObj[pair.id] = pair.attributes.uri.url;
+          })
+
+          // removes all other included data besides images in our included media
+          let idFilterData = data.included.filter((item) => {
+            return item.type == "media--image";
+          })
+          // using the image-only data, creates the idObj =>  key: thumbnail id, value : data id
+          idFilterData.map((pair) => {
+            idObj[pair.id] = pair.relationships.thumbnail.data.id;
+          })
+        }
             let returnedArticles = data.data
             let articleArrayWithScores = []
             // Create an array of options to render with additional checks
@@ -83,11 +127,11 @@ if(relatedShown){
                 // create an object out of 
                 let articleObj ={}
                 articleObj.id = article.id
-                articleObj.catMatches = article.relationships.field_ucb_article_categories.data.length // count the number of matches
+                articleObj.catMatches = checkMatches(article.relationships.field_ucb_article_categories.data, myCats) // count the number of matches
                 articleObj.article = article // contain the existing article
                 articleArrayWithScores.push(articleObj) // add to running array of possible matches
-                console.log('---------------------------------------------------------------------------')
-                console.log(`I have ${article.relationships.field_ucb_article_categories.data.length} matching categories`, article.relationships.field_ucb_article_categories)
+                // console.log('---------------------------------------------------------------------------')
+                // console.log(`I have ${article.relationships.field_ucb_article_categories.data.length} matching categories`, article.relationships.field_ucb_article_categories)
             })
 
             // Remove current article from those availabile in the block
@@ -99,15 +143,22 @@ if(relatedShown){
                 }
             })
             articleArrayWithScores.sort((a, b) => a.catMatches - b.catMatches).reverse();
+            // Remove articles without matches from those availabile in the block
+            articleArrayWithScores.filter((article)=>{
+                if(article.catMatches === 0){
+                    articleArrayWithScores.splice(articleArrayWithScores.indexOf(article),1)
+                } else {
+                    return article;
+                }
+            })
 
-
-            // TO DO -- if less than 3, grab the most tags
 
             // if more than 3 articles, take the top 3
             if(articleArrayWithScores.length>3){
                 articleArrayWithScores.length = 3
-            } else {
-                getArticlesWithTags()
+            } else if(articleArrayWithScores.length<3){
+                // if less than 3, grab the most tags
+                getArticlesWithTags(tagQuery,articleArrayWithScores, urlObj, idObj)
             }
 
 
@@ -123,17 +174,32 @@ if(relatedShown){
     articleArrayWithScores.map((article)=>{
         console.log(article)
         let articleCard = document.createElement('div')
-        articleCard.classList = "ucb-article-card col-sm-1 col-md-2 col-lg-4"
+        articleCard.classList = "ucb-article-card col-sm-12 col-md-6 col-lg-4"
         let title = article.article.attributes.title;
         let link = article.article.attributes.path.alias;
-        let image = "";
+                // if no thumbnail, show no image
+                if (!article.article.relationships.field_ucb_article_thumbnail.data) {
+                    image = "";
+                  } else {
+                    //Use the idObj as a memo to add the corresponding image url
+                    let thumbId = article.article.relationships.field_ucb_article_thumbnail.data.id;
+                    image = urlObj[idObj[thumbId]];
+                  }
         let body = ""
-
+        // if summary, use that
         if( article.article.attributes.field_ucb_article_summary != null){
             body = article.article.attributes.field_ucb_article_summary;
         }
 
-        let imageSrc = "https://images.unsplash.com/photo-1658241817660-b0c1ad84313d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2664&q=80"
+        // if image, use it
+        if (!article.article.relationships.field_ucb_article_thumbnail.data) {
+            imageSrc = "";
+          } else {
+            //Use the idObj as a memo to add the corresponding image url
+            let thumbId = article.article.relationships.field_ucb_article_thumbnail.data.id;
+            imageSrc = urlObj[idObj[thumbId]];
+          }
+
         if(link && imageSrc) {
             image = `<a href="${link}"><img src="${imageSrc}" /></a>`;
         }
