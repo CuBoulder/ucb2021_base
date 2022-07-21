@@ -17,7 +17,7 @@ function checkMatches(data, ids){
     return count
 }
 // This function takes in the tag endpoint and current array of related articles, returns the array of related articles once it has a count of 3. 
-async function getArticlesWithTags(url, array, articleTags){
+async function getArticlesWithTags(url, array, articleTags ,numLeft){
     // console.log("=================================")
     // console.log(url)
     console.log(array, articleTags)
@@ -70,8 +70,10 @@ async function getArticlesWithTags(url, array, articleTags){
             })
           }
 
-        console.log("postfilter", filterData)
+        // Rank based on matches (tags)
         filterData.sort((a, b) => a.catMatches - b.catMatches).reverse();
+        filterData.length = numLeft // sets to fill in however many articles are left
+
         filterData.map((article)=>{
             console.log(article)
             let articleCard = document.createElement('div')
@@ -249,8 +251,9 @@ if(relatedShown){
             if(articleArrayWithScores.length>3){
                 articleArrayWithScores.length = 3
             } else if(articleArrayWithScores.length<3){
+                let howManyLeft = 3 - articleArrayWithScores.length
                 // if less than 3, grab the most tags
-              getArticlesWithTags(tagQuery,articleArrayWithScores, myTags);
+              getArticlesWithTags(tagQuery,articleArrayWithScores, myTags, howManyLeft);
               
             }
 
