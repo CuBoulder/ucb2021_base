@@ -1,6 +1,12 @@
 const relatedArticlesBlock = document.querySelector(".ucb-related-articles-block");
-let articleArrayWithScores = []
+const excludeTagEl = document.querySelector("#ucb-related-articles-exclude-tags")
+const excludeCatEl = document.querySelector("#ucb-related-articles-exclude-categories")
 
+// Get the tax ids for excluded Cats and Tags
+const excludeTagArr = excludeTagEl.getAttribute('data-excludetags').split(',').filter(Number)
+const excludeCatArr = excludeCatEl.getAttribute('data-excludecategories').split(',').filter(Number)
+
+let articleArrayWithScores = []
 
 // Related Shown? 
 const relatedShown = relatedArticlesBlock.getAttribute('data-relatedshown') != "Off" ? true : false;
@@ -21,6 +27,7 @@ async function getArticlesWithTags(url, array, articleTags ,numLeft){
     fetch(url)
     .then(response => response.json())
     .then(data=>{
+        console.log(data)
         let relatedArticlesDiv = document.querySelector('.related-articles-section')
 
         // console.log("TAG DATA", data)
@@ -31,13 +38,15 @@ async function getArticlesWithTags(url, array, articleTags ,numLeft){
             existingIds.push(article.id)
         })
 
-        // remove any articles already chosen and the current article
+        // remove any articles already chosen, excluded categories, and the current article
         let filterData = []
         returnedArticles.map((article)=>{
+
             // console.log(article.id, existingIds.includes(article.id))
-            if(existingIds.includes(article.id) || article.attributes.path.alias == window.location.pathname){
-            return ''
-            } else {
+            if(existingIds.includes(article.id) || article.attributes.path.alias == window.location.pathname ){
+                return ''
+            // filter on categories
+            }else{
                 let articleObj ={}
                 articleObj.id = article.id
                 articleObj.catMatches = checkMatches(article.relationships.field_ucb_article_tags.data, articleTags) // count the number of matches
@@ -45,6 +54,9 @@ async function getArticlesWithTags(url, array, articleTags ,numLeft){
                 filterData.push(articleObj)
             }
         })
+
+        console.log(returnedArticles)
+
         let urlObj = {};
         let idObj = {};
 
@@ -67,7 +79,7 @@ async function getArticlesWithTags(url, array, articleTags ,numLeft){
             })
           }
 
-        // Rank based on matches (tags)
+        // Rank based on matches (cats)
         filterData.sort((a, b) => a.catMatches - b.catMatches).reverse();
         filterData.length = numLeft // sets to fill in however many articles are left
 
@@ -180,7 +192,6 @@ if(relatedShown){
         fetch(URL)
             .then(response=>response.json())
             .then(data=> {
-
         // Below objects are needed to match images with their corresponding articles. 
         // There are two endpoints => data.data (article) and data.included (incl. media), both needed to associate a media library image with its respective article
         let urlObj = {};
@@ -206,17 +217,53 @@ if(relatedShown){
           })
         }
             let returnedArticles = data.data
+            console.log("my returned articles from categories", returnedArticles)
             // Create an array of options to render with additional checks
             returnedArticles.map((article)=> {
-                // create an object out of 
+                let thisArticleCats = article.relationships.field_ucb_article_categories.data
+                let thisArticleTags = article.relationships.field_ucb_article_tags.data
+                let urlCheck = article.attributes.path.alias;
+                let toInclude = true;
+                console.log('+++++++++++++++++++')
+                console.log("this article cats", thisArticleCats)
+                console.log("excluded cats", excludeCatArr)
+                //remove excluded category & tagss
+                // if(thisArticleTags.length){ // if there are categories
+                //     thisArticleTags.forEach((tag)=>{
+                //         let id = tag.meta.drupal_internal__target_id.toString();
+                //         console.log(id)
+                //          if(excludeCatArr.includes(id)){
+                //             return '';
+                //          }
+                //     }) 
+                // }
+
+                if(thisArticleCats.length){ // if there are categories
+                    thisArticleCats.forEach((category)=>{ // check each category
+                        let id = category.meta.drupal_internal__target_id.toString();
+                        console.log('cat id', id)                        
+                         if(excludeCatArr.includes(id)){ // if excluded, do not proceed
+                            console.log('i have an included id')
+                            return '';
+                         } 
+                         if( urlCheck == window.location.pathname) { // if same article, do not proceed
+                             console.log("im the current article! ignore me!")
+                            return '';
+                         }  // proceed
+                             // create an object out of 
+                             // add to running array of possible matches
+                         
+                    }) 
+                }
                 let articleObj = {}
-                articleObj.id = article.id
-                articleObj.catMatches = checkMatches(article.relationships.field_ucb_article_categories.data, myCats) // count the number of matches
-                articleObj.article = article // contain the existing article
-                articleArrayWithScores.push(articleObj) // add to running array of possible matches
+                             articleObj.id = article.id
+                             articleObj.catMatches = checkMatches(article.relationships.field_ucb_article_categories.data, myCats) // count the number of matches
+                             articleObj.article = article // contain the existing article
+                             articleArrayWithScores.push(articleObj)
+                
             })
 
-            // Remove current article from those availabile in the block
+            //Remove current article from those availabile in the block
             articleArrayWithScores.filter((article)=>{
                 if(article.article.attributes.path.alias == window.location.pathname){
                     articleArrayWithScores.splice(articleArrayWithScores.indexOf(article),1)
@@ -226,23 +273,24 @@ if(relatedShown){
             })
             articleArrayWithScores.sort((a, b) => a.catMatches - b.catMatches).reverse(); // sort in order
 
-            // Remove articles without matches from those availabile in the block
+            //Remove articles without matches from those availabile in the block
             articleArrayWithScores.filter((article)=>{
                 if(article.catMatches === 0){
-                    articleArrayWithScores.splice(articleArrayWithScores.indexOf(article),1)
+                    return ''
                 } else {
                     return article;
                 }
             })
 
-
+            console.log("LASST PASS ARTICLES WITH SCORES", articleArrayWithScores)
             // if more than 3 articles, take the top 3
             if(articleArrayWithScores.length>3){
                 articleArrayWithScores.length = 3
             } else if(articleArrayWithScores.length<3){
                 let howManyLeft = 3 - articleArrayWithScores.length
                 // if less than 3, grab the most tags
-              getArticlesWithTags(tagQuery,articleArrayWithScores, myTags, howManyLeft);
+            //   getArticlesWithTags(tagQuery,articleArrayWithScores, myTags, howManyLeft);
+            console.log(howManyLeft)
               
             }
 
