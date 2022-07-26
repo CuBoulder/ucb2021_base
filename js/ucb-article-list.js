@@ -5,7 +5,7 @@
 async function getArticleParagraph(id) {
   if(id) {
     const response = await fetch(
-      `/jsonapi/paragraph/article_content/${id}?include[paragraph--article_content]=field_article_image,field_article_text&include=field_article_image.field_media_image&fields[file--file]=uri,url`
+      `/jsonapi/paragraph/article_content/${id}`
     );
     return response;
   } else {
@@ -76,20 +76,22 @@ function renderArticleList( JSONURL, ExcludeCategories = "", ExcludeTags = "") {
         // Below objects are needed to match images with their corresponding articles. There are two endpoints => data.data (article) and data.included (incl. media), both needed to associate a media library image with its respective article
         let urlObj = {};
         let idObj = {};
+        let altObj = {};
         // Remove any blanks from our articles before map
         if (data.included) {
-          let filteredData = data.included.filter((url) => {
-            return url.attributes.uri !== undefined;
-          })
-          // creates the urlObj, key: data id, value: url
-          filteredData.map((pair) => {
-            urlObj[pair.id] = pair.attributes.uri.url;
-          })
-
           // removes all other included data besides images in our included media
           let idFilterData = data.included.filter((item) => {
             return item.type == "media--image";
           })
+
+          let altFilterData = data.included.filter((item) => {
+            return item.type == 'file--file';
+          });
+          // finds the focial point version of the thumbnail
+          altFilterData.map((item)=>{
+            altObj[item.id] = item.links.focal_image.href
+          })
+
           // using the image-only data, creates the idObj =>  key: thumbnail id, value : data id
           idFilterData.map((pair) => {
             idObj[pair.id] = pair.relationships.thumbnail.data.id;
@@ -97,6 +99,7 @@ function renderArticleList( JSONURL, ExcludeCategories = "", ExcludeTags = "") {
         }
         // console.log("idObj", idObj);
         // console.log("urlObj", urlObj);
+        // console.log('altObj', altObj)
         //iterate over each item in the array
         data.data.map((item) => {
           let thisArticleCats = [];
@@ -156,7 +159,6 @@ function renderArticleList( JSONURL, ExcludeCategories = "", ExcludeTags = "") {
               getArticleParagraph(bodyAndImageId)
                 .then((response) => response.json())
                 .then((data) => {
-                  // console.log("2nd call", data);
                   // Remove any html tags within the article
                   let htmlStrip = data.data.attributes.field_article_text.processed.replace(
                     /<\/?[^>]+(>|$)/g,
@@ -167,15 +169,18 @@ function renderArticleList( JSONURL, ExcludeCategories = "", ExcludeTags = "") {
                   // take only the first 100 words ~ 500 chars
                   let trimmedString = lineBreakStrip.substr(0, 500);
                   // if in the middle of the string, take the whole word
-                  trimmedString = trimmedString.substr(
-                    0,
-                    Math.min(
-                      trimmedString.length,
-                      trimmedString.lastIndexOf(" ")
+                  if(trimmedString.length > 100){
+                    trimmedString = trimmedString.substr(
+                      0,
+                      Math.min(
+                        trimmedString.length,
+                        trimmedString.lastIndexOf(" ")
+                      )
                     )
-                  )
+                    body = `${trimmedString}...`;
+                  }
                   // set the contentBody of Article Summary card to the minified body instead
-                  body = `${trimmedString}...`;
+                  body = `${trimmedString}`;
                   document.getElementById(`body-${bodyAndImageId}`).innerHTML = body;
                 })
             }
@@ -186,7 +191,7 @@ function renderArticleList( JSONURL, ExcludeCategories = "", ExcludeTags = "") {
             } else {
               //Use the idObj as a memo to add the corresponding image url
               let thumbId = item.relationships.field_ucb_article_thumbnail.data.id;
-              imageSrc = urlObj[idObj[thumbId]];
+              imageSrc = altObj[idObj[thumbId]];
             }
 
             //Date - make human readable

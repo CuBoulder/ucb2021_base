@@ -171,3 +171,7 @@ ucb-related-articles:
   css:
     theme:
       css/ucb-related-articles.css: {}
+ucb-site-contact-info-footer:
+  css:
+    theme:
+      css/ucb-site-contact-info-footer.css: {}
