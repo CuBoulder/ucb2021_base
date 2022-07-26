@@ -224,30 +224,29 @@ if(relatedShown){
                 let thisArticleTags = article.relationships.field_ucb_article_tags.data
                 let urlCheck = article.attributes.path.alias;
                 let toInclude = true;
-                console.log('+++++++++++++++++++')
-                console.log("this article cats", thisArticleCats)
-                console.log("excluded cats", excludeCatArr)
                 //remove excluded category & tagss
-                // if(thisArticleTags.length){ // if there are categories
-                //     thisArticleTags.forEach((tag)=>{
-                //         let id = tag.meta.drupal_internal__target_id.toString();
-                //         console.log(id)
-                //          if(excludeCatArr.includes(id)){
-                //             return '';
-                //          }
-                //     }) 
-                // }
+                if(thisArticleTags.length){ // if there are categories
+                    thisArticleTags.forEach((tag)=>{
+                        let id = tag.meta.drupal_internal__target_id.toString();
+                        console.log(id)
+                         if(excludeCatArr.includes(id)){
+                            toInclude = false;
+                         }
+                    }) 
+                }
 
                 if(thisArticleCats.length){ // if there are categories
                     thisArticleCats.forEach((category)=>{ // check each category
                         let id = category.meta.drupal_internal__target_id.toString();
                         console.log('cat id', id)                        
                          if(excludeCatArr.includes(id)){ // if excluded, do not proceed
-                            console.log('i have an included id')
-                            return '';
+                            // console.log('i have an included id')
+                            toInclude = false;
+                            return
                          } 
                          if( urlCheck == window.location.pathname) { // if same article, do not proceed
-                             console.log("im the current article! ignore me!")
+                            //  console.log("im the current article! ignore me!")
+                             toInclude = false
                             return '';
                          }  // proceed
                              // create an object out of 
@@ -255,11 +254,14 @@ if(relatedShown){
                          
                     }) 
                 }
+                // if it triggered any fail conditions, do not proceed with the article
+                if(toInclude){
                 let articleObj = {}
                              articleObj.id = article.id
                              articleObj.catMatches = checkMatches(article.relationships.field_ucb_article_categories.data, myCats) // count the number of matches
                              articleObj.article = article // contain the existing article
                              articleArrayWithScores.push(articleObj)
+                }
                 
             })
 
@@ -274,22 +276,16 @@ if(relatedShown){
             articleArrayWithScores.sort((a, b) => a.catMatches - b.catMatches).reverse(); // sort in order
 
             //Remove articles without matches from those availabile in the block
-            articleArrayWithScores.filter((article)=>{
-                if(article.catMatches === 0){
-                    return ''
-                } else {
-                    return article;
-                }
-            })
+            const finalArr = articleArrayWithScores.filter(article=> article.catMatches > 0)
 
-            console.log("LASST PASS ARTICLES WITH SCORES", articleArrayWithScores)
+            console.log("LASST PASS ARTICLES WITH SCORES", finalArr)
             // if more than 3 articles, take the top 3
-            if(articleArrayWithScores.length>3){
-                articleArrayWithScores.length = 3
-            } else if(articleArrayWithScores.length<3){
-                let howManyLeft = 3 - articleArrayWithScores.length
+            if(finalArr.length>3){
+                finalArr.length = 3
+            } else if(finalArr.length<3){
+                let howManyLeft = 3 - finalArr.length
                 // if less than 3, grab the most tags
-            //   getArticlesWithTags(tagQuery,articleArrayWithScores, myTags, howManyLeft);
+              getArticlesWithTags(tagQuery,finalArr, myTags, howManyLeft);
             console.log(howManyLeft)
               
             }
@@ -304,7 +300,7 @@ if(relatedShown){
     relatedArticlesDiv.classList = "row related-articles-section"
     relatedArticlesBlock.appendChild(relatedArticlesDiv)
 
-    articleArrayWithScores.map((article)=>{
+    finalArr.map((article)=>{
         let articleCard = document.createElement('div')
         articleCard.classList = "ucb-article-card col-sm-12 col-md-6 col-lg-4"
         let title = article.article.attributes.title;
