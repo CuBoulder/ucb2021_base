@@ -35,7 +35,7 @@ async function getArticlesWithTags(url, array, articleTags ,numLeft){
     fetch(url)
     .then(response => response.json())
     .then(data=>{
-        console.log(data)
+        // console.log(data)
         let relatedArticlesDiv = document.querySelector('.related-articles-section')
 
         // console.log("TAG DATA", data)
@@ -58,7 +58,7 @@ async function getArticlesWithTags(url, array, articleTags ,numLeft){
                 if(thisArticleTags.length){ // if there are categories
                     thisArticleTags.forEach((tag)=>{
                         let id = tag.meta.drupal_internal__target_id.toString();
-                        console.log(id)
+                        // console.log(id)
                          if(excludeCatArr.includes(id)){
                             toInclude = false;
                             return
@@ -69,7 +69,7 @@ async function getArticlesWithTags(url, array, articleTags ,numLeft){
                 if(thisArticleCats.length){ // if there are categories
                     thisArticleCats.forEach((category)=>{ // check each category
                         let id = category.meta.drupal_internal__target_id.toString();
-                        console.log('cat id', id)                        
+                        // console.log('cat id', id)                        
                          if(excludeCatArr.includes(id)){ // if excluded, do not proceed
                             // console.log('i have an included id')
                             toInclude = false;
@@ -103,7 +103,7 @@ async function getArticlesWithTags(url, array, articleTags ,numLeft){
             }
         })
 
-        console.log(returnedArticles)
+        // console.log(returnedArticles)
 
         let urlObj = {};
         let idObj = {};
@@ -265,7 +265,7 @@ if(relatedShown){
           })
         }
             let returnedArticles = data.data
-            console.log("my returned articles from categories", returnedArticles)
+            // console.log("my returned articles from categories", returnedArticles)
             // Create an array of options to render with additional checks
             returnedArticles.map((article)=> {
                 let thisArticleCats = article.relationships.field_ucb_article_categories.data
@@ -276,7 +276,7 @@ if(relatedShown){
                 if(thisArticleTags.length){ // if there are categories
                     thisArticleTags.forEach((tag)=>{
                         let id = tag.meta.drupal_internal__target_id.toString();
-                        console.log(id)
+                        // console.log(id)
                          if(excludeCatArr.includes(id)){
                             toInclude = false;
                             return
@@ -287,7 +287,7 @@ if(relatedShown){
                 if(thisArticleCats.length){ // if there are categories
                     thisArticleCats.forEach((category)=>{ // check each category
                         let id = category.meta.drupal_internal__target_id.toString();
-                        console.log('cat id', id)                        
+                        // console.log('cat id', id)                        
                          if(excludeCatArr.includes(id)){ // if excluded, do not proceed
                             // console.log('i have an included id')
                             toInclude = false;
@@ -327,7 +327,7 @@ if(relatedShown){
             //Remove articles without matches from those availabile in the block
             const finalArr = articleArrayWithScores.filter(article=> article.catMatches > 0)
 
-            console.log("LASST PASS ARTICLES WITH SCORES", finalArr)
+            // console.log("LASST PASS ARTICLES WITH SCORES", finalArr)
             // if more than 3 articles, take the top 3
             if(finalArr.length>3){
                 finalArr.length = 3
@@ -335,7 +335,7 @@ if(relatedShown){
                 let howManyLeft = 3 - finalArr.length
                 // if less than 3, grab the most tags
               getArticlesWithTags(tagQuery,finalArr, myTags, howManyLeft);
-            console.log(howManyLeft)
+            // console.log(howManyLeft)
               
             }
 
