@@ -106,9 +106,6 @@ view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
 {# TO DO -- Related Articles Block #}
         <div class="ucb-related-articles-block" data-catsjson="{{content.field_ucb_article_categories| json_encode(constant('JSON_PRETTY_PRINT'))}}" data-tagsjson="{{ content.field_ucb_article_tags| json_encode(constant('JSON_PRETTY_PRINT')) }}"data-relatedshown="{{showRelated|striptags|trim}}"data-tags="{{myTags|render|striptags|trim|replace({"\n": "", "\r": "", "\t": ""})}}"data-cats="{{myCats|render|striptags|trim|replace({"\n": "", "\r": "", "\t": ""})}}">
                 {{content.field_ucb_related_articles_parag}}
-                 {# <h1>{{ myTags|striptags|trim }}</h1>
-                <h1>{{myCats|striptags|trim}}</h1>
-                <h1>{{showRelated}}</h1> #}
         </div>
     </div>
 </article>
