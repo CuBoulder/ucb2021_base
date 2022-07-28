@@ -8,6 +8,7 @@
 
 {{ attach_library('ucb2021_base/ucb-page') }}
 {{ attach_library('ucb2021_base/ucb-article') }}
+{{ attach_library('ucb2021_base/ucb-related-articles') }}
 
 {%
 set classes = [
@@ -17,6 +18,7 @@ not node.isPublished() ? 'node--unpublished',
 view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
 ]
 %}
+
 
 {% set social_share_button_position = drupal_config('ucb2021_base.settings', 'ucb_social_share_position')%}
 {% set social_share_class = "" %}
@@ -36,9 +38,27 @@ view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
 
 {#Dummy variable to ensure that all content tags are set for caching purposes#}
 {% set content_render = content|render %}
-
 {% if not content.field_ucb_article_external_url|render %}
+
+{# Related Articles setup #}
+{# {% set showRelated = ''%} #}
+
+{% set myTags %}
+    {{ content.field_ucb_article_tags }}
+{% endset %}
+{% set myCats %}
+    {{ content.field_ucb_article_categories }}
+{% endset %}
+{% set showRelated %}
+    {{content.field_ucb_related_articles_parag.0}}
+{% endset %}
+{# {% if show_Related != "Off" %}
+    {% set showRelated = true %}
+    {% endset %}
+{% endif %} #}
+
 <article{{attributes.addClass(classes)}}>
+
     <div class="container ucb-article" itemscope itemtype="https://schema.org/Article">
         {{ label }}
         {# TO DO - conditional render #}
@@ -83,8 +103,13 @@ view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
                 {{ content.field_ucb_article_tags }}
             </div>
         {% endif %}
+{# TO DO -- Related Articles Block #}
+        <div class="ucb-related-articles-block" data-catsjson="{{content.field_ucb_article_categories| json_encode(constant('JSON_PRETTY_PRINT'))}}" data-tagsjson="{{ content.field_ucb_article_tags| json_encode(constant('JSON_PRETTY_PRINT')) }}"data-relatedshown="{{showRelated|striptags|trim}}"data-tags="{{myTags|render|striptags|trim|replace({"\n": "", "\r": "", "\t": ""})}}"data-cats="{{myCats|render|striptags|trim|replace({"\n": "", "\r": "", "\t": ""})}}">
+                {{content.field_ucb_related_articles_parag}}
+        </div>
     </div>
 </article>
+
 {% else %}
     {% if not user.hasPermission('update node') %}
         {# redirect non-authenticated users to the specified URL #}
