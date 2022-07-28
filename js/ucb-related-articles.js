@@ -35,7 +35,6 @@ async function getArticlesWithTags(url, array, articleTags ,numLeft){
     fetch(url)
     .then(response => response.json())
     .then(data=>{
-        // console.log(data)
         let relatedArticlesDiv = document.querySelector('.related-articles-section')
 
         // console.log("TAG DATA", data)
@@ -114,7 +113,7 @@ async function getArticlesWithTags(url, array, articleTags ,numLeft){
             })
             // creates the urlObj, key: data id, value: url
             filteredData.map((pair) => {
-              urlObj[pair.id] = pair.attributes.uri.url;
+              urlObj[pair.id] = pair.links.focal_image.href;
             })
   
             // removes all other included data besides images in our included media
@@ -252,7 +251,7 @@ if(relatedShown){
 
           // creates the urlObj, key: data id, value: url
           filteredData.map((pair) => {
-            urlObj[pair.id] = pair.attributes.uri.url;
+            urlObj[pair.id] = pair.links.focal_image.href;
           })
 
           // removes all other included data besides images in our included media
