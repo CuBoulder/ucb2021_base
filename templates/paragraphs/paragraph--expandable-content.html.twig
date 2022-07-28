@@ -25,6 +25,7 @@
 	<!-- Accordion -->
 	{% if layoutSelection == 0 %}
 		<div{{attributes.addClass(classes)}}>
+			<h2>{{ content.field_expandable_section_title|render|striptags|trim }}</h2>
 			<div class="accordion accordion-flush" id="ucb-accordion{{ paragraph.id() }}">
 				{% for key, item in paragraph.field_expandable_content_copy if key|first != '#' %}
 					<div class="accordion-item">

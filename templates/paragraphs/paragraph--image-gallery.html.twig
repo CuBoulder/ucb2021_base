@@ -10,6 +10,7 @@
 
 {% block paragraph %}
 	<div{{attributes.addClass(classes)}}>
+		<h2>{{ content.field_image_gallery_title|render|striptags|trim }}</h2>
 		<div class="row row-cols-lg-6 row-cols-md-3 row-cols-2 justify-content-center gallery-div">
 			{% for key, item in paragraph.field_image_gallery_photo if key|first != '#' %}
 				{% if item.entity.field_media_image_caption.value|render|striptags|trim %}

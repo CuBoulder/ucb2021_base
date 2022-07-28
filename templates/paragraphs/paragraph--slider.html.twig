@@ -30,7 +30,7 @@
 {% block paragraph %}
   <div{{ attributes.addClass(classes).addClass(size) }}>
     {% block content %}
-    {# <h1> {{ dump(paragraph.field_slider_slide.value) }} </h1> #}
+    <h2>{{ content.field_slider_title|render|striptags|trim }}</h2>
     <div id="{{ id }}" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-indicators">
         {% for i in 1..paragraph.field_slider_slide.value|length %}

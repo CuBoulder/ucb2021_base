@@ -1,0 +1,10 @@
+{#
+/**
+ * Theme layout to display titles for grid layouts
+ * Created by jnichol on 4/07/22
+ */
+#}
+
+{% for item in items %}
+       <h2>{{ item|render|striptags|trim }}</h2>
+{% endfor %}

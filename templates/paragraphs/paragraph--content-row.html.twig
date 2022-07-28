@@ -22,6 +22,7 @@
 
 {% block paragraph %}
 	<div{{attributes.addClass(classes)}}>
+    <h2>{{ content.content_row_title|render|striptags|trim }}
     {# Teaser Row Layout #}
     {% if layoutSelection == 0 %}
       {% for key, item in paragraph.field_row_layout_content if key|first != '#' %}
