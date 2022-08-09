@@ -165,6 +165,13 @@ ucb-article-list:
     theme:
       css/ucb-article-list.css: {}
 
+ucb-related-articles:
+  version: 1.x
+  js:
+    js/ucb-related-articles.js: {}
+  css:
+    theme:
+      css/ucb-related-articles.css: {}
 ucb-site-contact-info-footer:
   css:
     theme:
