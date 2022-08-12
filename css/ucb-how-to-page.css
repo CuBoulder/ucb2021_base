@@ -1,0 +1,56 @@
+.eachStepDiv {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+.initialImage {
+    max-width: 50%;
+    width: 50%;
+    margin-left: auto;
+    margin-bottom: 10px;
+}
+
+.verticalFlex {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    margin-right: 30px;
+    max-width: 50%;
+}
+.stepFlex {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    margin-right: 30px;
+}
+.horizontalFlex {
+    display: flex;
+    flex-direction: row;
+}
+
+.costDiv {
+    margin-left: auto;
+    font-size: 20px;
+    margin-bottom: 20px;
+
+}
+
+.stepTitle {
+    font-size: 24px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.stepText {
+    font-size: 20px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.eachStepImage {
+    max-width: 30%;
+    width: 30%;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-right: 20px;
+}
